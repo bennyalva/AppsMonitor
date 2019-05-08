@@ -18,3 +18,5 @@ brew install msodbcsql17 mssql-tools
 
 docker run -e 'ACCEPT_EULA=Y' -e 'SA_PASSWORD=Axity!2019Swd' -e 'MSSQL_PID=Express' -p 1433:1433 -d mcr.microsoft.com/mssql/server:2017-latest-ubuntu
 docker run --name mongodb -d -p 27017:27017 mongo
+
+python3 init.py

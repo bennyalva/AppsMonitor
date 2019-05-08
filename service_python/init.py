@@ -6,8 +6,8 @@ import cron_task
 from api_routes import app
 import crawler
 
-# def main():
-    # cron_task.schedule_job()
+def main():
+    cron_task.schedule_job()
     # response = webscrapping.invoke_site('http://Google.com/')
     # print('status code', response.status_code)
 
@@ -27,5 +27,5 @@ import crawler
 
 
 if __name__ == '__main__':
-    # main()
+    main()
     app.run(host='0.0.0.0', port=3000)
