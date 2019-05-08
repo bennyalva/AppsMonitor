@@ -1,3 +1,10 @@
+python3 -m venv .
+source bin/activate
+pip install -r requirements.txt
+
+deactivate
+
+
 brew update
 brew install unixodbc
 https://github.com/mkleehammer/pyodbc/wiki
