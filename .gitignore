@@ -1,6 +1,37 @@
 
-# Created by https://www.gitignore.io/api/python
-# Edit at https://www.gitignore.io/?templates=python
+# Created by https://www.gitignore.io/api/python,angular
+# Edit at https://www.gitignore.io/?templates=python,angular
+
+### Angular ###
+## Angular ##
+# compiled output
+/dist
+/tmp
+/app/**/*.js
+/app/**/*.js.map
+
+# dependencies
+/node_modules
+/bower_components
+
+# IDEs and editors
+/.idea
+
+# misc
+/.sass-cache
+/connect.lock
+/coverage/*
+/libpeerconnection.log
+npm-debug.log
+testem.log
+/typings
+
+# e2e
+/e2e/*.js
+/e2e/*.map
+
+#System Files
+.DS_Store
 
 ### Python ###
 # Byte-compiled / optimized / DLL files
@@ -13,8 +44,8 @@ __pycache__/
 
 # Distribution / packaging
 .Python
-build/
 bin/
+build/
 develop-eggs/
 dist/
 downloads/
@@ -128,29 +159,4 @@ dmypy.json
 # Pyre type checker
 .pyre/
 
-# OS generated files #
-.DS_Store
-.DS_Store?
-._*
-.Spotlight-V100
-.Trashes
-ehthumbs.db
-Thumbs.db
-
-# IDEs and editors
-/.idea
-.project
-.classpath
-.c9/
-*.launch
-.settings/
-*.sublime-workspace
-
-# IDE - VSCode
-.vscode/*
-!.vscode/settings.json
-!.vscode/tasks.json
-!.vscode/launch.json
-!.vscode/extensions.json
-
-# End of https://www.gitignore.io/api/python
+# End of https://www.gitignore.io/api/python,angular
