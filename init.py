@@ -4,9 +4,10 @@ import db_monitor
 import mongo
 import cron_task
 from api_routes import app
+import crawler
 
-def main():
-    cron_task.schedule_job()
+# def main():
+    # cron_task.schedule_job()
     # response = webscrapping.invoke_site('http://Google.com/')
     # print('status code', response.status_code)
 
@@ -20,11 +21,11 @@ def main():
     # result = db_monitor.verify_connection('ODBC Driver 17 for SQL Server', '127.0.0.1', 'cinepolis', 'sa', 'Axity!2019Swd')
     # print('result', result)
 
-    # mon = mongo.MongoManager()
-    # id = mon.insert()
-    # print('id', id)
+    # craw = crawler.Crawler()
+    # response = craw.get_points()
+    # print('response', response)
 
 
 if __name__ == '__main__':
-    main()
+    # main()
     app.run(host='0.0.0.0', port=3000)

@@ -7,11 +7,11 @@ class MongoManager:
         self.db = self.client.monitor
 
 
-    def insert(self):
-        col_config = self.db.config
-        reg = {'name':'Javier'}
-        reg_id = col_config.insert_one(reg).inserted_id
+    def insert(self, collection, data):
+        coll = self.db[collection]
+        reg_id = coll.insert_one(data).inserted_id
         return reg_id
-
-        
-
+    
+    def get(self, collection, query):
+        coll = self.db[collection]
+        return coll.find(query)
