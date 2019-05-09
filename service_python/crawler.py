@@ -16,9 +16,11 @@ class Crawler:
         return self.mgo.get_list('points', {})
     
     def process(self, point):
+        print('monitoring_application:', point['application'])
         self.webscrapping(point['application'], point['sites'])
         # self.port_open(point['application'], point['services'])
         self.database_status(point['application'], point['databases'])
+        print('monitoring_application_finish:', point['application'])
         
     def webscrapping(self, application, sites):
         for site in sites:
