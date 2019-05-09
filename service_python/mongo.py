@@ -12,6 +12,7 @@ class MongoManager:
         reg_id = coll.insert_one(data).inserted_id
         return reg_id
     
-    def get(self, collection, query):
+    def get_list(self, collection, query):
         coll = self.db[collection]
-        return coll.find(query)
+        r = coll.find(query)
+        return list(r)
