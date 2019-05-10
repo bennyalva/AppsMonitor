@@ -11,5 +11,5 @@ def verify_connection(driver, ip_address, db_name, user, pwd):
         row = cursor.fetchone()
         return {'status': True, 'msg': row[0]}
     except pyodbc.Error as ex:
-        return {'status': False, 'msg': ex}
+        return {'status': False, 'msg': str(ex)}
         
