@@ -39,7 +39,7 @@ brew install msodbcsql17 mssql-tools
 
 [Angular CLI](https://github.com/angular/angular-cli)  
 
-###Para arrancar el proyecto
+## Para arrancar el proyecto
 
 En el directorio donde se descarga el repositorio ejecutar:
 
@@ -59,7 +59,7 @@ Para salir de ambiente ejecutar: `deactivate`
 
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
 
-### Infraestructura
+## Infraestructura
  
  ```Shell
 //Levantar bd MongoDb
@@ -68,6 +68,66 @@ docker run --name mongodb -d -p 27017:27017 mongo
 //Levantar bd SqlServer (pruebas)
 docker run -e 'ACCEPT_EULA=Y' -e 'SA_PASSWORD=Axity!2019Swd' -e 'MSSQL_PID=Express' -p 1433:1433 -d mcr.microsoft.com/mssql/server:2017-latest-ubuntu  
  ```
+
+# Objetos 
+
+Objeto para registrar un aplicativo  
+```json
+{
+	"application": "Aplicativo",
+	"description": "Aplicativo System",
+	"sites": [
+		{ 
+			"name": "Google",
+			"url": "http://Google.com/",
+			"type": "principal",
+			"environment": "Prod"
+		}
+	],
+	"databases": [
+		{
+			"name":"principal",
+			"type": "sqlserver",
+			"ip": "127.0.0.1",
+			"database": "Aplicativo",
+			"port": 1433,
+			"usr": "sa",
+			"pwd": "Axity!2019Swd"
+		}
+	],
+	"services": [
+		{
+			"name":"service",
+			"type": "rest",
+			"ip": "127.0....",
+			"port": 8080,
+			"url": "http://...",
+			"method":"GET"
+		}	
+	],
+	"servicebus": [
+		{
+			"name":"bus",
+			"type": "osb",
+			"ip": "127.0....",
+			"port": 8080
+		}
+	]
+}
+```
+
+Objeto alarma para ser reflejado en el monitoreo  
+```json
+{
+	"_id":"5cd4ec46ebd872faaa1f49b8",
+	"datetime":"2019-05-09T22:13:10.042Z",
+	"application":"Aplicativo",
+	"type":"databases",
+	"name":"principal",
+	"status_response":"('HYT00', '[HYT00] [Microsoft][ODBC Driver 17 for SQL Server]Login timeout expired (0) (SQLDriverConnect)')",
+	"status":false
+}
+```
 
 ## Contributors
 
