@@ -1,0 +1,8 @@
+<div class="chart-container">
+  <ngx-charts-line-chart [view]="view" [results]="multi" [roundDomains]="true" [xAxis]="true" [yAxis]="true"
+    [legend]="true" [legendPosition]="'below'" [legendTitle]="legendTitle" [showXAxisLabel]="true"
+    [showYAxisLabel]="true" [xAxisLabel]="xAxisLabel" [yAxisLabel]="yAxisLabel" [autoScale]="autoScale"
+    [yAxisTicks]="yAxisTicks" [yAxisTickFormatting]="yAxisTickFormatting" [tooltipDisabled]="true"
+    (select)="onSelect($event)">
+  </ngx-charts-line-chart>
+</div>
