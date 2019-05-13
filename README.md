@@ -66,7 +66,7 @@ Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app w
 docker run --name mongodb -d -p 27017:27017 mongo  
 
 //Levantar bd SqlServer (pruebas)
-docker run -e 'ACCEPT_EULA=Y' -e 'SA_PASSWORD=Axity!2019Swd' -e 'MSSQL_PID=Express' -p 1433:1433 -d mcr.microsoft.com/mssql/server:2017-latest-ubuntu  
+docker run -e 'ACCEPT_EULA=Y' -e 'SA_PASSWORD=SecurePwd' -e 'MSSQL_PID=Express' -p 1433:1433 -d mcr.microsoft.com/mssql/server:2017-latest-ubuntu  
  ```
 
 # Objetos 
@@ -92,7 +92,7 @@ Objeto para registrar un aplicativo
 			"database": "Aplicativo",
 			"port": 1433,
 			"usr": "sa",
-			"pwd": "Axity!2019Swd"
+			"pwd": "SecurePwd"
 		}
 	],
 	"services": [
@@ -119,7 +119,6 @@ Objeto para registrar un aplicativo
 Objeto alarma para ser reflejado en el monitoreo  
 ```json
 {
-	"_id":"5cd4ec46ebd872faaa1f49b8",
 	"datetime":"2019-05-09T22:13:10.042Z",
 	"application":"Aplicativo",
 	"type":"databases",
