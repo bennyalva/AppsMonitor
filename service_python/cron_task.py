@@ -3,8 +3,8 @@ import schedule
 import time
 import crawler
 
-def schedule_job():
-    schedule.every(1).seconds.do(job)
+def schedule_job(every_minutes):
+    schedule.every(every_minutes).minute.do(job)
     t = Thread(target=run_schedule)
     t.start()
 
@@ -14,5 +14,6 @@ def run_schedule():
         time.sleep(1)
 
 def job():
-    print("I'm working...")
+    print("checking...")
     crawler.Crawler()
+    print("finish checking...")

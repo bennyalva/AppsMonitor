@@ -13,12 +13,16 @@ class MongoManager:
         reg_id = coll.insert_one(data).inserted_id
         return reg_id
 
+    def get_list(self, collection, query):
+        coll = self.db[collection]
+        r = coll.find(query)
+        return list(r)
+
     def get(self, collection, query, id=None):
         coll = self.db[collection]
         print('id', id)
         if id is not None:
             return coll.find_one({'_id': ObjectId(id)})
-
         return coll.find()
 
     def update(self, collection, id, data):
