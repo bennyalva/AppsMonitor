@@ -1,8 +1,14 @@
-<div class="chart-container">
-  <ngx-charts-line-chart [view]="view" [results]="multi" [roundDomains]="true" [xAxis]="true" [yAxis]="true"
+<h4>{{ title }}</h4>
+<div class="chart-container" *ngIf="!isLoading">
+  <ngx-charts-line-chart [view]="view" [results]="data" [roundDomains]="true" [xAxis]="true" [yAxis]="true"
     [legend]="true" [legendPosition]="'below'" [legendTitle]="legendTitle" [showXAxisLabel]="true"
     [showYAxisLabel]="true" [xAxisLabel]="xAxisLabel" [yAxisLabel]="yAxisLabel" [autoScale]="autoScale"
     [yAxisTicks]="yAxisTicks" [yAxisTickFormatting]="yAxisTickFormatting" [tooltipDisabled]="true"
-    (select)="onSelect($event)">
+    (select)="onSelect($event)" *ngIf="data.length > 0">
   </ngx-charts-line-chart>
+  <span *ngIf="data.length === 0 && !error">No existen datos disponibles</span>
+  <span *ngIf="error">Ocurrió un error al obtener la información</span>
+</div>
+<div class="loader" *ngIf="isLoading">
+  <mat-spinner></mat-spinner>
 </div>
