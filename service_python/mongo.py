@@ -1,5 +1,7 @@
 from pymongo import MongoClient
 from bson.objectid import ObjectId
+from datetime import datetime
+import dateutil.parser
 
 
 class MongoManager:
@@ -13,8 +15,26 @@ class MongoManager:
         reg_id = coll.insert_one(data).inserted_id
         return reg_id
 
-    def get_list(self, collection, query):
+    def get_list(self, collection, query, startDate=None, endDate=None):
         coll = self.db[collection]
+
+        if startDate is not None or endDate is not None:
+            dateFilter = {'datetime': {}}
+            if self.isNotBlank(startDate):
+                dateFilter['datetime'] = {
+                    '$gte': dateutil.parser.parse(startDate)
+                }
+
+            if self.isNotBlank(endDate):
+                dateFilter['datetime'] = dict(dateFilter['datetime'], **{
+                    '$lte': dateutil.parser.parse(endDate)
+                })
+
+            query.update(dateFilter)
+
+            print('filter', query)
+            return list(coll.find(query))
+
         r = coll.find(query)
         return list(r)
 
@@ -32,3 +52,9 @@ class MongoManager:
     def delete(self, collection, id):
         coll = self.db[collection]
         return coll.delete_one({'_id': ObjectId(id)}).deleted_count
+
+    def isBlank(self, myString):
+        return not (myString and myString.strip())
+
+    def isNotBlank(self, myString):
+        return bool(myString and myString.strip())

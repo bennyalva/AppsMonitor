@@ -46,3 +46,9 @@ def delete_point(id):
     mgo = mongo.MongoManager()
     res = mgo.delete('points', id)
     return create_response(res, 200)
+
+@app.route('/events', methods=['GET'])
+def get_events():
+    mgo = mongo.MongoManager()
+    res = mgo.get_list('events', { 'application': request.args.get('application') }, request.args.get('startDate'), request.args.get('endDate'))
+    return create_response(res, 200)
