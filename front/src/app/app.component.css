@@ -1,3 +1,12 @@
+mat-sidenav-container {
+  height: 100%;
+  background-color: white;
+}
+
+mat-sidenav {
+  width: 300px;
+}
+
 .toolbar-container {
   width: 100%;
   height: 40px;
@@ -15,9 +24,14 @@
 .toolbar-logo {
   height: 50px;
   margin-top: -6px;
+  margin-left: 24px;
   /* position: absolute; */
 }
 
 .toolbar-text {
   font-size: 1.2em;
+}
+
+.hand-cursor {
+  cursor: pointer;
 }

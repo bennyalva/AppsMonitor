@@ -1,4 +1,9 @@
-export interface Application {
+export class Pagination {
+  page: number;
+  items: number;
+}
+
+export class Application {
   _id: Id;
   application: string;
   description: string;
@@ -6,9 +11,16 @@ export interface Application {
   databases: Database[];
   services: Service[];
   servicebus: ServiceBus[];
+
+  constructor() {
+    this.sites = [];
+    this.databases = [];
+    this.services = [];
+    this.servicebus = [];
+  }
 }
 
-export interface ServiceBus {
+export class ServiceBus {
   name: string;
   type: string;
   ip: string;
@@ -17,7 +29,7 @@ export interface ServiceBus {
   datetime: Datetime;
 }
 
-export interface Database {
+export class Database {
   name: string;
   type: string;
   ip: string;
@@ -29,7 +41,7 @@ export interface Database {
   datetime: Datetime;
 }
 
-export interface Service {
+export class Service {
   name: string;
   type: string;
   ip: string;
@@ -40,7 +52,7 @@ export interface Service {
   datetime: Datetime;
 }
 
-export interface Site {
+export class Site {
   name: string;
   url: string;
   type: string;
@@ -49,10 +61,10 @@ export interface Site {
   datetime: Datetime;
 }
 
-export interface Id {
+export class Id {
   '$oid': string;
 }
 
-export interface Datetime {
+export class Datetime {
   '$date': number;
 }

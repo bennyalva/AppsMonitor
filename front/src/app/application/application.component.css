@@ -1,0 +1,15 @@
+mat-form-field {
+  width: 100%;
+}
+
+mat-list .actions {
+  display: flex;
+  justify-content: flex-end;
+  padding-bottom: 12px;
+}
+
+mat-list .item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
