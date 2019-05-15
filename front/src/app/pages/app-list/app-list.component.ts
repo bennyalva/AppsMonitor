@@ -63,4 +63,16 @@ export class AppListComponent implements OnInit {
   edit(element: Application) {
     this._router.navigate(['application'], { queryParams: { id: element._id.$oid } });
   }
+
+  delete(element: Application) {
+    this._dataService.setIsLoadingEvent(true);
+    this._consumeService.deleteApplication(element._id.$oid).subscribe(res => {
+      this._dataService.setIsLoadingEvent(false);
+      this._dataService.setGeneralNotificationMessage(res);
+      this.paginator.page.emit();
+    }, err => {
+      this._dataService.setIsLoadingEvent(false);
+      this._dataService.setGeneralNotificationMessage(err);
+    });
+  }
 }

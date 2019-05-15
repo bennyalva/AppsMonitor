@@ -16,6 +16,7 @@ import { ConsumeService } from './services/consume.service';
 import { DataService } from './services/data.service';
 import { PaginatorService } from './services/paginator.service';
 import { SystemChartComponent } from './components/system-chart/system-chart.component';
+import { DialogFormComponent } from './components/dialog-form/dialog-form.component';
 
 @NgModule({
   declarations: [
@@ -23,7 +24,8 @@ import { SystemChartComponent } from './components/system-chart/system-chart.com
     DashboardComponent,
     SystemChartComponent,
     ApplicationComponent,
-    AppListComponent
+    AppListComponent,
+    DialogFormComponent
   ],
   imports: [
     BrowserModule,
@@ -42,6 +44,9 @@ import { SystemChartComponent } from './components/system-chart/system-chart.com
       useClass: PaginatorService
     },
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents: [
+    DialogFormComponent
+  ]
 })
 export class AppModule { }

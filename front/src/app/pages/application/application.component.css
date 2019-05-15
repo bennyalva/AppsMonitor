@@ -13,3 +13,7 @@ mat-list .item {
   align-items: center;
   justify-content: space-between;
 }
+
+.button-add {
+  margin-bottom: 12px;
+}

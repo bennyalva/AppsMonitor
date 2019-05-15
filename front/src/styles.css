@@ -8,10 +8,38 @@ html, body {
   font-family: 'Roboto', sans-serif;
 }
 
+.text-left {
+  text-align: left !important;
+}
+
+.text-right {
+  text-align: right !important;
+}
+
 .text-center {
   text-align: center !important;
 }
 
 .mt {
   margin-top: 24px;
+}
+
+.mb {
+  margin-bottom: 24px;
+}
+
+.card-dialog .mat-dialog-container {
+  padding: 0;
+  background-color: transparent;
+  border-radius: 8px;
+  box-shadow: unset;
+}
+
+.card-dialog mat-form-field {
+  width: 100%;
+}
+
+.mat-dialog-content {
+  margin: 0 -16px !important;
+  padding: 0px 16px !important;
 }

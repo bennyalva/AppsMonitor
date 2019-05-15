@@ -1,0 +1,13 @@
+mat-form-field {
+  width: 100%;
+}
+
+mat-card-actions {
+  text-align: center !important;
+  margin-bottom: 6px !important;
+}
+
+mat-card-actions button {
+  margin-left: 15px !important;
+  margin-right: 15px !important;
+}
