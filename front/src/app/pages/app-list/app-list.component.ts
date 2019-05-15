@@ -4,9 +4,9 @@ import { Router } from '@angular/router';
 import { throwError } from 'rxjs';
 import { catchError, map, startWith, switchMap } from 'rxjs/operators';
 
-import { Application, Pagination } from '../model/rest.model';
-import { ConsumeService } from '../services/consume.service';
-import { DataService } from '../services/data.service';
+import { Application, Pagination } from '../../model/rest.model';
+import { ConsumeService } from '../../services/consume.service';
+import { DataService } from '../../services/data.service';
 
 @Component({
   selector: 'app-app-list',
