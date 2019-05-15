@@ -2,7 +2,7 @@ from flask import Flask, Response, request
 from flask_cors import CORS
 from bson import Binary, Code
 from bson.json_util import dumps
-import mongo
+from pymongo import mongo
 
 app = Flask(__name__)
 CORS(app)
