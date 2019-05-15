@@ -30,7 +30,7 @@ def insert_point():
 @app.route('/points', methods=['GET'])
 def get_points():
     mgo = mongo.MongoManager()
-    res = mgo.get('points', {}, request.args.get('id'))
+    res = mgo.get('points', {}, request.args.get('id'), request.args.get('page'), request.args.get('items'))
     return create_response(res, 200)
 
 

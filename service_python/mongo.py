@@ -38,11 +38,16 @@ class MongoManager:
         r = coll.find(query)
         return list(r)
 
-    def get(self, collection, query, id=None):
+    def get(self, collection, query, id=None, page=None, items=None):
         coll = self.db[collection]
         print('id', id)
         if id is not None:
             return coll.find_one({'_id': ObjectId(id)})
+        if page is not None and items is not None:
+            skip = int(page) * int(items)
+            limit = int(items)
+            res = { 'total': coll.find().count(), 'data': coll.find().skip(skip).limit(limit) }
+            return res
         return coll.find()
 
     def update(self, collection, id, data):
