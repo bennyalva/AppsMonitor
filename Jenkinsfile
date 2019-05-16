@@ -8,7 +8,7 @@ pipeline {
             steps {
                 echo 'Building Frontend Angular'
                 dir ('front/'){
-                    sh 'npm install'
+                    sh 'npm ci'
                     sh 'npm run build'
                 }
             }
@@ -16,10 +16,10 @@ pipeline {
         stage('Docker up') {
             steps {
                 echo 'Running on Docker'
-                //sh 'docker network disconnect lead_default 9e4c3905f895'
+                sh 'docker network disconnect appmonitor_default mongodb'
                 sh 'docker-compose down --rmi all'
                 sh 'docker-compose up -d'
-                //sh 'docker network connect lead_default 9e4c3905f895'
+                sh 'docker network connect appmonitor_default mongodb'
             }
         }
     }
