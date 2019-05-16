@@ -1,8 +1,13 @@
 import { Component, Input, OnInit } from '@angular/core';
 import * as moment from 'moment';
+import { iif, of, throwError, Subscription } from 'rxjs';
+import { concatMap, delay, repeatWhen, retryWhen } from 'rxjs/operators';
 
 import { Application } from '../../model/rest.model';
 import { ConsumeService } from '../../services/consume.service';
+
+const REQ_INTERVAL = 60000;
+const REQ_RETRIES = 10;
 
 @Component({
   selector: 'app-system-chart',
@@ -24,6 +29,8 @@ export class SystemChartComponent implements OnInit {
   yScaleMin = 0;
   yScaleMax = 1;
 
+  subscription: Subscription;
+
   constructor(private _consumeService: ConsumeService) { }
 
   yAxisTickFormatting(val) {
@@ -31,31 +38,59 @@ export class SystemChartComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.isLoading = true;
     this.title = this.application.application;
+    this.loadData();
+  }
 
-    this._consumeService.getLatestEvents(this.application.application).subscribe(res => {
-      this.isLoading = false;
-      this.data = [];
+  reload() {
+    if (this.subscription) {
+      this.subscription.unsubscribe();
+    }
+    this.loadData();
+  }
 
-      const types = res.data.map(x => x.type).filter(function (elem, index, self) {
-        return index === self.indexOf(elem);
-      });
+  loadData() {
+    this.isLoading = true;
 
-      types.forEach(t => {
-        this.data.push({
-          name: t,
-          series: res.data.filter(x => x.type === t).map(y => {
-            return {
-              name: moment(y.datetime.$date).format('HH:mm'),
-              value: y.status ? 1 : 0
-            };
-          })
+    this.subscription = this._consumeService.getLatestEvents(this.application.application)
+      .pipe(
+        repeatWhen(completed => completed.pipe(
+          delay(REQ_INTERVAL)).pipe(
+            // tap(() => { this.isLoading = true; })
+          )
+        ),
+        retryWhen(error => error.pipe(
+          concatMap((e, i) =>
+            iif(
+              () => i > REQ_RETRIES,
+              throwError(e),
+              of(e).pipe(delay(REQ_INTERVAL))
+            )
+          )
+        )))
+      .subscribe(res => {
+        this.isLoading = false;
+        this.data = [];
+
+        const types = res.data.map(x => x.type).filter(function (elem, index, self) {
+          return index === self.indexOf(elem);
         });
+
+        types.forEach(t => {
+          this.data.push({
+            name: t,
+            series: res.data.filter(x => x.type === t).map(y => {
+              return {
+                name: moment(y.datetime.$date).utc().format('HH:mm'),
+                value: y.status ? 1 : 0,
+                response: y.status_response
+              };
+            })
+          });
+        });
+      }, err => {
+        this.isLoading = false;
+        this.error = err;
       });
-    }, err => {
-      this.isLoading = false;
-      this.error = err;
-    });
   }
 }
