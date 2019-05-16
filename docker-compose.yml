@@ -1,0 +1,18 @@
+version: '3'
+services:
+  frontend:
+    build:
+      context: .
+      dockerfile: "Dockerfile-frontend"
+    ports:
+      - "80:80"
+    environment:
+      - TZ=America/Mexico_City
+  service:
+    build:
+      context: .
+      dockerfile: "Dockerfile-service"
+    ports:
+      - "3000:3000"
+    environment:
+      - TZ=America/Mexico_City
