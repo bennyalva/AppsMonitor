@@ -46,7 +46,7 @@ class MongoManager:
         if page is not None and items is not None:
             skip = int(page) * int(items)
             limit = int(items)
-            res = { 'total': coll.find().count(), 'data': coll.find().skip(skip).limit(limit) }
+            res = { 'total': coll.find().count(), 'items': coll.find().skip(skip).limit(limit) }
             return res
         return coll.find()
 
