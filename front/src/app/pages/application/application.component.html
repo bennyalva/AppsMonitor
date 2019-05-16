@@ -1,0 +1,125 @@
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
+      <h1>{{ title }}</h1>
+    </div>
+  </div>
+  <div class="row" [formGroup]="formApp">
+    <div class="col-md-6">
+      <mat-form-field>
+        <input matInput placeholder="Aplicación" formControlName="application" required>
+      </mat-form-field>
+    </div>
+    <div class="col-md-6">
+      <mat-form-field>
+        <input matInput placeholder="Descripción" formControlName="description" required>
+      </mat-form-field>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+      <h4>Sitios</h4>
+      <mat-list>
+        <button mat-icon-button class="button-add" color="primary" matTooltip="Agregar"
+          (click)="addElement(elementType.site)">
+          <mat-icon>add</mat-icon>
+        </button>
+        <mat-list-item *ngFor="let item of application.sites">
+          <p class="item" mat-line>
+            {{ item.name }}
+            <span class="actions">
+              <button mat-icon-button color="primary" matTooltip="Editar" (click)="addElement(elementType.site, item)">
+                <mat-icon>edit</mat-icon>
+              </button>
+              <button mat-icon-button color="primary" matTooltip="Eliminar"
+                (click)="deleteElement(elementType.site, item)">
+                <mat-icon>delete</mat-icon>
+              </button>
+            </span>
+          </p>
+        </mat-list-item>
+        <mat-divider></mat-divider>
+      </mat-list>
+    </div>
+    <div class="col-md-12">
+      <h4>Bases de datos</h4>
+      <mat-list>
+        <button mat-icon-button color="primary" class="button-add" matTooltip="Agregar"
+          (click)="addElement(elementType.database)">
+          <mat-icon>add</mat-icon>
+        </button>
+        <mat-list-item *ngFor="let item of application.databases">
+          <p class="item" mat-line>
+            {{ item.name }}
+            <span class="actions">
+              <button mat-icon-button color="primary" matTooltip="Editar"
+                (click)="addElement(elementType.database, item)">
+                <mat-icon>edit</mat-icon>
+              </button>
+              <button mat-icon-button color="primary" matTooltip="Eliminar"
+                (click)="deleteElement(elementType.database, item)">
+                <mat-icon>delete</mat-icon>
+              </button>
+            </span>
+          </p>
+        </mat-list-item>
+        <mat-divider></mat-divider>
+      </mat-list>
+    </div>
+    <div class="col-md-12">
+      <h4>Servicios</h4>
+      <mat-list>
+        <button mat-icon-button color="primary" class="button-add" matTooltip="Agregar"
+          (click)="addElement(elementType.service)">
+          <mat-icon>add</mat-icon>
+        </button>
+        <mat-list-item *ngFor="let item of application.services">
+          <p class="item" mat-line>
+            {{ item.name }}
+            <span class="actions">
+              <button mat-icon-button color="primary" matTooltip="Editar"
+                (click)="addElement(elementType.service, item)">
+                <mat-icon>edit</mat-icon>
+              </button>
+              <button mat-icon-button color="primary" matTooltip="Eliminar"
+                (click)="deleteElement(elementType.service, item)">
+                <mat-icon>delete</mat-icon>
+              </button>
+            </span>
+          </p>
+        </mat-list-item>
+        <mat-divider></mat-divider>
+      </mat-list>
+    </div>
+    <div class="col-md-12">
+      <h4>Service bus</h4>
+      <mat-list>
+        <button mat-icon-button color="primary" class="button-add" matTooltip="Agregar"
+          (click)="addElement(elementType.servicebus)">
+          <mat-icon>add</mat-icon>
+        </button>
+        <mat-list-item *ngFor="let item of application.servicebus">
+          <p class="item" mat-line>
+            {{ item.name }}
+            <span class="actions">
+              <button mat-icon-button color="primary" matTooltip="Editar"
+                (click)="addElement(elementType.servicebus, item)">
+                <mat-icon>edit</mat-icon>
+              </button>
+              <button mat-icon-button color="primary" matTooltip="Eliminar"
+                (click)="deleteElement(elementType.servicebus, item)">
+                <mat-icon>delete</mat-icon>
+              </button>
+            </span>
+          </p>
+        </mat-list-item>
+        <mat-divider></mat-divider>
+      </mat-list>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12 text-center mt mb">
+      <button mat-raised-button color="primary" [disabled]="formApp.invalid" (click)="saveApp()">Guardar</button>
+    </div>
+  </div>
+</div>

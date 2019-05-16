@@ -1,8 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
 import * as moment from 'moment';
 
-import { Application } from '../model/rest.model';
-import { ConsumeService } from '../services/consume.service';
+import { Application } from '../../model/rest.model';
+import { ConsumeService } from '../../services/consume.service';
 
 @Component({
   selector: 'app-system-chart',

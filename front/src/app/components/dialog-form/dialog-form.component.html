@@ -1,0 +1,21 @@
+<mat-card class="card-dialog mat-elevation-z0">
+  <mat-card-title mat-dialog-title>
+    {{ title }}
+  </mat-card-title>
+  <mat-dialog-content>
+    <mat-card-content [formGroup]="form">
+      <mat-form-field *ngFor="let field of fields">
+        <input matInput *ngIf="field.type === fieldType.input" [formControlName]="field.name" [placeholder]="field.placeholder">
+        <mat-select *ngIf="field.type === fieldType.select" [placeholder]="field.placeholder">
+          <mat-option *ngFor="let opt of field.options" [value]="option.value">
+            {{ opt.text }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </mat-card-content>
+  </mat-dialog-content>
+  <mat-card-actions>
+    <button tabindex="-1" type="button" mat-button (click)="_dialogRef.close()">Cancelar</button>
+    <button type="button" mat-raised-button color="primary" (click)="dialogOk()" [disabled]="form.invalid">Aceptar</button>
+  </mat-card-actions>
+</mat-card>

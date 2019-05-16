@@ -8,7 +8,14 @@ import {
   MatToolbarModule,
   MatSnackBarModule,
   MatProgressBarModule,
-  MatProgressSpinnerModule
+  MatProgressSpinnerModule,
+  MatTableModule,
+  MatTooltipModule,
+  MatSelectModule,
+  MatPaginatorModule,
+  MatDialogModule,
+  MatInputModule,
+  MatDatepickerModule,
 } from '@angular/material';
 
 export const MATERIAL_COMPONENTS = [
@@ -20,7 +27,14 @@ export const MATERIAL_COMPONENTS = [
   MatCardModule,
   MatSnackBarModule,
   MatProgressBarModule,
-  MatProgressSpinnerModule
+  MatProgressSpinnerModule,
+  MatTableModule,
+  MatTooltipModule,
+  MatSelectModule,
+  MatPaginatorModule,
+  MatDialogModule,
+  MatInputModule,
+  MatDatepickerModule,
 ];
 
 @NgModule({

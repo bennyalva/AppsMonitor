@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 
-import { Application } from '../model/rest.model';
-import { ConsumeService } from '../services/consume.service';
-import { DataService } from '../services/data.service';
+import { Application } from '../../model/rest.model';
+import { ConsumeService } from '../../services/consume.service';
+import { DataService } from '../../services/data.service';
 
 @Component({
   selector: 'app-dashboard',
