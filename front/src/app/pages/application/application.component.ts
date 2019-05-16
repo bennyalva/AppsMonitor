@@ -51,9 +51,9 @@ export class ApplicationComponent implements OnInit {
     });
 
     if (this.id) {
-      this._consumeService.getApplication(this.id).subscribe((app: Application) => {
-        this.application = app;
-        this.formApp.patchValue(app);
+      this._consumeService.getApplication(this.id).subscribe(res => {
+        this.application = res.data;
+        this.formApp.patchValue(this.application);
       });
     }
   }
@@ -62,7 +62,7 @@ export class ApplicationComponent implements OnInit {
     this._dataService.setIsLoadingEvent(true);
     this._consumeService.saveApplication(this.application).subscribe(res => {
       this._dataService.setIsLoadingEvent(false);
-      this._dataService.setGeneralNotificationMessage(res);
+      this._dataService.setGeneralNotificationMessage(res.message);
       this._router.navigate(['applications']);
     }, err => {
       this._dataService.setIsLoadingEvent(false);

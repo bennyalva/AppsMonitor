@@ -38,14 +38,14 @@ export class SystemChartComponent implements OnInit {
       this.isLoading = false;
       this.data = [];
 
-      const types = res.map(x => x.type).filter(function (elem, index, self) {
+      const types = res.data.map(x => x.type).filter(function (elem, index, self) {
         return index === self.indexOf(elem);
       });
 
       types.forEach(t => {
         this.data.push({
           name: t,
-          series: res.filter(x => x.type === t).map(y => {
+          series: res.data.filter(x => x.type === t).map(y => {
             return {
               name: moment(y.datetime.$date).format('HH:mm'),
               value: y.status ? 1 : 0

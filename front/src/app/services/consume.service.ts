@@ -6,6 +6,11 @@ import { environment } from 'src/environments/environment';
 
 import { Pagination, Application } from '../model/rest.model';
 
+export class Response {
+  message: string;
+  data: any;
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -15,45 +20,45 @@ export class ConsumeService {
 
   constructor(private _http: HttpClient) { }
 
-  getApplications(pagination?: Pagination): Observable<any> {
+  getApplications(pagination?: Pagination): Observable<Response> {
 
     if (pagination) {
       const params = new HttpParams()
         .set('page', pagination.page.toString())
         .set('items', pagination.items.toString());
-      return this._http.get(`${this.baseUrl}/points`, { params: params });
+      return this._http.get<Response>(`${this.baseUrl}/points`, { params: params });
     }
 
-    return this._http.get(`${this.baseUrl}/points`);
+    return this._http.get<Response>(`${this.baseUrl}/points`);
   }
 
-  getApplication(id: string): Observable<any> {
+  getApplication(id: string): Observable<Response> {
     const params = new HttpParams()
       .set('id', id);
-    return this._http.get(`${this.baseUrl}/points`, { params: params });
+    return this._http.get<Response>(`${this.baseUrl}/points`, { params: params });
   }
 
-  saveApplication(application: Application): Observable<any> {
+  saveApplication(application: Application): Observable<Response> {
     if (application._id) {
       const id = application._id.$oid;
       delete application._id;
-      return this._http.put(`${this.baseUrl}/points/${id}`, application);
+      return this._http.put<Response>(`${this.baseUrl}/points/${id}`, application);
     } else {
-      return this._http.post(`${this.baseUrl}/points`, application);
+      return this._http.post<Response>(`${this.baseUrl}/points`, application);
     }
   }
 
-  deleteApplication(id: string): Observable<any> {
-    return this._http.delete(`${this.baseUrl}/points/${id}`);
+  deleteApplication(id: string): Observable<Response> {
+    return this._http.delete<Response>(`${this.baseUrl}/points/${id}`);
   }
 
-  getLatestEvents(application: string): Observable<any> {
+  getLatestEvents(application: string): Observable<Response> {
     const startDate = moment().add(-1, 'days').toDate().toISOString();
     const endDate = moment().toDate().toISOString();
     const params = new HttpParams()
       .set('application', application)
       .set('startDate', startDate)
       .set('endDate', endDate);
-    return this._http.get(`${this.baseUrl}/events`, { params: params });
+    return this._http.get<Response>(`${this.baseUrl}/events`, { params: params });
   }
 }

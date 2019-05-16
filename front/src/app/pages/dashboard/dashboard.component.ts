@@ -16,8 +16,8 @@ export class DashboardComponent implements OnInit {
 
   ngOnInit() {
     this._dataService.setIsLoadingEvent(true);
-    this._consumeService.getApplications().subscribe((res: Application[]) => {
-      this.applications = res;
+    this._consumeService.getApplications().subscribe(res => {
+      this.applications = res.data;
       this._dataService.setIsLoadingEvent(false);
 
     }, err => {

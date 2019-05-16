@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { MatPaginator } from '@angular/material';
+import { MatPaginator, MatTableDataSource } from '@angular/material';
 import { Router } from '@angular/router';
 import { throwError } from 'rxjs';
 import { catchError, map, startWith, switchMap } from 'rxjs/operators';
@@ -14,7 +14,7 @@ import { DataService } from '../../services/data.service';
   styleUrls: ['./app-list.component.css']
 })
 export class AppListComponent implements OnInit {
-  data: Application[] = [];
+  appData = new MatTableDataSource<Application>();
   resultsLength = 0;
 
   displayedColumns = ['application', 'description', 'sites', 'databases', 'services', 'servicebus', 'actions'];
@@ -40,15 +40,15 @@ export class AppListComponent implements OnInit {
           pagination.items = this.paginator.pageSize;
           return this._consumeService.getApplications(pagination);
         }),
-        map(data => {
-          this.resultsLength = data.total;
-          return data.data;
+        map(res => {
+          this.resultsLength = res.data.total;
+          return res.data.items;
         }),
         catchError((error) => {
           return throwError(error);
         })
       ).subscribe(data => {
-        this.data = data;
+        this.appData.data = data;
         this._dataService.setIsLoadingEvent(false);
       }, err => {
         this._dataService.setIsLoadingEvent(false);
@@ -68,7 +68,7 @@ export class AppListComponent implements OnInit {
     this._dataService.setIsLoadingEvent(true);
     this._consumeService.deleteApplication(element._id.$oid).subscribe(res => {
       this._dataService.setIsLoadingEvent(false);
-      this._dataService.setGeneralNotificationMessage(res);
+      this._dataService.setGeneralNotificationMessage(res.message);
       this.paginator.page.emit();
     }, err => {
       this._dataService.setIsLoadingEvent(false);

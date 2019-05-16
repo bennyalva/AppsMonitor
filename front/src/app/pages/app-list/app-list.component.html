@@ -9,7 +9,7 @@
   </div>
   <div class="row">
     <div class="col-md-12">
-      <table mat-table [dataSource]="data">
+      <table mat-table [dataSource]="appData">
         <ng-container matColumnDef="application">
           <th mat-header-cell *matHeaderCellDef>Aplicación</th>
           <td mat-cell *matCellDef="let element" data-label="Aplicación">{{ element.application }}</td>
