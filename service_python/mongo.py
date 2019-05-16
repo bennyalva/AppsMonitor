@@ -7,7 +7,7 @@ import dateutil.parser
 class MongoManager:
 
     def __init__(self):
-        self.client = MongoClient('127.0.0.1:27017')
+        self.client = MongoClient('mongodb:27017')
         self.db = self.client.monitor
 
     def insert(self, collection, data):

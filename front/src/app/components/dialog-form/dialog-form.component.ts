@@ -31,7 +31,7 @@ export class DialogFormComponent implements OnInit {
   fields: DialogField[];
   form: FormGroup;
 
-  constructor(private _dialogRef: MatDialogRef<DialogFormComponent>, @Inject(MAT_DIALOG_DATA) private _data: any,
+  constructor(public _dialogRef: MatDialogRef<DialogFormComponent>, @Inject(MAT_DIALOG_DATA) private _data: any,
     private _fb: FormBuilder) {
     this.fields = this._data.fields;
     this.title = this._data.title;
