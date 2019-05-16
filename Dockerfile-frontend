@@ -1,2 +1,2 @@
 FROM nginx
-COPY front/dist /usr/share/nginx/html
+COPY front/dist/apps-monitor /usr/share/nginx/html
