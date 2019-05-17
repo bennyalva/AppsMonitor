@@ -7,7 +7,7 @@ import { Application } from '../../model/rest.model';
 import { ConsumeService } from '../../services/consume.service';
 
 const REQ_INTERVAL = 60000;
-const REQ_RETRIES = 10;
+const REQ_RETRIES = 2;
 
 @Component({
   selector: 'app-system-chart',
@@ -20,26 +20,56 @@ export class SystemChartComponent implements OnInit {
   title: string;
   error: string;
 
+  events: any[] = [];
   data: any[] = [];
+  types: string[] = ['sites', 'databases', 'services', 'servicebus'];
+  selectedType;
   view: any[] = undefined;
 
   yAxisLabel = 'Estatus';
   xAxisLabel = 'Hora';
-  yAxisTicks = [0, 1];
-  yScaleMin = 0;
-  yScaleMax = 1;
+  yAxisTicks = [-1, 1];
+  yScaleMin = -1.1;
+  yScaleMax = 1.1;
 
   subscription: Subscription;
 
   constructor(private _consumeService: ConsumeService) { }
 
-  yAxisTickFormatting(val) {
-    return val === 1 ? 'up' : 'down';
-  }
-
   ngOnInit() {
     this.title = this.application.application;
+    this.selectedType = this.types[0];
     this.loadData();
+  }
+
+  yAxisTickFormatting(val) {
+    return val === 1 ? 'up' : (val === -1 ? 'down' : '');
+  }
+
+  changeType() {
+    this.reload();
+  }
+
+  buildChartData() {
+    this.data = [];
+
+    const typeEvents = this.events.filter(x => x.type === this.selectedType);
+    const names = typeEvents.map(x => x.name).filter(function (elem, index, self) {
+      return index === self.indexOf(elem);
+    });
+
+    names.forEach(name => {
+      this.data.push({
+        name: name,
+        series: typeEvents.filter(x => x.name === name).map(y => {
+          return {
+            name: moment(y.datetime.$date).utc().format('HH:mm'),
+            value: y.status ? 1 : -1,
+            response: y.status_response
+          };
+        })
+      });
+    });
   }
 
   reload() {
@@ -51,8 +81,9 @@ export class SystemChartComponent implements OnInit {
 
   loadData() {
     this.isLoading = true;
+    this.error = null;
 
-    this.subscription = this._consumeService.getLatestEvents(this.application.application)
+    this.subscription = this._consumeService.getLatestEvents(this.application.application, this.selectedType)
       .pipe(
         repeatWhen(completed => completed.pipe(
           delay(REQ_INTERVAL)).pipe(
@@ -64,30 +95,14 @@ export class SystemChartComponent implements OnInit {
             iif(
               () => i > REQ_RETRIES,
               throwError(e),
-              of(e).pipe(delay(REQ_INTERVAL))
+              of(e).pipe(delay(3000))
             )
           )
         )))
       .subscribe(res => {
         this.isLoading = false;
-        this.data = [];
-
-        const types = res.data.map(x => x.type).filter(function (elem, index, self) {
-          return index === self.indexOf(elem);
-        });
-
-        types.forEach(t => {
-          this.data.push({
-            name: t,
-            series: res.data.filter(x => x.type === t).map(y => {
-              return {
-                name: moment(y.datetime.$date).utc().format('HH:mm'),
-                value: y.status ? 1 : 0,
-                response: y.status_response
-              };
-            })
-          });
-        });
+        this.events = res.data;
+        this.buildChartData();
       }, err => {
         this.isLoading = false;
         this.error = err;

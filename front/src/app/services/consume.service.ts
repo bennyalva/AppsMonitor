@@ -52,13 +52,13 @@ export class ConsumeService {
     return this._http.delete<Response>(`${this.baseUrl}/points/${id}`);
   }
 
-  getLatestEvents(application: string): Observable<Response> {
-    const startDate = moment().add(-1, 'days').toDate().toISOString();
-    const endDate = moment().toDate().toISOString();
+  getLatestEvents(application: string, type: string): Observable<Response> {
     const params = new HttpParams()
       .set('application', application)
-      .set('startDate', startDate)
-      .set('endDate', endDate);
+      .set('type', type)
+      .set('sort', 'datetime')
+      .set('sortDir', 'desc')
+      .set('limit', '30');
     return this._http.get<Response>(`${this.baseUrl}/events`, { params: params });
   }
 }
