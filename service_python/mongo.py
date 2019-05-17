@@ -15,7 +15,7 @@ class MongoManager:
         reg_id = coll.insert_one(data).inserted_id
         return reg_id
 
-    def get_list(self, collection, query, startDate=None, endDate=None):
+    def get_list(self, collection, query, startDate=None, endDate=None, sort=None, sortDir=None, limit=None):
         coll = self.db[collection]
 
         if startDate is not None or endDate is not None:
@@ -33,10 +33,15 @@ class MongoManager:
             query.update(dateFilter)
 
             print('filter', query)
-            return list(coll.find(query))
 
-        r = coll.find(query)
-        return list(r)
+        if sort is not None and limit is not None:
+            return coll.find(query).sort(sort, -1 if sortDir == 'desc' else 1).limit(int(limit))
+        elif sort is not None:
+            return coll.find(query).sort(sort, -1 if sortDir == 'desc' else 1)
+        elif limit is not None:
+            return coll.find(query).limit(int(limit))
+
+        return coll.find(query)
 
     def get(self, collection, query, id=None, page=None, items=None):
         coll = self.db[collection]
@@ -46,7 +51,8 @@ class MongoManager:
         if page is not None and items is not None:
             skip = int(page) * int(items)
             limit = int(items)
-            res = { 'total': coll.find().count(), 'items': coll.find().skip(skip).limit(limit) }
+            res = {'total': coll.find().count(
+            ), 'items': coll.find().skip(skip).limit(limit)}
             return res
         return coll.find()
 
