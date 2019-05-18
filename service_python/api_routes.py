@@ -45,13 +45,11 @@ def get_points():
                   request.args.get('page'), request.args.get('items'))
     return create_response(res, 200)
 
-
 @app.route('/points/<id>', methods=['PUT'])
 def update_point(id):
     mgo = mongo.MongoManager()
     res = mgo.update('points', id, request.get_json())
     return create_response(res, 200)
-
 
 @app.route('/points/<id>', methods=['DELETE'])
 def delete_point(id):
@@ -74,5 +72,5 @@ def custom400(error):
 
 
 @app.errorhandler(500)
-def custom400(error):
+def custom500(error):
     return create_response(None, 500)

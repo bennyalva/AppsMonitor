@@ -18,7 +18,7 @@ class Crawler:
     def process(self, point):
         print('monitoring_application:', point['application'])
         self.webscrapping(point['application'], point['sites'])
-        # self.port_open(point['application'], point['services'])
+        self.port_open(point['application'], point['services'])
         self.database_status(point['application'], point['databases'])
         print('monitoring_application_finish:', point['application'])
         
@@ -27,7 +27,6 @@ class Crawler:
             print('webscrapping_to:', site['url'])
             result = webscrapping.invoke_site(site['url'])
             print('webscrapping_to_response:', result)
-            # find = str(parsed_response).find("Google")
             self.persist_event(application, 'sites', site['name'], result['msg'], result['status'])
     
     def port_open(self, application, services):

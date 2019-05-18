@@ -2,12 +2,12 @@ from pymongo import MongoClient
 from bson.objectid import ObjectId
 from datetime import datetime
 import dateutil.parser
-
+import config
 
 class MongoManager:
 
     def __init__(self):
-        self.client = MongoClient('mongodb:27017')
+        self.client = MongoClient('{}:27017'.format(config.env.MONGO_URL)) # pylint: disable=maybe-no-member
         self.db = self.client.monitor
 
     def insert(self, collection, data):
