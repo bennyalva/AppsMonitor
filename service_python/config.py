@@ -1,6 +1,6 @@
 env = {}
 class Config:
-    APP_NAME = 'myapp'
+    APP_NAME = 'AppMonitor'
 
 class DevelopmentConfig(Config):
     DEBUG = True
