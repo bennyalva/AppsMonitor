@@ -14,20 +14,23 @@ class AlarmAnalizer:
         if(status == False):
             similar_alarms = list(self.mgo.get_list('events', event, sort='datetime', sortDir='desc', limit=1))
             print('similar_alarms False', similar_alarms)
-            if len(similar_alarms) >= 1 & similar_alarms[0]['status'] == False:
-                print('Mando mail se cayo')
-                print('Dest', self.get_dest_alarms(event))
-                print('Msg', self.create_alarm_message(False, event, status_response))
-                self.notification.send_email(self.get_dest_alarms(event), self.create_alarm_message(False, event, status_response))
+            print('similar_alarms Len', len(similar_alarms))
+            if len(similar_alarms) >= 1:
+                if similar_alarms[0]['status'] == False:
+                    print('Mando mail se cayo')
+                    print('Dest', self.get_dest_alarms(event))
+                    print('Msg', self.create_alarm_message(False, event, status_response))
+                    self.notification.send_email(self.get_dest_alarms(event), self.create_alarm_message(False, event, status_response))
         else:
             similar_alarms = list(self.mgo.get_list('events', event, sort='datetime', sortDir='desc', limit=2))
             print('similar_alarms True', similar_alarms)
             print('Filter', list(filter(lambda sim_alm: sim_alm['status'] == False, similar_alarms)))
-            if(len(similar_alarms) >= 2 & len(list(filter(lambda sim_alm: sim_alm['status'] == False, similar_alarms))) == 2):
-                print('Mando mail levanto')
-                print('Dest', self.get_dest_alarms(event))
-                print('Msg', self.create_alarm_message(True, event, status_response))
-                self.notification.send_email(self.get_dest_alarms(event), self.create_alarm_message(True, event, status_response))
+            if len(similar_alarms) >= 2:
+                if(len(list(filter(lambda sim_alm: sim_alm['status'] == False, similar_alarms))) == 2):
+                    print('Mando mail levanto')
+                    print('Dest', self.get_dest_alarms(event))
+                    print('Msg', self.create_alarm_message(True, event, status_response))
+                    self.notification.send_email(self.get_dest_alarms(event), self.create_alarm_message(True, event, status_response))
         print('Termine')
     
     def create_alarm_message(self, status, event, status_response):

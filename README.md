@@ -131,10 +131,10 @@ Objeto alarma para ser reflejado en el monitoreo
 
 ## Contributors
 
-Javier Rodríguez
-[francisco.rodriguez@axity.com]
-Diego Cárcamo
-[diego.carcamo@axity.com]
+Javier Rodríguez  
+[francisco.rodriguez@axity.com]  
+Diego Cárcamo  
+[diego.carcamo@axity.com]  
 
 ## License
 
