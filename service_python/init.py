@@ -2,13 +2,10 @@ from api_routes import app
 import cron_task
 import config
 import sys
+import alarm_analizer
 
 def main():
     cron_task.schedule_job(5)
-    # n = notification_controller.Notifications()
-    # emails = ['francisco.rodriguez@axity.com']
-    # body = 'Prueba'
-    # n.send_email(emails, body)
 
 if __name__ == '__main__':
     env = sys.argv[1] if len(sys.argv) == 2 else 'dev'

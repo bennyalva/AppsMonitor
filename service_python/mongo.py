@@ -45,7 +45,6 @@ class MongoManager:
 
     def get(self, collection, query, id=None, page=None, items=None):
         coll = self.db[collection]
-        print('id', id)
         if id is not None:
             return coll.find_one({'_id': ObjectId(id)})
         if page is not None and items is not None:
