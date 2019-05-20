@@ -4,7 +4,7 @@ import * as moment from 'moment';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 
-import { Pagination, Application } from '../model/rest.model';
+import { Pagination, Application, Catalog } from '../model/rest.model';
 
 export class Response {
   message: string;
@@ -60,5 +60,9 @@ export class ConsumeService {
       .set('sortDir', 'desc')
       .set('limit', '30');
     return this._http.get<Response>(`${this.baseUrl}/events`, { params: params });
+  }
+
+  getCatalogs(): Observable<Response> {
+    return this._http.get<Response>(`${this.baseUrl}/catalogs`);
   }
 }

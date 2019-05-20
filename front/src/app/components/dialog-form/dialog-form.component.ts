@@ -4,7 +4,9 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 
 export enum FieldType {
   input = 1,
-  select = 2
+  select = 2,
+  password = 3,
+  switch = 4
 }
 
 export class DialogField {

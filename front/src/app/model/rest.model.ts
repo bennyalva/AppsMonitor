@@ -11,12 +11,15 @@ export class Application {
   databases: Database[];
   services: Service[];
   servicebus: ServiceBus[];
+  ownerEmail: string[];
+  notifications: boolean;
 
   constructor() {
     this.sites = [];
     this.databases = [];
     this.services = [];
     this.servicebus = [];
+    this.ownerEmail = [];
   }
 }
 
@@ -67,4 +70,11 @@ export class Id {
 
 export class Datetime {
   '$date': number;
+}
+
+export class Catalog {
+  _id: Id;
+  type: string;
+  name: string;
+  value;
 }

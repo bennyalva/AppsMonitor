@@ -2,9 +2,17 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material';
 import { ActivatedRoute, Router } from '@angular/router';
-import { DialogField, DialogFormComponent, FieldType } from 'src/app/components/dialog-form/dialog-form.component';
+import { EMPTY, forkJoin } from 'rxjs';
+import { tap } from 'rxjs/operators';
+import {
+  DialogField,
+  DialogFieldOption,
+  DialogFormComponent,
+  FieldType,
+} from 'src/app/components/dialog-form/dialog-form.component';
+import { ValidateIPAddress, ValidateNumbers, ValidateURL } from 'src/app/utils/custom.validators';
 
-import { Application, Database, Service, ServiceBus, Site } from '../../model/rest.model';
+import { Application, Catalog, Database, Service, ServiceBus, Site } from '../../model/rest.model';
 import { ConsumeService } from '../../services/consume.service';
 import { DataService } from '../../services/data.service';
 
@@ -12,7 +20,8 @@ export enum ElementType {
   site = 1,
   database = 2,
   service = 3,
-  servicebus = 4
+  servicebus = 4,
+  owners = 5
 }
 
 @Component({
@@ -24,6 +33,7 @@ export class ApplicationComponent implements OnInit {
   id: string;
   title: string;
   application: Application = new Application();
+  catalogs: Catalog[] = [];
   formApp: FormGroup;
   elementType = ElementType;
 
@@ -36,6 +46,7 @@ export class ApplicationComponent implements OnInit {
     this.formApp = this._fb.group({
       application: ['', Validators.required],
       description: ['', Validators.required],
+      notifications: [true, Validators.required],
     });
   }
 
@@ -50,12 +61,34 @@ export class ApplicationComponent implements OnInit {
       this.application.description = val;
     });
 
+    this.formApp.get('notifications').valueChanges.subscribe(val => {
+      this.application.notifications = val;
+    });
+
+    let reqApp;
     if (this.id) {
-      this._consumeService.getApplication(this.id).subscribe(res => {
-        this.application = res.data;
-        this.formApp.patchValue(this.application);
-      });
+      reqApp = this._consumeService.getApplication(this.id).pipe(
+        tap(res => {
+          this.application = res.data;
+          this.formApp.patchValue(this.application);
+        })
+      );
+    } else {
+      reqApp = EMPTY;
     }
+
+    const reqCat = this._consumeService.getCatalogs().pipe(
+      tap(res => {
+        this.catalogs = res.data;
+      })
+    );
+
+    forkJoin(reqCat, reqApp).subscribe(() => {
+      this._dataService.setIsLoadingEvent(false);
+    }, err => {
+      this._dataService.setIsLoadingEvent(false);
+      this._dataService.setGeneralNotificationMessage(err);
+    });
   }
 
   saveApp() {
@@ -75,6 +108,18 @@ export class ApplicationComponent implements OnInit {
       case ElementType.site:
         this.application.sites = this.application.sites.filter(x => x !== element);
         break;
+      case ElementType.database:
+        this.application.databases = this.application.databases.filter(x => x !== element);
+        break;
+      case ElementType.service:
+        this.application.services = this.application.services.filter(x => x !== element);
+        break;
+      case ElementType.servicebus:
+        this.application.servicebus = this.application.servicebus.filter(x => x !== element);
+        break;
+      case ElementType.owners:
+        this.application.ownerEmail = this.application.ownerEmail.filter(x => x !== element);
+        break;
     }
   }
 
@@ -92,6 +137,9 @@ export class ApplicationComponent implements OnInit {
       case ElementType.servicebus:
         this.addServicebus(element);
         break;
+      case ElementType.owners:
+        this.addOwner(element);
+        break;
     }
   }
 
@@ -108,19 +156,31 @@ export class ApplicationComponent implements OnInit {
         name: 'url',
         placeholder: 'URL',
         type: FieldType.input,
-        validators: [Validators.required]
+        validators: [Validators.required, ValidateURL]
       },
       {
         name: 'type',
         placeholder: 'Tipo',
-        type: FieldType.input,
-        validators: [Validators.required]
+        type: FieldType.select,
+        validators: [Validators.required],
+        options: this.catalogs.filter(x => x.type === 'sites').filter(x => x.name === 'type').map(x => {
+          return <DialogFieldOption>{
+            text: x.value,
+            value: x.value
+          };
+        })
       },
       {
         name: 'environment',
         placeholder: 'Ambiente',
-        type: FieldType.input,
-        validators: [Validators.required]
+        type: FieldType.select,
+        validators: [Validators.required],
+        options: this.catalogs.filter(x => x.type === 'sites').filter(x => x.name === 'environment').map(x => {
+          return <DialogFieldOption>{
+            text: x.value,
+            value: x.value
+          };
+        })
       },
     ];
 
@@ -165,14 +225,20 @@ export class ApplicationComponent implements OnInit {
       {
         name: 'type',
         placeholder: 'Tipo',
-        type: FieldType.input,
-        validators: [Validators.required]
+        type: FieldType.select,
+        validators: [Validators.required],
+        options: this.catalogs.filter(x => x.type === 'databases').filter(x => x.name === 'type').map(x => {
+          return <DialogFieldOption>{
+            text: x.value,
+            value: x.value
+          };
+        })
       },
       {
         name: 'ip',
         placeholder: 'IP',
         type: FieldType.input,
-        validators: [Validators.required]
+        validators: [Validators.required, ValidateIPAddress]
       },
       {
         name: 'database',
@@ -184,7 +250,7 @@ export class ApplicationComponent implements OnInit {
         name: 'port',
         placeholder: 'Puerto',
         type: FieldType.input,
-        validators: [Validators.required]
+        validators: [Validators.required, ValidateNumbers]
       },
       {
         name: 'usr',
@@ -195,7 +261,7 @@ export class ApplicationComponent implements OnInit {
       {
         name: 'pwd',
         placeholder: 'Password',
-        type: FieldType.input,
+        type: FieldType.password,
         validators: [Validators.required]
       },
     ];
@@ -247,32 +313,44 @@ export class ApplicationComponent implements OnInit {
       {
         name: 'type',
         placeholder: 'Tipo',
-        type: FieldType.input,
-        validators: [Validators.required]
+        type: FieldType.select,
+        validators: [Validators.required],
+        options: this.catalogs.filter(x => x.type === 'services').filter(x => x.name === 'type').map(x => {
+          return <DialogFieldOption>{
+            text: x.value,
+            value: x.value
+          };
+        })
       },
       {
         name: 'ip',
         placeholder: 'IP',
         type: FieldType.input,
-        validators: [Validators.required]
+        validators: [Validators.required, ValidateIPAddress]
       },
       {
         name: 'port',
         placeholder: 'Puerto',
         type: FieldType.input,
-        validators: [Validators.required]
+        validators: [Validators.required, ValidateNumbers]
       },
       {
         name: 'url',
         placeholder: 'URL',
         type: FieldType.input,
-        validators: [Validators.required]
+        validators: [Validators.required, ValidateURL]
       },
       {
         name: 'method',
         placeholder: 'Método HTTP',
-        type: FieldType.input,
-        validators: [Validators.required]
+        type: FieldType.select,
+        validators: [Validators.required],
+        options: this.catalogs.filter(x => x.type === 'services').filter(x => x.name === 'method').map(x => {
+          return <DialogFieldOption>{
+            text: x.value,
+            value: x.value
+          };
+        })
       },
     ];
 
@@ -310,7 +388,7 @@ export class ApplicationComponent implements OnInit {
   }
 
   private addServicebus(item?: any) {
-    const title = item ? 'Editar servicio' : 'Agregar servicio';
+    const title = item ? 'Editar service bus' : 'Agregar service bus';
     const fields: DialogField[] = [
       {
         name: 'name',
@@ -321,20 +399,26 @@ export class ApplicationComponent implements OnInit {
       {
         name: 'type',
         placeholder: 'Tipo',
-        type: FieldType.input,
-        validators: [Validators.required]
+        type: FieldType.select,
+        validators: [Validators.required],
+        options: this.catalogs.filter(x => x.type === 'servicebus').filter(x => x.name === 'type').map(x => {
+          return <DialogFieldOption>{
+            text: x.value,
+            value: x.value
+          };
+        })
       },
       {
         name: 'ip',
         placeholder: 'IP',
         type: FieldType.input,
-        validators: [Validators.required]
+        validators: [Validators.required, ValidateIPAddress]
       },
       {
         name: 'port',
         placeholder: 'Puerto',
         type: FieldType.input,
-        validators: [Validators.required]
+        validators: [Validators.required, ValidateNumbers]
       }
     ];
 
@@ -362,6 +446,38 @@ export class ApplicationComponent implements OnInit {
           item.type = value.type;
           item.ip = value.ip;
           item.port = value.port;
+        }
+      }
+    });
+  }
+
+  addOwner(item?: any) {
+    const title = item ? 'Editar administrador' : 'Agregar administrador';
+    const fields: DialogField[] = [
+      {
+        name: 'email',
+        placeholder: 'E-mail',
+        type: FieldType.input,
+        validators: [Validators.required, Validators.email]
+      }
+    ];
+
+    const dialogRef = this._dialog.open(DialogFormComponent, {
+      panelClass: ['card-dialog'],
+      width: '384px',
+      data: {
+        fields: fields,
+        title: title,
+        item: { email: item }
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(value => {
+      if (value) {
+        if (!item) {
+          this.application.ownerEmail = this.application.ownerEmail.concat(value.email);
+        } else {
+          item = value.email;
         }
       }
     });
