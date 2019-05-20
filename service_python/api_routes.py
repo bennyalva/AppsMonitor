@@ -45,11 +45,13 @@ def get_points():
                   request.args.get('page'), request.args.get('items'))
     return create_response(res, 200)
 
+
 @app.route('/points/<id>', methods=['PUT'])
 def update_point(id):
     mgo = mongo.MongoManager()
-    res = mgo.update('points', id, request.get_json())
+    res = mgo.update('points', request.get_json(), id)
     return create_response(res, 200)
+
 
 @app.route('/points/<id>', methods=['DELETE'])
 def delete_point(id):
@@ -63,6 +65,13 @@ def get_events():
     mgo = mongo.MongoManager()
     res = mgo.get_list('events', {'application': request.args.get('application'), 'type': request.args.get('type')}, request.args.get(
         'startDate'), request.args.get('endDate'), request.args.get('sort'), request.args.get('sortDir'), request.args.get('limit'))
+    return create_response(res, 200)
+
+
+@app.route('/catalogs', methods=['GET'])
+def get_catalogs():
+    mgo = mongo.MongoManager()
+    res = mgo.get_list('catalogs', {})
     return create_response(res, 200)
 
 

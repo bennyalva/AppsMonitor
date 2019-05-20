@@ -4,10 +4,12 @@ from datetime import datetime
 import dateutil.parser
 import config
 
+
 class MongoManager:
 
     def __init__(self):
-        self.client = MongoClient('{}:27017'.format(config.env.MONGO_URL)) # pylint: disable=maybe-no-member
+        self.client = MongoClient('{}:27017'.format(
+            config.env.MONGO_URL))  # pylint: disable=maybe-no-member
         self.db = self.client.monitor
 
     def insert(self, collection, data):
@@ -55,9 +57,14 @@ class MongoManager:
             return res
         return coll.find()
 
-    def update(self, collection, id, data):
+    def update(self, collection, data, id):
         coll = self.db[collection]
         return coll.update_one({'_id': ObjectId(id)}, {'$set': data}).modified_count
+
+    def init_coll(self, collection, data):
+        coll = self.db[collection]
+        coll.drop()
+        return coll.insert_many(data)
 
     def delete(self, collection, id):
         coll = self.db[collection]
