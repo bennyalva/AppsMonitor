@@ -43,7 +43,7 @@ class Crawler:
     def database_status(self, application, databases):
         for database in databases:
             print('verifying_dbconnection_to: ', 'ip:{}, db:{}'.format(database['ip'], database['database']))
-            result = db_monitor.verify_connection('ODBC Driver 17 for SQL Server', database['ip'], database['database'], database['usr'], database['pwd'])
+            result = db_monitor.verify_connection('FreeTDS', database['ip'], database['database'], database['usr'], database['pwd'])
             self.alm_analizer.analize(application, 'databases', database['name'], result['msg'], result['status'])
             print('verifying_dbconnection_to_response: ', result)
             self.persist_event(application, 'databases', database['name'], result['msg'], result['status'])

@@ -3,7 +3,7 @@ import json
 
 def verify_connection(driver, ip_address, db_name, user, pwd):
     try:
-        conn_string = "Driver={};Server={};Database={};UID={};PWD={};".format(driver, ip_address, db_name, user, pwd)
+        conn_string = "driver={};server={};PORT=1433 database={};UID={};PWD={};TDS_Version=8.0;".format(driver, ip_address, db_name, user, pwd)
         print('verifying_connection_to_conn: ', conn_string)
         conn = pyodbc.connect(conn_string)
         cursor = conn.cursor()
