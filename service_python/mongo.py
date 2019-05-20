@@ -63,6 +63,7 @@ class MongoManager:
 
     def init_coll(self, collection, data):
         coll = self.db[collection]
+        # TODO: implementar update o insert
         coll.drop()
         return coll.insert_many(data)
 
