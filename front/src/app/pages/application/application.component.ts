@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material';
 import { ActivatedRoute, Router } from '@angular/router';
-import { EMPTY, forkJoin } from 'rxjs';
+import { forkJoin, of } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import {
   DialogField,
@@ -74,7 +74,7 @@ export class ApplicationComponent implements OnInit {
         })
       );
     } else {
-      reqApp = EMPTY;
+      reqApp = of(null);
     }
 
     const reqCat = this._consumeService.getCatalogs().pipe(
