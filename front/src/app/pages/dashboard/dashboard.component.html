@@ -1,7 +1,12 @@
-<div class="container-fluid">
+<div class="container-fluid" *ngIf="applications.length > 0">
   <div class="row">
     <div class="col-md-6" *ngFor="let app of applications">
       <app-system-chart [application]="app"></app-system-chart>
     </div>
   </div>
+</div>
+<div class="no-data" *ngIf="!isLoading && applications.length === 0">
+  <mat-icon>local_cafe</mat-icon>
+  <p>No existen datos disponibles</p>
+  <a [routerLink]="['/application']">Registrar una nueva aplicación</a>
 </div>

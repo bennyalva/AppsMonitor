@@ -10,16 +10,20 @@ import { DataService } from '../../services/data.service';
   styleUrls: ['./dashboard.component.css']
 })
 export class DashboardComponent implements OnInit {
-  applications: Application[];
+  applications: Application[] = [];
+  isLoading = false;
 
-  constructor(private _dataService: DataService, private _consumeService: ConsumeService) { }
+  constructor(private _dataService: DataService, private _consumeService: ConsumeService) {
+    this._dataService.getIsLoadingEvent().subscribe(load => {
+      this.isLoading = load;
+    });
+  }
 
   ngOnInit() {
     this._dataService.setIsLoadingEvent(true);
     this._consumeService.getApplications().subscribe(res => {
       this.applications = res.data;
       this._dataService.setIsLoadingEvent(false);
-
     }, err => {
       this._dataService.setIsLoadingEvent(false);
       this._dataService.setGeneralNotificationMessage(err);
