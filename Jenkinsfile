@@ -16,10 +16,10 @@ pipeline {
         stage('Docker up') {
             steps {
                 echo 'Running on Docker'
-                sh 'docker network disconnect appmonitor_default mongodb'
+                //sh 'docker network disconnect appmonitor_default mongodb'
                 sh 'docker-compose down --rmi all'
                 sh 'docker-compose up -d'
-                sh 'docker network connect appmonitor_default mongodb'
+                //sh 'docker network connect appmonitor_default mongodb'
             }
         }
     }

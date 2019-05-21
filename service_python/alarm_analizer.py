@@ -12,11 +12,11 @@ class AlarmAnalizer:
                 'type': type,
                 'name': name }
         if(status == False):
-            similar_alarms = list(self.mgo.get_list('events', event, sort='datetime', sortDir='desc', limit=1))
+            similar_alarms = list(self.mgo.get_list('events', event, sort='datetime', sortDir='desc', limit=2))
             print('similar_alarms False', similar_alarms)
             print('similar_alarms Len', len(similar_alarms))
-            if len(similar_alarms) >= 1:
-                if similar_alarms[0]['status'] == False:
+            if len(similar_alarms) >= 2:
+                if(len(list(filter(lambda sim_alm: sim_alm['status'] == False, similar_alarms))) == 1):
                     print('Mando mail se cayo')
                     print('Dest', self.get_dest_alarms(event))
                     print('Msg', self.create_alarm_message(False, event, status_response))
