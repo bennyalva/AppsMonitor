@@ -20,7 +20,8 @@
         [legend]="true" [legendTitle]="legendTitle" [showXAxisLabel]="true" [showYAxisLabel]="true"
         [xAxisLabel]="xAxisLabel" [yAxisLabel]="yAxisLabel" [yAxisTicks]="yAxisTicks" [yScaleMin]="yScaleMin"
         [yScaleMax]="yScaleMax" [yAxisTickFormatting]="yAxisTickFormatting" [trimYAxisTicks]="false"
-        [maxYAxisTickLength]="16" [tooltipDisabled]="false" [scheme]="'neons'" *ngIf="data.length > 0 && !isLoading">
+        [maxYAxisTickLength]="16" [tooltipDisabled]="false" [scheme]="'neons'" [curve]="curve"
+        *ngIf="data.length > 0 && !isLoading">
         <ng-template #tooltipTemplate let-model="model">
           <p>
             {{model.name}}

@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
+import * as shape from 'd3-shape';
 import * as moment from 'moment';
-import { iif, of, throwError, Subscription } from 'rxjs';
+import { iif, of, Subscription, throwError } from 'rxjs';
 import { concatMap, delay, repeatWhen, retryWhen } from 'rxjs/operators';
 
 import { Application } from '../../model/rest.model';
@@ -31,6 +32,7 @@ export class SystemChartComponent implements OnInit {
   yAxisTicks = [-1, 1];
   yScaleMin = -1.1;
   yScaleMax = 1.1;
+  curve = shape.curveStepAfter;
 
   subscription: Subscription;
 
@@ -61,9 +63,9 @@ export class SystemChartComponent implements OnInit {
     names.forEach(name => {
       this.data.push({
         name: name,
-        series: typeEvents.filter(x => x.name === name).map(y => {
+        series: typeEvents.filter(x => x.name === name).sort((n1, n2) => n1.datetime.$date - n2.datetime.$date).map(y => {
           return {
-            name: moment(y.datetime.$date).utc().format('HH:mm'),
+            name: moment(y.datetime.$date).utc().format('DD-MM HH:mm'),
             value: y.status ? 1 : -1,
             response: y.status_response
           };
