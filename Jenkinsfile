@@ -9,7 +9,7 @@ pipeline {
                 echo 'Building Frontend Angular'
                 dir ('front/'){
                     sh 'npm ci'
-                    sh 'npm run build'
+                    sh 'npm run build-beta'
                 }
             }
         }
@@ -23,8 +23,8 @@ pipeline {
             }
         }
     }
-    post { 
-        always { 
+    post {
+        always {
             deleteDir()
         }
         success {
