@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, OnDestroy } from '@angular/core';
 import * as shape from 'd3-shape';
 import * as moment from 'moment';
 import { iif, of, Subscription, throwError } from 'rxjs';
@@ -15,7 +15,7 @@ const REQ_RETRIES = 2;
   templateUrl: './system-chart.component.html',
   styleUrls: ['./system-chart.component.css']
 })
-export class SystemChartComponent implements OnInit {
+export class SystemChartComponent implements OnInit, OnDestroy {
   @Input() application: Application;
   isLoading = false;
   title: string;
@@ -42,6 +42,12 @@ export class SystemChartComponent implements OnInit {
     this.title = this.application.application;
     this.selectedType = this.types[0];
     this.loadData();
+  }
+
+  ngOnDestroy() {
+    if (this.subscription) {
+      this.subscription.unsubscribe();
+    }
   }
 
   yAxisTickFormatting(val) {

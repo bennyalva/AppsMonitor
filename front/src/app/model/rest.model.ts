@@ -12,7 +12,7 @@ export class Application {
   services: Service[];
   servicebus: ServiceBus[];
   ownerEmail: string[];
-  notifications: boolean;
+  notifications = true;
 
   constructor() {
     this.sites = [];
