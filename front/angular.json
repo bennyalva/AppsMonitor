@@ -81,7 +81,7 @@
               "fileReplacements": [
                 {
                   "replace": "src/environments/environment.ts",
-                  "with": "src/environments/environment.beta.ts"
+                  "with": "src/environments/environment.public.ts"
                 }
               ],
               "optimization": true,
