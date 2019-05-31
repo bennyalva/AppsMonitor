@@ -17,10 +17,10 @@
     </div>
     <div class="chart-container">
       <ngx-charts-line-chart [view]="view" [results]="data" [roundDomains]="true" [xAxis]="true" [yAxis]="true"
-        [legend]="true" [legendTitle]="legendTitle" [showXAxisLabel]="true" [showYAxisLabel]="true"
-        [xAxisLabel]="xAxisLabel" [yAxisLabel]="yAxisLabel" [yAxisTicks]="yAxisTicks" [yScaleMin]="yScaleMin"
-        [yScaleMax]="yScaleMax" [yAxisTickFormatting]="yAxisTickFormatting" [trimYAxisTicks]="false"
-        [maxYAxisTickLength]="16" [tooltipDisabled]="false" [scheme]="'neons'" [curve]="curve"
+        [legend]="true" [legendTitle]="legendTitle" [legendPosition]="'below'" [showXAxisLabel]="true"
+        [showYAxisLabel]="true" [xAxisLabel]="xAxisLabel" [yAxisLabel]="yAxisLabel" [yAxisTicks]="yAxisTicks"
+        [yScaleMin]="yScaleMin" [yScaleMax]="yScaleMax" [yAxisTickFormatting]="yAxisTickFormatting"
+        [trimYAxisTicks]="false" [maxYAxisTickLength]="16" [tooltipDisabled]="false" [scheme]="'neons'" [curve]="curve"
         *ngIf="data.length > 0 && !isLoading">
         <ng-template #tooltipTemplate let-model="model">
           <p>
