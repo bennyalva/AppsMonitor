@@ -1,4 +1,5 @@
 from api_routes import app
+from gevent.pywsgi import WSGIServer
 import cron_task
 import config
 import sys
@@ -32,9 +33,11 @@ if __name__ == '__main__':
 
     if env == 'dev':
         config.env = config.DevelopmentConfig
+        app.run(host=config.env.LISTEN_ADDRESS, port=config.env.LISTEN_PORT)
     elif env == 'prod':
         config.env = config.ProductionConfig
+        http_server = WSGIServer((config.env.LISTEN_ADDRESS, config.env.LISTEN_PORT), app)
+        http_server.serve_forever()
 
     main()
     init_catalogs()
-    app.run(host=config.env.LISTEN_ADDRESS, port=config.env.LISTEN_PORT)
