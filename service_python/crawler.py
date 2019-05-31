@@ -5,6 +5,7 @@ import db_monitor
 import alarm_analizer
 from datetime import datetime
 
+
 class Crawler:
 
     def __init__(self):
@@ -28,25 +29,34 @@ class Crawler:
         for site in sites:
             print('webscrapping_to:', site['url'])
             result = webscrapping.invoke_site(site['url'])
-            self.alm_analizer.analize(point, 'sites', site['name'], result['msg'], result['status'])
+            self.alm_analizer.analize(
+                point, 'sites', site['name'], result['msg'], result['status'])
             print('webscrapping_to_response:', result)
-            self.persist_event(point['application'], 'sites', site['name'], result['msg'], result['status'])
+            self.persist_event(
+                point['application'], 'sites', site['name'], result['msg'], result['status'])
 
     def port_open(self, point, services):
         for service in services:
-            print('connecting_to_port:', '{}:{}'.format(service['ip'], service['port']))
+            print('connecting_to_port:', '{}:{}'.format(
+                service['ip'], service['port']))
             result = port_checker.check_port(service['ip'], service['port'])
-            self.alm_analizer.analize(point, 'services', service['name'], result, result)
+            self.alm_analizer.analize(
+                point, 'services', service['name'], result, result)
             print('connecting_to_port_response:', result)
-            self.persist_event(point['application'], 'services', service['name'], result, result)
+            self.persist_event(
+                point['application'], 'services', service['name'], result, result)
 
     def database_status(self, point, databases):
         for database in databases:
-            print('verifying_dbconnection_to: ', 'ip:{}, db:{}'.format(database['ip'], database['database']))
-            result = db_monitor.verify_connection('FreeTDS', database['ip'], database['database'], database['usr'], database['pwd'])
-            self.alm_analizer.analize(point, 'databases', database['name'], result['msg'], result['status'])
+            print('verifying_dbconnection_to: ', 'type:{} ip:{}, port:{} db:{}'.format(
+                database['type'], database['ip'], database['port'], database['database']))
+            result = db_monitor.verify_connection(
+                database['type'], database['ip'], database['port'], database['database'], database['usr'], database['pwd'])
+            self.alm_analizer.analize(
+                point, 'databases', database['name'], result['msg'], result['status'])
             print('verifying_dbconnection_to_response: ', result)
-            self.persist_event(point['application'], 'databases', database['name'], result['msg'], result['status'])
+            self.persist_event(point['application'], 'databases',
+                               database['name'], result['msg'], result['status'])
 
     def persist_event(self, application, type, name, status_response, status):
         event = {
@@ -58,5 +68,3 @@ class Crawler:
             'status': status
         }
         self.mgo.insert('events', event)
-
-
