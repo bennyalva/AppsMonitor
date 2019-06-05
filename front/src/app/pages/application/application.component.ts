@@ -371,7 +371,7 @@ export class ApplicationComponent implements OnInit {
           service.name = value.name;
           service.type = value.type;
           service.ip = value.ip;
-          service.port = value.port;
+          service.port = +value.port;
           service.url = value.url;
           service.method = value.method;
           this.application.services = this.application.services.concat(service);
@@ -379,7 +379,7 @@ export class ApplicationComponent implements OnInit {
           item.name = value.name;
           item.type = value.type;
           item.ip = value.ip;
-          item.port = value.port;
+          item.port = +value.port;
           item.url = value.url;
           item.method = value.method;
         }
