@@ -48,10 +48,10 @@ class Crawler:
 
     def database_status(self, point, databases):
         for database in databases:
-            print('verifying_dbconnection_to: ', 'ip:{}, db:{}'.format(
-                database['ip'], database['database']))
+            print('verifying_dbconnection_to: ', 'type:{} ip:{}, port:{} db:{}'.format(
+                database['type'], database['ip'], database['port'], database['database']))
             result = db_monitor.verify_connection(
-                'FreeTDS', database['ip'], database['database'], database['usr'], database['pwd'])
+                database['type'], database['ip'], database['port'], database['database'], database['usr'], database['pwd'])
             self.alm_analizer.analize(
                 point, 'databases', database['name'], result['msg'], result['status'])
             print('verifying_dbconnection_to_response: ', result)
