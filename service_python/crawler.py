@@ -3,6 +3,8 @@ import webscrapping
 import port_checker
 import db_monitor
 import alarm_analizer
+import pika
+import json
 from datetime import datetime
 
 
@@ -34,6 +36,8 @@ class Crawler:
             print('webscrapping_to_response:', result)
             self.persist_event(
                 point['application'], 'sites', site['name'], result['msg'], result['status'])
+            self.sentToRabbit(point['application'], 'sites',
+                              site['name'], result['msg'], result['status'])
 
     def port_open(self, point, services):
         for service in services:
@@ -57,6 +61,8 @@ class Crawler:
             print('verifying_dbconnection_to_response: ', result)
             self.persist_event(point['application'], 'databases',
                                database['name'], result['msg'], result['status'])
+            self.sentToRabbit(point['application'], 'databases',
+                              database['name'], result['msg'], result['status'])
 
     def persist_event(self, application, type, name, status_response, status):
         event = {
@@ -68,3 +74,24 @@ class Crawler:
             'status': status
         }
         self.mgo.insert('events', event)
+
+    def sentToRabbit(self, application, type, name, status_response, status):
+        event = {
+            'datetime': datetime.now().strftime('%Y-%m-%d %H:%M:%S'),
+            'application': application,
+            'type': type,
+            'name': name,
+            'status_response': status_response,
+            'status': status
+        }
+
+        message = json.dumps(event)
+        connection = pika.BlockingConnection(
+            pika.ConnectionParameters('localhost'))
+        channel = connection.channel()
+        channel.queue_declare(queue='apps-monitor')
+        channel.basic_publish(exchange='',
+                              routing_key='apps-monitor',
+                              body=message)
+        connection.close()
+        print(" [x] Sent data to RabbitMQ: {}".format(message))
