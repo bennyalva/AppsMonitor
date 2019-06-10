@@ -34,8 +34,6 @@ class Crawler:
             self.alm_analizer.analize(
                 point, 'sites', site['name'], result['msg'], result['status'])
             print('webscrapping_to_response:', result)
-            self.persist_event(
-                point['application'], 'sites', site['name'], result['msg'], result['status'])
             self.sentToRabbit(point['application'], 'sites',
                               site['name'], result['msg'], result['status'])
 
@@ -47,7 +45,7 @@ class Crawler:
             self.alm_analizer.analize(
                 point, 'services', service['name'], result, result)
             print('connecting_to_port_response:', result)
-            self.persist_event(point['application'], 'services',
+            self.sentToRabbit(point['application'], 'services',
                                service['name'], result['msg'], result['status'])
 
     def database_status(self, point, databases):
@@ -59,21 +57,19 @@ class Crawler:
             self.alm_analizer.analize(
                 point, 'databases', database['name'], result['msg'], result['status'])
             print('verifying_dbconnection_to_response: ', result)
-            self.persist_event(point['application'], 'databases',
-                               database['name'], result['msg'], result['status'])
             self.sentToRabbit(point['application'], 'databases',
                               database['name'], result['msg'], result['status'])
 
-    def persist_event(self, application, type, name, status_response, status):
-        event = {
-            'datetime': datetime.now(),
-            'application': application,
-            'type': type,
-            'name': name,
-            'status_response': status_response,
-            'status': status
-        }
-        self.mgo.insert('events', event)
+    # def persist_event(self, application, type, name, status_response, status):
+    #     event = {
+    #         'datetime': datetime.now(),
+    #         'application': application,
+    #         'type': type,
+    #         'name': name,
+    #         'status_response': status_response,
+    #         'status': status
+    #     }
+    #     self.mgo.insert('events', event)
 
     def sentToRabbit(self, application, type, name, status_response, status):
         event = {
