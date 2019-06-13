@@ -4,6 +4,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { MatPaginatorIntl } from '@angular/material';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { InjectableRxStompConfig, RxStompService, rxStompServiceFactory } from '@stomp/ng2-stompjs';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
 
 import { AppMaterialModule } from './app-material.module';
@@ -18,6 +19,7 @@ import { ConsumeService } from './services/consume.service';
 import { DataService } from './services/data.service';
 import { PaginatorService } from './services/paginator.service';
 import { RestInterceptor } from './utils/rest.interceptor';
+import { rxStompConfig } from './utils/rx-stomp.config';
 
 @NgModule({
   declarations: [
@@ -48,6 +50,15 @@ import { RestInterceptor } from './utils/rest.interceptor';
       provide: HTTP_INTERCEPTORS,
       useClass: RestInterceptor,
       multi: true
+    },
+    {
+      provide: InjectableRxStompConfig,
+      useValue: rxStompConfig
+    },
+    {
+      provide: RxStompService,
+      useFactory: rxStompServiceFactory,
+      deps: [InjectableRxStompConfig]
     }
   ],
   bootstrap: [AppComponent],

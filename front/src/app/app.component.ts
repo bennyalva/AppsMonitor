@@ -2,6 +2,8 @@ import { AfterViewChecked, ChangeDetectorRef, Component } from '@angular/core';
 import { MatSnackBar } from '@angular/material';
 
 import { DataService } from './services/data.service';
+import { RxStompService } from '@stomp/ng2-stompjs';
+import { Message } from '@stomp/stompjs';
 
 @Component({
   selector: 'app-root',
@@ -11,7 +13,8 @@ import { DataService } from './services/data.service';
 export class AppComponent implements AfterViewChecked {
   isLoading = false;
 
-  constructor(private _dataService: DataService, private _snackBar: MatSnackBar, private _cdRef: ChangeDetectorRef) {
+  constructor(private _dataService: DataService, private _snackBar: MatSnackBar, private _cdRef: ChangeDetectorRef,
+    private rxStompService: RxStompService) {
     this._dataService.getIsLoadingEvent().subscribe(load => {
       this.isLoading = load;
     });
@@ -23,6 +26,10 @@ export class AppComponent implements AfterViewChecked {
           duration: 3000
         });
       });
+
+    this.rxStompService.watch('/queue/apps-monitor').subscribe((message: Message) => {
+      console.log('RECIEVED MESSAGE: ', message.body);
+    });
   }
 
   ngAfterViewChecked() {
