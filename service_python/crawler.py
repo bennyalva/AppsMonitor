@@ -46,7 +46,7 @@ class Crawler:
                 point, 'services', service['name'], result, result)
             print('connecting_to_port_response:', result)
             self.sentToRabbit(point['application'], 'services',
-                               service['name'], result['msg'], result['status'])
+                              service['name'], result['msg'], result['status'])
 
     def database_status(self, point, databases):
         for database in databases:
@@ -85,9 +85,12 @@ class Crawler:
         connection = pika.BlockingConnection(
             pika.ConnectionParameters('localhost'))
         channel = connection.channel()
-        channel.queue_declare(queue='apps-monitor')
+        channel.queue_declare(queue='apps-monitor', durable=True)
         channel.basic_publish(exchange='',
                               routing_key='apps-monitor',
-                              body=message)
+                              body=message,
+                              properties=pika.BasicProperties(
+                                  delivery_mode=2,  # make message persistent
+                              ))
         connection.close()
         print(" [x] Sent data to RabbitMQ: {}".format(message))
