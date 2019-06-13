@@ -3,11 +3,9 @@ ENV PYTHONUNBUFFERED 1
 WORKDIR /usr/src/app
 COPY service_python ./
 RUN apt-get update && apt-get install -y \
-	unixodbc \
-	unixodbc-dev \
-	tdsodbc
-RUN apt-get install -y freetds-common freetds-bin freetds-dev
-ADD odbcinst.ini /etc/
+	openjdk-8-jre
+ENV JAVA_HOME /usr/lib/jvm/java-8-openjdk-amd64
+RUN export JAVA_HOME
 RUN pip install -U pip
 RUN pip install --no-cache-dir -r requirements.txt
 CMD ["python", "-u", "init.py", "prod"]
