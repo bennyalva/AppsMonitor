@@ -75,6 +75,35 @@ def get_catalogs():
     return create_response(res, 200)
 
 
+@app.route('/clients', methods=['POST'])
+def insert_client():
+    mgo = mongo.MongoManager()
+    res = mgo.insert('clients', request.get_json())
+    return create_response(res, 200)
+
+
+@app.route('/clients', methods=['GET'])
+def get_clients():
+    mgo = mongo.MongoManager()
+    res = mgo.get('clients', {}, request.args.get('id'),
+                  request.args.get('page'), request.args.get('items'))
+    return create_response(res, 200)
+
+
+@app.route('/clients/<id>', methods=['PUT'])
+def update_client(id):
+    mgo = mongo.MongoManager()
+    res = mgo.update('clients', request.get_json(), id)
+    return create_response(res, 200)
+
+
+@app.route('/clients/<id>', methods=['DELETE'])
+def delete_client(id):
+    mgo = mongo.MongoManager()
+    res = mgo.delete('clients', id)
+    return create_response(res, 200)
+
+
 @app.errorhandler(404)
 def custom400(error):
     return create_response(None, 404)

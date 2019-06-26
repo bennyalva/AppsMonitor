@@ -3,8 +3,14 @@ export class Pagination {
   items: number;
 }
 
+export class Client {
+  _id: Id;
+  name: string;
+}
+
 export class Application {
   _id: Id;
+  client: string;
   application: string;
   description: string;
   sites: Site[];
