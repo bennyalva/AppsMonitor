@@ -76,6 +76,7 @@ Objeto para registrar un aplicativo
 {
 	"application": "Aplicativo",
 	"description": "Aplicativo System",
+	"ownerEmail": ["francisco.rodriguez@axity.com"],
 	"sites": [
 		{ 
 			"name": "Google",
@@ -130,10 +131,10 @@ Objeto alarma para ser reflejado en el monitoreo
 
 ## Contributors
 
-Javier Rodríguez
-[francisco.rodriguez@axity.com]
-Diego Cárcamo
-[diego.carcamo@axity.com]
+Javier Rodríguez  
+[francisco.rodriguez@axity.com]  
+Diego Cárcamo  
+[diego.carcamo@axity.com]  
 
 ## License
 

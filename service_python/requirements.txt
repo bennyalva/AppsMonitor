@@ -1,7 +1,8 @@
 beautifulsoup4
 requests
-pyodbc
+JayDeBeApi
 pymongo
 flask
 flask_cors
 schedule
+python-dateutil
