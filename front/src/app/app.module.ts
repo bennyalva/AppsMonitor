@@ -19,6 +19,7 @@ import { DataService } from './services/data.service';
 import { PaginatorService } from './services/paginator.service';
 import { RestInterceptor } from './utils/rest.interceptor';
 import { ClientListComponent } from './pages/client-list/client-list.component';
+import { ClientAppsComponent } from './components/client-apps/client-apps.component';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,8 @@ import { ClientListComponent } from './pages/client-list/client-list.component';
     ApplicationComponent,
     AppListComponent,
     DialogFormComponent,
-    ClientListComponent
+    ClientListComponent,
+    ClientAppsComponent
   ],
   imports: [
     BrowserModule,

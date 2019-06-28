@@ -13,6 +13,7 @@ mat-sidenav {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+  padding-right: 24px;
 }
 
 .toolbar-container span {
@@ -24,7 +25,6 @@ mat-sidenav {
 .toolbar-logo {
   height: 50px;
   margin-top: -6px;
-  margin-left: 24px;
   /* position: absolute; */
 }
 

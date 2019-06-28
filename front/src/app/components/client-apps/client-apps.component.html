@@ -1,0 +1,71 @@
+<table mat-table [dataSource]="applications">
+  <ng-container matColumnDef="application">
+    <th mat-header-cell *matHeaderCellDef></th>
+    <td mat-cell *matCellDef="let element" class="app-name"> {{element.application}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="databases">
+    <th mat-header-cell *matHeaderCellDef>
+      <div class="th-container">
+        <mat-icon>memory</mat-icon>
+        <span>Bases de datos</span>
+      </div>
+    </th>
+    <td mat-cell *matCellDef="let element" class="app-number"> {{element.databases}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="sites">
+    <th mat-header-cell *matHeaderCellDef>
+      <div class="th-container">
+        <mat-icon>computer</mat-icon>
+        <span>Sitios</span>
+      </div>
+    </th>
+    <td mat-cell *matCellDef="let element" class="app-number"> {{element.sites}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="services">
+    <th mat-header-cell *matHeaderCellDef>
+      <div class="th-container">
+        <mat-icon>device_hub</mat-icon>
+        <span>Servicios</span>
+      </div>
+    </th>
+    <td mat-cell *matCellDef="let element" class="app-number"> {{element.services}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="servicebus">
+    <th mat-header-cell *matHeaderCellDef>
+      <div class="th-container">
+        <mat-icon>dock</mat-icon>
+        <span>Service bus</span>
+      </div>
+    </th>
+    <td mat-cell *matCellDef="let element" class="app-number"> {{element.servicebus}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="admins">
+    <th mat-header-cell *matHeaderCellDef>
+      <div class="th-container">
+        <mat-icon>supervisor_account</mat-icon>
+        <span>Administradores</span>
+      </div>
+    </th>
+    <td mat-cell *matCellDef="let element" class="app-number"> {{element.administrators}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="actions">
+    <th mat-header-cell *matHeaderCellDef></th>
+    <td mat-cell *matCellDef="let element" class="app-actions">
+      <button mat-icon-button color="primary" matTooltip="Editar" (click)="edit(element)">
+        <mat-icon>edit</mat-icon>
+      </button>
+      <button mat-icon-button color="primary" matTooltip="Eliminar" (click)="delete(element)">
+        <mat-icon>delete</mat-icon>
+      </button>
+    </td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+</table>

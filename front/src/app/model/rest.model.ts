@@ -4,8 +4,17 @@ export class Pagination {
 }
 
 export class Client {
-  _id: Id;
-  name: string;
+  _id: any;
+  applications: ClientApp[];
+}
+
+export class ClientApp {
+  application: string;
+  databases: number;
+  sites: number;
+  services: number;
+  servicebus: number;
+  administrators: number;
 }
 
 export class Application {
@@ -72,6 +81,7 @@ export class Site {
 
 export class Id {
   '$oid': string;
+  'name': string;
 }
 
 export class Datetime {

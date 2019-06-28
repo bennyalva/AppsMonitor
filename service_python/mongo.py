@@ -57,6 +57,61 @@ class MongoManager:
             return res
         return coll.find()
 
+    def get_clients_with_points(self):
+        coll = self.db['points']
+        pipeline = [
+            {
+                '$group': {
+                    '_id': {
+                        'client': '$client',
+                        'application': '$application'
+                    },
+                    'databases': {
+                        '$sum': {
+                            '$size': '$databases'
+                        }
+                    },
+                    'sites': {
+                        '$sum': {
+                            '$size': '$sites'
+                        }
+                    },
+                    'services': {
+                        '$sum': {
+                            '$size': '$services'
+                        }
+                    },
+                    'servicebus': {
+                        '$sum': {
+                            '$size': '$servicebus'
+                        }
+                    },
+                    'administrators': {
+                        '$sum': {
+                            '$size': '$ownerEmail'
+                        }
+                    }
+                }
+            }, {
+                '$group': {
+                    '_id': {
+                        'client': '$_id.client'
+                    },
+                    'applications': {
+                        '$push': {
+                            'application': '$_id.application',
+                            'databases': '$databases',
+                            'sites': '$sites',
+                            'services': '$services',
+                            'servicebus': '$services',
+                            'administrators': '$administrators'
+                        }
+                    }
+                }
+            }
+        ]
+        return coll.aggregate(pipeline)
+
     def update(self, collection, data, id):
         coll = self.db[collection]
         return coll.update_one({'_id': ObjectId(id)}, {'$set': data}).modified_count

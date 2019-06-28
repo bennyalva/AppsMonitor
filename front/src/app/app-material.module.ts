@@ -16,7 +16,8 @@ import {
   MatDialogModule,
   MatInputModule,
   MatDatepickerModule,
-  MatSlideToggleModule
+  MatSlideToggleModule,
+  MatExpansionModule
 } from '@angular/material';
 
 export const MATERIAL_COMPONENTS = [
@@ -36,7 +37,8 @@ export const MATERIAL_COMPONENTS = [
   MatDialogModule,
   MatInputModule,
   MatDatepickerModule,
-  MatSlideToggleModule
+  MatSlideToggleModule,
+  MatExpansionModule
 ];
 
 @NgModule({
