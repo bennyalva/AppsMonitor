@@ -8,9 +8,9 @@ class DevelopmentConfig(Config):
     LISTEN_ADDRESS = '0.0.0.0'
     MONGO_URL = '127.0.0.1'
     EMAIL_HOST = 'smtp.office365.com'
-    EMAIL_PORT = 587
-    EMAIL_USER = 'arquitectura.swd@axity.com'
-    EMAIL_PWD = '4xSoft&2019'
+    EMAIL_PORT = 0
+    EMAIL_USER = ''
+    EMAIL_PWD = ''
 
 class ProductionConfig(Config):
     DEBUG = False
@@ -18,6 +18,6 @@ class ProductionConfig(Config):
     LISTEN_ADDRESS = '0.0.0.0'
     MONGO_URL = 'mongodb'
     EMAIL_HOST = 'smtp.office365.com'
-    EMAIL_PORT = 587
-    EMAIL_USER = 'arquitectura.swd@axity.com'
-    EMAIL_PWD = '4xSoft&2019'
+    EMAIL_PORT = 0
+    EMAIL_USER = ''
+    EMAIL_PWD = ''
