@@ -1,0 +1,41 @@
+div.stats-container {
+  display: flex;
+  flex-direction: column;
+  max-width: 140px;
+  margin: auto;
+}
+
+div.percent {
+  font-size: 32px;
+  font-weight: 300;
+  color: #3b1053;
+  text-align: center;
+}
+
+div.percent>mat-icon {
+  color: #b19fba;
+}
+
+div.type {
+  height: 14px;
+  background: #e6e6e6;
+  border-radius: 6px;
+  font-size: 10px;
+  color: #3b1053;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+div.items {
+  font-size: 18px;
+  font-weight: bold;
+  line-height: 1.2;
+  color: #b3b3b3;
+  text-align: center;
+}
+
+div.items .affected {
+  color: #ef374c;
+}

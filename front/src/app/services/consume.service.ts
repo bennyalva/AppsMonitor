@@ -77,6 +77,10 @@ export class ConsumeService {
     return this._http.get<Response>(`${this.baseUrl}/clients`);
   }
 
+  getClientsRaw(): Observable<Response> {
+    return this._http.get<Response>(`${this.baseUrl}/clients/raw`);
+  }
+
   getClient(id: string): Observable<Response> {
     const params = new HttpParams()
       .set('id', id);

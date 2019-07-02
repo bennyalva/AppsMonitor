@@ -20,6 +20,10 @@ import { PaginatorService } from './services/paginator.service';
 import { RestInterceptor } from './utils/rest.interceptor';
 import { ClientListComponent } from './pages/client-list/client-list.component';
 import { ClientAppsComponent } from './components/client-apps/client-apps.component';
+import { StatsComponent } from './components/stats/stats.component';
+import { TreeComponent } from './components/tree/tree.component';
+import { AppStatusComponent } from './components/app-status/app-status.component';
+import { ClientStatusComponent } from './components/client-status/client-status.component';
 
 @NgModule({
   declarations: [
@@ -30,7 +34,11 @@ import { ClientAppsComponent } from './components/client-apps/client-apps.compon
     AppListComponent,
     DialogFormComponent,
     ClientListComponent,
-    ClientAppsComponent
+    ClientAppsComponent,
+    StatsComponent,
+    TreeComponent,
+    AppStatusComponent,
+    ClientStatusComponent
   ],
   imports: [
     BrowserModule,

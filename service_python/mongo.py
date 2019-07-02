@@ -112,6 +112,19 @@ class MongoManager:
         ]
         return coll.aggregate(pipeline)
 
+    def get_clients(self):
+        coll = self.db['points']
+        pipeline = [
+            {
+                '$group': {
+                    '_id': {
+                        'client': '$client'
+                    }
+                }
+            }
+        ]
+        return coll.aggregate(pipeline)
+
     def update(self, collection, data, id):
         coll = self.db[collection]
         return coll.update_one({'_id': ObjectId(id)}, {'$set': data}).modified_count

@@ -1,0 +1,12 @@
+<div class="list-container">
+  <ul class="main-list">
+    <li *ngFor="let client of clients" class="parent">
+      {{client._id.client}}
+      <ul *ngIf="client.applications.length > 0">
+        <li *ngFor="let app of client.applications" class="child">
+          {{app.application}}
+        </li>
+      </ul>
+    </li>
+  </ul>
+</div>

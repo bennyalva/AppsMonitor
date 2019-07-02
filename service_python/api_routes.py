@@ -89,6 +89,13 @@ def get_clients():
     return create_response(res, 200)
 
 
+@app.route('/clients/raw', methods=['GET'])
+def get_clients_raw():
+    mgo = mongo.MongoManager()
+    res = mgo.get_clients()
+    return create_response(res, 200)
+
+
 @app.route('/clients/<id>', methods=['PUT'])
 def update_client(id):
     mgo = mongo.MongoManager()

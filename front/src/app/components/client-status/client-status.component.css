@@ -1,0 +1,92 @@
+.main-container {
+  max-width: 250px;
+  margin: auto;
+}
+
+.title {
+  font-size: 22px;
+  color: #3b1053;
+  font-weight: 300;
+  margin: 10px 0 10px 0;
+}
+
+.apps-status {
+  font-size: 12px;
+  color: #b3b3b3;
+}
+
+.apps-status>.affected {
+  font-size: 17px;
+  font-weight: bold;
+  color: #ef374c;
+}
+
+.apps-status>.total {
+  font-size: 17px;
+  font-weight: bold;
+  color: #b3b3b3;
+}
+
+.apps-status>.percentage {
+  font-size: 17px;
+  font-weight: bold;
+  color: #35bc38;
+}
+
+mat-card {
+  margin-top: 10px;
+}
+
+.types-row {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.types-row:first-child {
+  margin-bottom: 48.5px;
+}
+
+.item {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.item .separator {
+  margin: 0 10px 0 10px;
+  width: 0;
+  height: 40px;
+  box-shadow: 0 0px 0px 0.2px #b3b3b3;
+}
+
+.item .icon-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
+  border-bottom-right-radius: 20px;
+  border-bottom-left-radius: 20px;
+  width: 40px;
+  height: 40px;
+}
+
+.item .icon-container.ok {
+  background: #cdf9d1;
+}
+
+.item .icon-container>mat-icon {
+  color: #fff;
+}
+
+.item .icon-container.error {
+  background: #f7a9ae;
+}
+
+.item .count {
+  font-size: 22.3px;
+  font-weight: 300;
+  display: flex;
+  align-items: center;
+}
