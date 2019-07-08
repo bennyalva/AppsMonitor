@@ -20,6 +20,7 @@ export class AppComponent implements AfterViewChecked {
       .getGeneralNotificationMessage()
       .subscribe(msg => {
         this._snackBar.open(msg, 'OK', {
+          panelClass: ['snack-bar-custom'],
           duration: 3000
         });
       });

@@ -12,7 +12,7 @@ mat-sidenav {
   height: 40px;
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
+  justify-content: left;
   padding-right: 24px;
 }
 
@@ -20,6 +20,7 @@ mat-sidenav {
   display: flex;
   flex-direction: column;
   justify-content: center;
+  margin-left: 12px;
 }
 
 .toolbar-logo {

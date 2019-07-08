@@ -1,26 +1,58 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-12 title">
+      <h1 class="main-title">Configuración</h1>
+    </div>
+  </div>
+</div>
 <div class="container">
   <div class="row">
-    <div class="col-md-12">
-      <h1>{{ title }}</h1>
+    <div class="col-md-12 subtitle">
+      <h1>{{ client || 'Cliente inválido' }}</h1>
     </div>
   </div>
-  <div class="row" [formGroup]="formApp">
-    <div class="col-md-6">
-      <mat-form-field>
-        <input matInput placeholder="Aplicación" formControlName="application" required>
-      </mat-form-field>
-    </div>
-    <div class="col-md-6">
-      <mat-form-field>
-        <input matInput placeholder="Descripción" formControlName="description" required>
-      </mat-form-field>
-    </div>
-    <div class="col-md-6">
-      <mat-slide-toggle formControlName="notifications" labelPosition="before" color="primary">Notificaciones</mat-slide-toggle>
+</div>
+<div class="container" *ngIf="client" [formGroup]="formApp">
+  <div class="row">
+    <div class="col-md-12 app-header">
+      <div class="app-name" *ngIf="appName && !editName">
+        <h1>{{ appName }}</h1>
+        <button mat-icon-button color="primary" (click)="editNameClick()">
+          <mat-icon>edit</mat-icon>
+        </button>
+      </div>
+      <div class="app-input" *ngIf="!appName || editName">
+        <mat-form-field>
+          <input matInput formControlName="application" placeholder="Nombre de la aplicación">
+        </mat-form-field>
+      </div>
+      <button mat-raised-button color="accent" [disabled]="formApp.invalid" (click)="saveApp()" class="save-button">
+        Guardar
+      </button>
     </div>
   </div>
   <div class="row">
-    <div class="col-md-12">
+    <div class="col-md-6">
+      <mat-slide-toggle formControlName="notifications" labelPosition="before" color="primary">Notificaciones
+      </mat-slide-toggle>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12 sections">
+      <mat-accordion>
+        <mat-expansion-panel color="accent" *ngFor="let section of sections">
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              {{section.title}}
+              <span [matBadge]="getItems(section).length" matBadgeOverlap="false" matBadgeColor="accent"></span>
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+          <app-section-table [items]="getItems(section)" (addItem)="addElement(section.type, $event)"
+            (deleteItem)="deleteElement(section.type, $event)">
+          </app-section-table>
+        </mat-expansion-panel>
+      </mat-accordion>
+      <!--
       <h4>Sitios</h4>
       <mat-list>
         <button mat-icon-button class="button-add" color="primary" matTooltip="Agregar"
@@ -143,11 +175,6 @@
         </mat-list-item>
         <mat-divider></mat-divider>
       </mat-list>
+    </div> -->
     </div>
   </div>
-  <div class="row">
-    <div class="col-md-12 text-center mt mb">
-      <button mat-raised-button color="primary" [disabled]="formApp.invalid" (click)="saveApp()">Guardar</button>
-    </div>
-  </div>
-</div>

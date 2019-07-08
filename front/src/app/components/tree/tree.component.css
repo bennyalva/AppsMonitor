@@ -1,24 +1,29 @@
-.list-container {
+.tree-invisible {
+  display: none;
+}
+
+.mat-tree{
+  background: #f4eff0;
+}
+
+.tree ul,
+.tree li {
+  margin-top: 0;
+  margin-bottom: 0;
+  list-style-type: none;
   color: #3b1053;
-  background: #f4eff0;
-  height: 100%;
-  overflow-y: auto;
-  margin-left: -15px;
-  margin-right: -15px;
 }
 
-.list-container ul.main-list {
-  background: #f4eff0;
+.mat-tree-node {
+  font-size: 20px;
+  font-weight: 300;
+  color: #3b1053;
 }
 
-ul {
-  list-style: none;
+.node-app .mat-tree-node {
+  font-size: 14px !important;
 }
 
-li.parent {
-  font-size: 22px;
-}
-
-li.child {
-  font-size: 14px;
+.node-cat .mat-tree-node {
+  font-size: 14px !important;
 }

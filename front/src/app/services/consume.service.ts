@@ -19,21 +19,23 @@ export class ConsumeService {
 
   constructor(private _http: HttpClient) { }
 
-  getApplications(pagination?: Pagination): Observable<Response> {
+  getApplications(pagination?: Pagination, client?: string): Observable<Response> {
 
     if (pagination) {
       const params = new HttpParams()
         .set('page', pagination.page.toString())
-        .set('items', pagination.items.toString());
+        .set('items', pagination.items.toString())
+        .set('client', client);
       return this._http.get<Response>(`${this.baseUrl}/points`, { params: params });
     }
 
     return this._http.get<Response>(`${this.baseUrl}/points`);
   }
 
-  getApplication(id: string): Observable<Response> {
+  getApplication(client: string, application: string): Observable<Response> {
     const params = new HttpParams()
-      .set('id', id);
+      .set('client', client)
+      .set('application', application);
     return this._http.get<Response>(`${this.baseUrl}/points`, { params: params });
   }
 
@@ -47,8 +49,11 @@ export class ConsumeService {
     }
   }
 
-  deleteApplication(id: string): Observable<Response> {
-    return this._http.delete<Response>(`${this.baseUrl}/points/${id}`);
+  deleteApplication(client: string, application: string): Observable<Response> {
+    const params = new HttpParams()
+      .set('client', client)
+      .set('application', application);
+    return this._http.delete<Response>(`${this.baseUrl}/points`, { params: params });
   }
 
   getLatestEvents(application: string, type: string): Observable<Response> {

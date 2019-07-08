@@ -27,7 +27,6 @@ export class ClientListComponent implements OnInit {
     private _router: Router, private _dialog: MatDialog) { }
 
   ngOnInit() {
-    // this.setupPaginator();
     this._consumeService.getClients().subscribe(x => {
       this.clients = x.data;
     });

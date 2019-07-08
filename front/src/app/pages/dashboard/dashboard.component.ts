@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 
 import { Application, Client } from '../../model/rest.model';
 import { ConsumeService } from '../../services/consume.service';
 import { DataService } from '../../services/data.service';
 import { StatType } from 'src/app/components/stats/stats.component';
+import { TreeComponent } from 'src/app/components/tree/tree.component';
 
 @Component({
   selector: 'app-dashboard',
@@ -11,6 +12,8 @@ import { StatType } from 'src/app/components/stats/stats.component';
   styleUrls: ['./dashboard.component.css']
 })
 export class DashboardComponent implements OnInit {
+  @ViewChild(TreeComponent) treeComponent: TreeComponent;
+
   types: StatType[] = [
     { name: 'sites', title: 'Sitios', icon: 'dns', affected: 0, total: 0 },
     { name: 'databases', title: 'Bases de datos', icon: 'dns', affected: 0, total: 0 },
@@ -34,6 +37,7 @@ export class DashboardComponent implements OnInit {
     this._dataService.setIsLoadingEvent(true);
     this._consumeService.getClients().subscribe(x => {
       this.clients = x.data;
+      this.treeComponent.clients.next(x.data);
       if (this.clients.length > 0) {
         this.selectedClient = this.clients[0];
       }

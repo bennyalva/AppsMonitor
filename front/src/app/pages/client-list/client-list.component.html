@@ -1,10 +1,7 @@
 <div class="container-fluid">
   <div class="row">
     <div class="col-md-12 title">
-      <h1 class="main-title">Clientes</h1>
-      <!-- <button mat-mini-fab color="primary" matTooltip="Agregar" (click)="add()">
-        <mat-icon>add</mat-icon>
-      </button> -->
+      <h1 class="main-title">Configuración</h1>
     </div>
   </div>
 </div>
@@ -18,7 +15,7 @@
               {{client._id.client}}
             </mat-panel-title>
           </mat-expansion-panel-header>
-          <app-client-apps [applications]="client.applications"></app-client-apps>
+          <app-client-apps [client]="client" [applications]="client.applications"></app-client-apps>
         </mat-expansion-panel>
       </mat-accordion>
     </div>

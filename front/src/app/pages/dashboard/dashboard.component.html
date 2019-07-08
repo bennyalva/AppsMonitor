@@ -4,27 +4,20 @@
       <app-stats [type]="type"></app-stats>
     </div>
     <div class="col-md-2 col-sm-4 col-xs-6">
-      <div class="separator d-sm-none d-md-block"></div>
-      <div class="stats-alerts">
-        <div>{{statsAlerts}}</div>
-        <span>Alertas</span>
-      </div>
+      <app-stats-circle [title]="'Alertas'" [count]="0"></app-stats-circle>
     </div>
     <div class="col-md-2 col-sm-4 col-xs-6">
-      <div class="stats-alerts">
-        <div>{{statsApps}}</div>
-        <span>Apps afectadas</span>
-      </div>
+      <app-stats-circle [title]="'Apps afectadas'" [count]="0"></app-stats-circle>
     </div>
   </div>
   <div class="row">
     <h1 class="main-title">Clientes</h1>
   </div>
   <div class="row">
-    <div class="col-md-2">
-      <app-tree [clients]="clients"></app-tree>
+    <div class="col-lg-2 col-md-3 col-sm-12 tree-container">
+      <app-tree></app-tree>
     </div>
-    <div class="col-md-10">
+    <div class="offset-lg-2 offset-md-3 col-md-9 col-lg-10 cards-container">
       <div class="row">
         <div class="col-md-4" *ngFor="let client of clients">
           <app-client-status [client]="client"></app-client-status>

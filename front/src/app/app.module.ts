@@ -11,7 +11,6 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { DialogFormComponent } from './components/dialog-form/dialog-form.component';
 import { SystemChartComponent } from './components/system-chart/system-chart.component';
-import { AppListComponent } from './pages/app-list/app-list.component';
 import { ApplicationComponent } from './pages/application/application.component';
 import { DashboardComponent } from './pages/dashboard/dashboard.component';
 import { ConsumeService } from './services/consume.service';
@@ -24,6 +23,9 @@ import { StatsComponent } from './components/stats/stats.component';
 import { TreeComponent } from './components/tree/tree.component';
 import { AppStatusComponent } from './components/app-status/app-status.component';
 import { ClientStatusComponent } from './components/client-status/client-status.component';
+import { StatsCircleComponent } from './components/stats-circle/stats-circle.component';
+import { SectionTableComponent } from './components/section-table/section-table.component';
+import { ConfirmDialogComponent } from './components/confirm-dialog/confirm-dialog.component';
 
 @NgModule({
   declarations: [
@@ -31,14 +33,16 @@ import { ClientStatusComponent } from './components/client-status/client-status.
     DashboardComponent,
     SystemChartComponent,
     ApplicationComponent,
-    AppListComponent,
     DialogFormComponent,
     ClientListComponent,
     ClientAppsComponent,
     StatsComponent,
     TreeComponent,
     AppStatusComponent,
-    ClientStatusComponent
+    ClientStatusComponent,
+    StatsCircleComponent,
+    SectionTableComponent,
+    ConfirmDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -64,7 +68,8 @@ import { ClientStatusComponent } from './components/client-status/client-status.
   ],
   bootstrap: [AppComponent],
   entryComponents: [
-    DialogFormComponent
+    DialogFormComponent,
+    ConfirmDialogComponent
   ]
 })
 export class AppModule { }
