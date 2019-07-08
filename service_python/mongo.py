@@ -57,6 +57,10 @@ class MongoManager:
             return res
         return coll.find()
 
+    def get_single(self, collection, query):
+        coll = self.db[collection]
+        return coll.find_one(query)
+
     def get_clients_with_points(self):
         coll = self.db['points']
         pipeline = [
@@ -138,6 +142,10 @@ class MongoManager:
     def delete(self, collection, id):
         coll = self.db[collection]
         return coll.delete_one({'_id': ObjectId(id)}).deleted_count
+
+    def delete(self, collection, query):
+        coll = self.db[collection]
+        return coll.delete_one(query).deleted_count
 
     def isBlank(self, myString):
         return not (myString and myString.strip())

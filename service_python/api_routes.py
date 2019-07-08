@@ -41,8 +41,10 @@ def insert_point():
 @app.route('/points', methods=['GET'])
 def get_points():
     mgo = mongo.MongoManager()
-    res = mgo.get('points', {}, request.args.get('id'),
-                  request.args.get('page'), request.args.get('items'))
+    res = mgo.get_single('points', {
+        'client': request.args.get('client'),
+        'application': request.args.get('application')
+    })
     return create_response(res, 200)
 
 
@@ -53,10 +55,13 @@ def update_point(id):
     return create_response(res, 200)
 
 
-@app.route('/points/<id>', methods=['DELETE'])
-def delete_point(id):
+@app.route('/points', methods=['DELETE'])
+def delete_point():
     mgo = mongo.MongoManager()
-    res = mgo.delete('points', id)
+    res = mgo.delete('points', {
+        'client': request.args.get('client'),
+        'application': request.args.get('application')
+    })
     return create_response(res, 200)
 
 
