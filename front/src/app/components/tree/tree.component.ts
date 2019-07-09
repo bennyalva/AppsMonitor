@@ -45,13 +45,11 @@ export class TreeComponent implements OnInit {
             })
           };
         });
-        console.log(this.dataSource.data);
       }
     });
   }
 
   getNodeClass(node: Node) {
-    console.log(node);
     switch (node.level) {
       case 1:
         return 'node-app';
@@ -64,7 +62,7 @@ export class TreeComponent implements OnInit {
 
   getNodeTooltip(node: Node) {
     if (node.level === 2) {
-      return 'ERROR';
+      return 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat.Duis autem vel eum iriure dolor in hendrerit in';
     }
   }
 }

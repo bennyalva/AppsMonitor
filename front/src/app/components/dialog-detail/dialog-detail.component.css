@@ -1,0 +1,64 @@
+mat-card-title {
+  background: #e6e6e6;
+  color: #3b1053;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 24px;
+  font-weight: 300;
+  margin-top: -16px !important;
+  margin-right: -16px !important;
+  margin-left: -16px !important;
+  padding: 10px 10px 10px 24px !important;
+}
+
+mat-card-title button {
+  color: #999999;
+}
+
+div.header {
+  display: flex;
+  justify-content: left;
+  align-items: center;
+}
+
+div.header mat-icon {
+  color: #3b1053;
+}
+
+div.header span.section-title {
+  font-size: 16px;
+  font-weight: 300;
+  color: #3b1053;
+  margin-right: 8px;
+}
+
+.separator {
+  height: 0;
+  box-shadow: inset 0px 0.2px 0px 0.2px #3b1053;
+}
+
+.item-name {
+  font-size: 11px;
+  font-weight: bold;
+  color: #3b1053;
+}
+
+.item-details {
+  display: flex;
+  justify-content: space-between;
+}
+
+.item-details span {
+  font-size: 9px;
+  color: #666666;
+}
+
+.item-error {
+  font-size: 9px;
+  color: #666666;
+}
+
+div[class^="col"] {
+  margin: 5px 0 5px 0;
+}

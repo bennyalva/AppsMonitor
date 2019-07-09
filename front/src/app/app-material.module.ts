@@ -19,7 +19,8 @@ import {
   MatSlideToggleModule,
   MatExpansionModule,
   MatTreeModule,
-  MatBadgeModule
+  MatBadgeModule,
+  MatRippleModule
 } from '@angular/material';
 
 export const MATERIAL_COMPONENTS = [
@@ -42,7 +43,8 @@ export const MATERIAL_COMPONENTS = [
   MatSlideToggleModule,
   MatExpansionModule,
   MatTreeModule,
-  MatBadgeModule
+  MatBadgeModule,
+  MatRippleModule
 ];
 
 @NgModule({

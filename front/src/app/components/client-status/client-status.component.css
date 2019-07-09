@@ -35,6 +35,7 @@
 
 mat-card {
   margin-top: 10px;
+  cursor: pointer;
 }
 
 .types-row {

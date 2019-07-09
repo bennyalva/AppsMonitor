@@ -26,6 +26,7 @@ import { ClientStatusComponent } from './components/client-status/client-status.
 import { StatsCircleComponent } from './components/stats-circle/stats-circle.component';
 import { SectionTableComponent } from './components/section-table/section-table.component';
 import { ConfirmDialogComponent } from './components/confirm-dialog/confirm-dialog.component';
+import { DialogDetailComponent } from './components/dialog-detail/dialog-detail.component';
 
 @NgModule({
   declarations: [
@@ -42,7 +43,8 @@ import { ConfirmDialogComponent } from './components/confirm-dialog/confirm-dial
     ClientStatusComponent,
     StatsCircleComponent,
     SectionTableComponent,
-    ConfirmDialogComponent
+    ConfirmDialogComponent,
+    DialogDetailComponent
   ],
   imports: [
     BrowserModule,
@@ -69,7 +71,8 @@ import { ConfirmDialogComponent } from './components/confirm-dialog/confirm-dial
   bootstrap: [AppComponent],
   entryComponents: [
     DialogFormComponent,
-    ConfirmDialogComponent
+    ConfirmDialogComponent,
+    DialogDetailComponent
   ]
 })
 export class AppModule { }

@@ -1,0 +1,70 @@
+<mat-card>
+  <mat-card-title>
+    {{ application.application }}
+    <button mat-icon-button [disableRipple]="true" tabindex="-1" (click)="close()">
+      <mat-icon>close</mat-icon>
+    </button>
+  </mat-card-title>
+  <mat-dialog-content>
+    <mat-card-content>
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="header">
+              <mat-icon>dns</mat-icon>
+              <span class="section-title">Sitios</span>
+              <span [matBadge]="1" matBadgeOverlap="false" matBadgeColor="primary"></span>
+            </div>
+          </div>
+          <div class="col-md-12 separator">
+          </div>
+          <div class="col-md-12 item-name">
+            TEST
+          </div>
+          <div class="col-md-12 item-details">
+            <span>{{ 'Tipo: Oracle' }}</span>
+            <span>{{ 'IP: 127.0.0.1' }}</span>
+            <span>{{ 'Base de datos: DBTest' }}</span>
+            <span>{{ 'Puerto: 1521' }}</span>
+          </div>
+          <div class="col-md-12 item-error">
+            Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet
+            dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper
+            suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in hendrerit in
+            vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et
+            accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait
+            nulla facilisi.
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12">
+            <div class="header">
+              <mat-icon>dns</mat-icon>
+              <span class="section-title">Bases de datos</span>
+              <span [matBadge]="2" matBadgeOverlap="false" matBadgeColor="primary"></span>
+            </div>
+          </div>
+          <div class="col-md-12 separator">
+          </div>
+          <div class="col-md-12 item-name">
+            TEST DB
+          </div>
+          <div class="col-md-12 item-details">
+            <span>{{ 'Tipo: Oracle' }}</span>
+            <span>{{ 'IP: 127.0.0.1' }}</span>
+            <span>{{ 'Base de datos: DBTest' }}</span>
+            <span>{{ 'Puerto: 1521' }}</span>
+          </div>
+          <div class="col-md-12 item-error">
+            Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet
+            dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper
+            suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in hendrerit in
+            vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et
+            accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait
+            nulla facilisi.
+          </div>
+        </div>
+      </div>
+    </mat-card-content>
+  </mat-dialog-content>
+</mat-card>
