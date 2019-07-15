@@ -90,7 +90,22 @@ def insert_client():
 @app.route('/clients', methods=['GET'])
 def get_clients():
     mgo = mongo.MongoManager()
+    res = mgo.get('clients', {}, request.args.get('id'),
+                  request.args.get('page'), request.args.get('items'))
+    return create_response(res, 200)
+
+
+@app.route('/clients/apps', methods=['GET'])
+def get_clients_apps():
+    mgo = mongo.MongoManager()
     res = mgo.get_clients_with_points()
+    return create_response(res, 200)
+
+
+@app.route('/clients/events', methods=['GET'])
+def get_clients_apps_events():
+    mgo = mongo.MongoManager()
+    res = mgo.get_clients_with_points_and_events()
     return create_response(res, 200)
 
 

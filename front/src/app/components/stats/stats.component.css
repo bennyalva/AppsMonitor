@@ -39,3 +39,7 @@ div.items {
 div.items .affected {
   color: #ef374c;
 }
+
+div.items .ok {
+  color: #35bc38;
+}

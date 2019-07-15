@@ -23,4 +23,8 @@ export class DialogDetailComponent implements OnInit {
   close() {
     this._dialogRef.close();
   }
+
+  getSites() {
+    // return this.client.applications.map(x => x.sites.filter(y => y.))
+  }
 }

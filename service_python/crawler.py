@@ -32,8 +32,9 @@ class Crawler:
             self.alm_analizer.analize(
                 point, 'sites', site['name'], result['msg'], result['status'])
             print('webscrapping_to_response:', result)
-            self.persist_event(point['client'], point['application'],
-                               'sites', site['name'], result['msg'], result['status'])
+            if result['status'] == False:
+                self.persist_event(point['client'], point['_id'],
+                                   'sites', site['name'], result['msg'], result['status'])
 
     def port_open(self, point, services):
         for service in services:
@@ -43,8 +44,9 @@ class Crawler:
             self.alm_analizer.analize(
                 point, 'services', service['name'], result, result)
             print('connecting_to_port_response:', result)
-            self.persist_event(point['client'], point['application'],
-                               'services', service['name'], result['msg'], result['status'])
+            if result['status'] == False:
+                self.persist_event(point['client'], point['_id'],
+                                'services', service['name'], result['msg'], result['status'])
 
     def database_status(self, point, databases):
         for database in databases:
@@ -55,13 +57,13 @@ class Crawler:
             self.alm_analizer.analize(
                 point, 'databases', database['name'], result['msg'], result['status'])
             print('verifying_dbconnection_to_response: ', result)
-            self.persist_event(point['client'], point['application'],
-                               'databases', database['name'], result['msg'], result['status'])
+            if result['status'] == False:
+                self.persist_event(point['client'], point['_id'],
+                                'databases', database['name'], result['msg'], result['status'])
 
     def persist_event(self, client, application, type, name, status_response, status):
         event = {
             'datetime': datetime.now(),
-            'client': client,
             'application': application,
             'type': type,
             'name': name,

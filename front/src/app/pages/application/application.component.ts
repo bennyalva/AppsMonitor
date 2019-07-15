@@ -12,17 +12,9 @@ import {
 } from 'src/app/components/dialog-form/dialog-form.component';
 import { ValidateIPAddress, ValidateNumbers, ValidateURL } from 'src/app/utils/custom.validators';
 
-import { Application, Catalog, Database, Service, ServiceBus, Site } from '../../model/rest.model';
+import { Application, Catalog, Database, Service, ServiceBus, Site, ElementType } from '../../model/rest.model';
 import { ConsumeService } from '../../services/consume.service';
 import { DataService } from '../../services/data.service';
-
-export enum ElementType {
-  site = 1,
-  database = 2,
-  service = 3,
-  servicebus = 4,
-  owners = 5
-}
 
 @Component({
   selector: 'app-application',
@@ -112,6 +104,10 @@ export class ApplicationComponent implements OnInit {
     }
   }
 
+  back() {
+    this._router.navigate(['config']);
+  }
+
   saveApp() {
     this._dataService.setIsLoadingEvent(true);
     this._consumeService.saveApplication(this.application).subscribe(res => {
@@ -128,7 +124,7 @@ export class ApplicationComponent implements OnInit {
     });
   }
 
-  editNameClick() {
+  editNameClick() {
     this.editName = true;
   }
 

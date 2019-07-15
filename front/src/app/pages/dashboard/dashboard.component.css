@@ -1,3 +1,7 @@
+[hidden] {
+  visibility: hidden;
+}
+
 .top-section {
   margin-top: 15px;
   padding-bottom: 28px;
@@ -40,7 +44,6 @@ h1.main-title {
     bottom: unset;
     height: 192px !important;
   }
-
   .cards-container {
     position: relative;
     top: unset;

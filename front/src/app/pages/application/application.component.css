@@ -49,7 +49,7 @@ mat-list .item {
   width: 144px;
 }
 
-mat-panel-title {
+mat-panel-title, mat-slide-toggle {
   font-size: 20px;
   font-weight: 300;
   color: #3b1053;
@@ -63,4 +63,8 @@ mat-panel-title {
 .sections {
   margin-top: 24px;
   margin-bottom: 24px;
+}
+
+.back-container {
+  margin-top: -25px;
 }

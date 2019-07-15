@@ -1,6 +1,6 @@
 <mat-card>
   <mat-card-title>
-    {{ application.application }}
+    {{ client._id.client }}
     <button mat-icon-button [disableRipple]="true" tabindex="-1" (click)="close()">
       <mat-icon>close</mat-icon>
     </button>
@@ -11,7 +11,7 @@
         <div class="row">
           <div class="col-md-12">
             <div class="header">
-              <mat-icon>dns</mat-icon>
+              <mat-icon svgIcon="site"></mat-icon>
               <span class="section-title">Sitios</span>
               <span [matBadge]="1" matBadgeOverlap="false" matBadgeColor="primary"></span>
             </div>

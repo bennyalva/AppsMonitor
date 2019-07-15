@@ -7,6 +7,8 @@ import { Subject } from 'rxjs';
 interface Node {
   name: string;
   level: number;
+  tooltip?: string;
+  icon?: string;
   children?: Node[];
 }
 
@@ -29,24 +31,43 @@ export class TreeComponent implements OnInit {
   ngOnInit() {
     this.clients.subscribe(cli => {
       if (cli) {
-        this.dataSource.data = cli.map(x => {
+        this.dataSource.data = cli.filter(x => x.applications.map(y => y.events.length).reduce((a, b) => a + b, 0) > 0).map(x => {
           return <Node>{
             name: x._id.client,
             level: 0,
             children: x.applications.map(y => {
               return <Node>{
-                name: y.application,
+                name: y.application.application,
                 level: 1,
-                children: [
-                  { name: 'Sitio', level: 2 },
-                  { name: 'Base de datos', level: 2 },
-                ]
+                children: y.events.map(e => {
+                  return {
+                    name: e.name,
+                    tooltip: e.status_response,
+                    icon: this.getIconForType(e.type),
+                    level: 2
+                  };
+                })
               };
             })
           };
         });
       }
     });
+  }
+
+  getIconForType(type): string {
+    switch (type) {
+      case 'sites':
+        return 'site';
+      case 'databases':
+        return 'database';
+      case 'services':
+        return 'service';
+      case 'servicebus':
+        return 'servicebus';
+      default:
+        return '';
+    }
   }
 
   getNodeClass(node: Node) {
@@ -57,12 +78,6 @@ export class TreeComponent implements OnInit {
         return 'node-cat';
       default:
         return '';
-    }
-  }
-
-  getNodeTooltip(node: Node) {
-    if (node.level === 2) {
-      return 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat.Duis autem vel eum iriure dolor in hendrerit in';
     }
   }
 }

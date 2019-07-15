@@ -13,9 +13,9 @@
 
 <mat-tree [dataSource]="dataSource" [treeControl]="treeControl" class="tree">
   <mat-tree-node *matTreeNodeDef="let node" matTreeNodeToggle>
-    <li class="mat-tree-node" [matTooltip]="getNodeTooltip(node)" matTooltipPosition="right">
+    <li class="mat-tree-node" [matTooltip]="node.tooltip" matTooltipPosition="right">
       <button mat-icon-button disabled></button>
-      <mat-icon>dns</mat-icon>
+      <mat-icon [svgIcon]="node.icon"></mat-icon>
       {{node.name}}
     </li>
   </mat-tree-node>

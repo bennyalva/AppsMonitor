@@ -70,8 +70,15 @@ export class ConsumeService {
     return this._http.get<Response>(`${this.baseUrl}/catalogs`);
   }
 
-  getClients(pagination?: Pagination): Observable<Response> {
+  getClientsApps(): Observable<Response> {
+    return this._http.get<Response>(`${this.baseUrl}/clients/apps`);
+  }
 
+  getClientsAppsEvents(): Observable<Response> {
+    return this._http.get<Response>(`${this.baseUrl}/clients/events`);
+  }
+
+  getClients(pagination?: Pagination): Observable<Response> {
     if (pagination) {
       const params = new HttpParams()
         .set('page', pagination.page.toString())

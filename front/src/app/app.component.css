@@ -36,3 +36,7 @@ mat-sidenav {
 .hand-cursor {
   cursor: pointer;
 }
+
+.menu span {
+  color: #3b1053;
+}

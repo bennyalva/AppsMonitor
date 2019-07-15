@@ -1,43 +1,45 @@
 <div class="main-container">
   <h3 class="title">{{client._id.client}}</h3>
   <div class="apps-status">
-    Apps afectadas: <span class="affected">0</span><span class="total"> / 0</span>
+    Apps afectadas: <span [class]="affected > 0 ? 'affected' : 'ok'">{{affected}}</span><span class="total"> /
+      {{total}}</span>
   </div>
   <div class="apps-status">
-    Disponibilidad: <span class="percentage">100%</span>
+    Disponibilidad: <span
+      [class]="getPercentage() < 100 ? 'percentage error' : 'percentage ok'">{{getPercentage() + '%'}}</span>
   </div>
   <mat-card (click)="detail()">
     <mat-card-content>
       <div class="types-row">
         <div class="item">
-          <div class="icon-container error">
-            <mat-icon>dns</mat-icon>
+          <div [class]="getCountByType('site') > 0 ? 'icon-container error' : 'icon-container ok'">
+            <mat-icon svgIcon="site"></mat-icon>
           </div>
           <span class="separator"></span>
-          <span class="count">0</span>
+          <span class="count">{{getCountByType('site')}}</span>
         </div>
         <div class="item">
-          <div class="icon-container ok">
-            <mat-icon>dns</mat-icon>
+          <div [class]="getCountByType('database') > 0 ? 'icon-container error' : 'icon-container ok'">
+            <mat-icon svgIcon="database"></mat-icon>
           </div>
           <span class="separator"></span>
-          <span class="count">0</span>
+          <span class="count">{{getCountByType('database')}}</span>
         </div>
       </div>
       <div class="types-row">
         <div class="item">
-          <div class="icon-container error">
-            <mat-icon>dns</mat-icon>
+          <div [class]="getCountByType('service') > 0 ? 'icon-container error' : 'icon-container ok'">
+            <mat-icon svgIcon="service"></mat-icon>
           </div>
           <span class="separator"></span>
-          <span class="count">0</span>
+          <span class="count">{{getCountByType('service')}}</span>
         </div>
         <div class="item">
-          <div class="icon-container ok">
-            <mat-icon>dns</mat-icon>
+          <div [class]="getCountByType('servicebus') > 0 ? 'icon-container error' : 'icon-container ok'">
+            <mat-icon svgIcon="servicebus"></mat-icon>
           </div>
           <span class="separator"></span>
-          <span class="count">0</span>
+          <span class="count">{{getCountByType('servicebus')}}</span>
         </div>
       </div>
     </mat-card-content>

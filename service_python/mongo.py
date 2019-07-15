@@ -1,6 +1,6 @@
 from pymongo import MongoClient
 from bson.objectid import ObjectId
-from datetime import datetime
+from datetime import datetime, timedelta
 import dateutil.parser
 import config
 
@@ -114,6 +114,159 @@ class MongoManager:
                 }
             }
         ]
+        return coll.aggregate(pipeline)
+
+    def get_clients_with_points_and_events(self):
+        coll = self.db['points']
+        pipeline = [
+            {
+                '$group': {
+                    '_id': {
+                        'client': '$client',
+                        'application': '$application',
+                        'applicationId': '$_id'
+                    },
+                    'databases': {
+                        '$addToSet': {
+                            '$mergeObjects': '$databases'
+                        }
+                    },
+                    'sites': {
+                        '$addToSet': {
+                            '$mergeObjects': '$sites'
+                        }
+                    },
+                    'services': {
+                        '$addToSet': {
+                            '$mergeObjects': '$services'
+                        }
+                    },
+                    'servicebus': {
+                        '$addToSet': {
+                            '$mergeObjects': '$servicebus'
+                        }
+                    },
+                    'administrators': {
+                        '$addToSet': {
+                            '$mergeObjects': '$ownerEmail'
+                        }
+                    }
+                }
+            }, {
+                '$project': {
+                    '_id': '$_id',
+                    'databases': {
+                        '$filter': {
+                            'input': '$databases',
+                            'as': 'item',
+                            'cond': {
+                                '$gt': [
+                                    '$$item', {}
+                                ]
+                            }
+                        }
+                    },
+                    'sites': {
+                        '$filter': {
+                            'input': '$sites',
+                            'as': 'item',
+                            'cond': {
+                                '$gt': [
+                                    '$$item', {}
+                                ]
+                            }
+                        }
+                    },
+                    'services': {
+                        '$filter': {
+                            'input': '$services',
+                            'as': 'item',
+                            'cond': {
+                                '$gt': [
+                                    '$$item', {}
+                                ]
+                            }
+                        }
+                    },
+                    'servicebus': {
+                        '$filter': {
+                            'input': '$servicebus',
+                            'as': 'item',
+                            'cond': {
+                                '$gt': [
+                                    '$$item', {}
+                                ]
+                            }
+                        }
+                    }
+                }
+            }, {
+                '$lookup': {
+                    'from': 'events',
+                    'localField': '_id.applicationId',
+                    'foreignField': 'application',
+                    'as': 'events'
+                }
+            }, {
+                '$group': {
+                    '_id': {
+                        'client': '$_id.client'
+                    },
+                    'applications': {
+                        '$push': {
+                            'application': {
+                                'application': '$_id.application',
+                                'applicationId': '$_id.applicationId'
+                            },
+                            'databases': '$databases',
+                            'sites': '$sites',
+                            'services': '$services',
+                            'servicebus': '$services',
+                            'administrators': '$administrators',
+                            'events': {
+                                '$filter': {
+                                    'input': '$events',
+                                    'as': 'evt',
+                                    'cond': {
+                                        '$gt': [
+                                            '$$evt.datetime', datetime.now() - timedelta(hours=24)
+                                        ]
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }, {
+                '$project': {
+                    '_id': '$_id',
+                    'applications': {
+                        '$filter': {
+                            'input': '$applications',
+                            'as': 'app',
+                            'cond': {
+                                '$gt': [
+                                    {
+                                        '$size': '$$app.events'
+                                    }, 0
+                                ]
+                            }
+                        }
+                    }
+                }
+            }, {
+                '$match': {
+                    '$expr': {
+                        '$gt': [
+                            {
+                                '$size': '$applications'
+                            }, 0
+                        ]
+                    }
+                }
+            }
+        ]
+        # '$$evt.datetime', datetime.now() - timedelta(hours=24)
         return coll.aggregate(pipeline)
 
     def get_clients(self):

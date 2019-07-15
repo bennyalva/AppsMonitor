@@ -1,13 +1,13 @@
-<div class="container-fluid">
+<div class="container-fluid" [hidden]="isLoading">
   <div class="row top-section">
     <div class="col-md-2 col-sm-4 col-xs-6" *ngFor="let type of types">
       <app-stats [type]="type"></app-stats>
     </div>
     <div class="col-md-2 col-sm-4 col-xs-6">
-      <app-stats-circle [title]="'Alertas'" [count]="0"></app-stats-circle>
+      <app-stats-circle [title]="'Alertas'" [count]="statsAlerts"></app-stats-circle>
     </div>
     <div class="col-md-2 col-sm-4 col-xs-6">
-      <app-stats-circle [title]="'Apps afectadas'" [count]="0"></app-stats-circle>
+      <app-stats-circle [title]="'Apps afectadas'" [count]="statsApps"></app-stats-circle>
     </div>
   </div>
   <div class="row">

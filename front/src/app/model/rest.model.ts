@@ -9,12 +9,13 @@ export class Client {
 }
 
 export class ClientApp {
-  application: string;
-  databases: number;
-  sites: number;
-  services: number;
-  servicebus: number;
-  administrators: number;
+  application: Application;
+  databases: Database[];
+  sites: Site[];
+  services: Service[];
+  servicebus: ServiceBus[];
+  administrators: string[];
+  events: AppEvent[];
 }
 
 export class Application {
@@ -88,9 +89,27 @@ export class Datetime {
   '$date': number;
 }
 
+export class AppEvent {
+  _id: Id;
+  application: Id;
+  datetime: Datetime;
+  name: string;
+  status: boolean;
+  status_response: string;
+  type: string;
+}
+
 export class Catalog {
   _id: Id;
   type: string;
   name: string;
-  value;
+  value: any;
+}
+
+export enum ElementType {
+  site = 1,
+  database = 2,
+  service = 3,
+  servicebus = 4,
+  owners = 5
 }

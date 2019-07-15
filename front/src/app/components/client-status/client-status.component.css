@@ -21,6 +21,12 @@
   color: #ef374c;
 }
 
+.apps-status>.ok {
+  font-size: 17px;
+  font-weight: bold;
+  color: #35bc38;
+}
+
 .apps-status>.total {
   font-size: 17px;
   font-weight: bold;
@@ -30,6 +36,14 @@
 .apps-status>.percentage {
   font-size: 17px;
   font-weight: bold;
+  color: #35bc38;
+}
+
+.apps-status>.percentage.error {
+  color: #ef374c;
+}
+
+.apps-status>.percentage.ok {
   color: #35bc38;
 }
 
@@ -78,7 +92,7 @@ mat-card {
 }
 
 .item .icon-container>mat-icon {
-  color: #fff;
+  color: #fff !important;
 }
 
 .item .icon-container.error {
