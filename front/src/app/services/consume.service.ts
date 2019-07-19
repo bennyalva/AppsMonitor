@@ -56,6 +56,26 @@ export class ConsumeService {
     return this._http.delete<Response>(`${this.baseUrl}/points`, { params: params });
   }
 
+  getStatsByType(type: string): Observable<Response> {
+    return this._http.get<Response>(`${this.baseUrl}/dashboard/stats/${type}`);
+  }
+
+  getTotalAlerts(): Observable<Response> {
+    return this._http.get<Response>(`${this.baseUrl}/dashboard/stats/alerts`);
+  }
+
+  getAffectedApps(): Observable<Response> {
+    return this._http.get<Response>(`${this.baseUrl}/dashboard/stats/affected-apps`);
+  }
+
+  getAffectedClients(): Observable<Response> {
+    return this._http.get<Response>(`${this.baseUrl}/dashboard/stats/affected-clients`);
+  }
+
+  getClientAffectedTypes(): Observable<Response> {
+    return this._http.get<Response>(`${this.baseUrl}/dashboard/stats/client-affected-types`);
+  }
+
   getLatestEvents(application: string, type: string): Observable<Response> {
     const params = new HttpParams()
       .set('application', application)

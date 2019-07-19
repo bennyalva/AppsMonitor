@@ -1,8 +1,9 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { Client } from 'src/app/model/rest.model';
+import { Client, AffectedClient } from 'src/app/model/rest.model';
 import { NestedTreeControl } from '@angular/cdk/tree';
 import { MatTreeNestedDataSource } from '@angular/material';
 import { Subject } from 'rxjs';
+import { ConsumeService } from 'src/app/services/consume.service';
 
 interface Node {
   name: string;
@@ -18,26 +19,26 @@ interface Node {
   styleUrls: ['./tree.component.css'],
 })
 export class TreeComponent implements OnInit {
-  clients = new Subject<Client[]>();
+  clients = new Subject<AffectedClient[]>();
 
   treeControl = new NestedTreeControl<Node>(node => node.children);
   dataSource = new MatTreeNestedDataSource<Node>();
 
   hasChild = (_: number, node: Node) => !!node.children && node.children.length > 0;
 
-  constructor() {
+  constructor(private _consumeService: ConsumeService) {
   }
 
   ngOnInit() {
     this.clients.subscribe(cli => {
       if (cli) {
-        this.dataSource.data = cli.filter(x => x.applications.map(y => y.events.length).reduce((a, b) => a + b, 0) > 0).map(x => {
+        this.dataSource.data = cli.map(x => {
           return <Node>{
-            name: x._id.client,
+            name: x.client,
             level: 0,
             children: x.applications.map(y => {
               return <Node>{
-                name: y.application.application,
+                name: y.name,
                 level: 1,
                 children: y.events.map(e => {
                   return {

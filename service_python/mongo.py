@@ -61,6 +61,83 @@ class MongoManager:
         coll = self.db[collection]
         return coll.find_one(query)
 
+    def get_stats_by_type(self, type):
+        all_points = self.db['points'].find()
+        total = 0
+        for r in all_points:
+            total += len(r[type])
+        affected = len(self.db['events'].find({'status': False, 'type': type, 'datetime': {
+                       '$gt': datetime.now() - timedelta(hours=24)}}).distinct('application'))
+        res = {
+            'total': total,
+            'affected': affected
+        }
+        return res
+
+    def get_total_alerts(self):
+        all_alerts = self.db['events'].count_documents(
+            {'status': False, 'datetime': {'$gt': datetime.now() - timedelta(hours=24)}})
+        res = {
+            'total': all_alerts
+        }
+        return res
+
+    def get_affected_apps(self):
+        affected = len(self.db['events'].find({'status': False, 'datetime': {
+                       '$gt': datetime.now() - timedelta(hours=24)}}).distinct('application'))
+        res = {
+            'total': affected
+        }
+        return res
+
+    def get_affected_clients(self):
+        last_day = datetime.now() - timedelta(hours=24)
+        clients = self.db['events'].find({'status': False, 'datetime': {
+            '$gt': last_day}}).distinct('client')
+        affected = []
+        for c in clients:
+            affected.append({
+                'client': c,
+                'applications': self.db['events'].find({'status': False, 'client': c, 'datetime': {
+                    '$gt': last_day}}).distinct('application')
+            })
+        res = []
+        for c in affected:
+            cli = {
+                'client': c['client']
+            }
+            apps = []
+            for a in c['applications']:
+                apps.append({
+                    'name': a,
+                    'events': self.db['events'].find({'status': False, 'client': c['client'], 'application': a, 'datetime': {
+                        '$gt': last_day}})
+                })
+            cli['applications'] = apps
+            res.append(cli)
+        return res
+
+    def get_client_affected_types(self):
+        last_day = datetime.now() - timedelta(hours=24)
+        clients = self.db['events'].find({'status': False, 'datetime': {
+            '$gt': last_day}}).distinct('client')
+        affected = []
+        for c in clients:
+            affected.append({
+                'client': c,
+                'applications': {
+                    'total': len(self.db['points'].find({'client': c}).distinct('application')),
+                    'affected': len(self.db['events'].find({'status': False, 'client': c, 'datetime': {'$gt': last_day}}).distinct('application'))
+                },
+                'affected': {
+                    'sites': len(self.db['events'].find({'status': False, 'client': c, 'type': 'sites', 'datetime': {'$gt': last_day}}).distinct('name')),
+                    'databases': len(self.db['events'].find({'status': False, 'client': c, 'type': 'databases', 'datetime': {'$gt': last_day}}).distinct('name')),
+                    'services': len(self.db['events'].find({'status': False, 'client': c, 'type': 'services', 'datetime': {'$gt': last_day}}).distinct('name')),
+                    'servicebus': len(self.db['events'].find({'status': False, 'client': c, 'type': 'servicebus', 'datetime': {'$gt': last_day}}).distinct('name'))
+                }
+            })
+        return affected
+
     def get_clients_with_points(self):
         coll = self.db['points']
         pipeline = [
@@ -286,13 +363,17 @@ class MongoManager:
         coll = self.db[collection]
         return coll.update_one({'_id': ObjectId(id)}, {'$set': data}).modified_count
 
+    def upsert(self, collection, data):
+        coll = self.db[collection]
+        return coll.update_one(data, upsert=True).modified_count
+
     def init_coll(self, collection, data):
         coll = self.db[collection]
         # TODO: implementar update o insert
         coll.drop()
         return coll.insert_many(data)
 
-    def delete(self, collection, id):
+    def delete_by_id(self, collection, id):
         coll = self.db[collection]
         return coll.delete_one({'_id': ObjectId(id)}).deleted_count
 

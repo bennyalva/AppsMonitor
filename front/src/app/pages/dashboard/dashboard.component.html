@@ -19,7 +19,7 @@
     </div>
     <div class="offset-lg-2 offset-md-3 col-md-9 col-lg-10 cards-container">
       <div class="row">
-        <div class="col-md-4" *ngFor="let client of clients">
+        <div class="col-md-4" *ngFor="let client of affectedClientTypes">
           <app-client-status [client]="client"></app-client-status>
         </div>
       </div>

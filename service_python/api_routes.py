@@ -126,7 +126,42 @@ def update_client(id):
 @app.route('/clients/<id>', methods=['DELETE'])
 def delete_client(id):
     mgo = mongo.MongoManager()
-    res = mgo.delete('clients', id)
+    res = mgo.delete_by_id('clients', id)
+    return create_response(res, 200)
+
+
+@app.route('/dashboard/stats/<type>', methods=['GET'])
+def get_type_stats(type):
+    mgo = mongo.MongoManager()
+    res = mgo.get_stats_by_type(type)
+    return create_response(res, 200)
+
+
+@app.route('/dashboard/stats/alerts', methods=['GET'])
+def get_total_alerts():
+    mgo = mongo.MongoManager()
+    res = mgo.get_total_alerts()
+    return create_response(res, 200)
+
+
+@app.route('/dashboard/stats/affected-apps', methods=['GET'])
+def get_affected_apps():
+    mgo = mongo.MongoManager()
+    res = mgo.get_affected_apps()
+    return create_response(res, 200)
+
+
+@app.route('/dashboard/stats/affected-clients', methods=['GET'])
+def get_affected_clients():
+    mgo = mongo.MongoManager()
+    res = mgo.get_affected_clients()
+    return create_response(res, 200)
+
+
+@app.route('/dashboard/stats/client-affected-types', methods=['GET'])
+def get_client_affected_types():
+    mgo = mongo.MongoManager()
+    res = mgo.get_client_affected_types()
     return create_response(res, 200)
 
 

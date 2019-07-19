@@ -1,6 +1,6 @@
 <mat-card>
   <mat-card-title>
-    {{ client._id.client }}
+    {{ client.client }}
     <button mat-icon-button [disableRipple]="true" tabindex="-1" (click)="close()">
       <mat-icon>close</mat-icon>
     </button>
@@ -8,18 +8,18 @@
   <mat-dialog-content>
     <mat-card-content>
       <div class="container-fluid">
-        <div class="row">
+        <div class="row" *ngFor="let site of getSites()">
           <div class="col-md-12">
             <div class="header">
               <mat-icon svgIcon="site"></mat-icon>
               <span class="section-title">Sitios</span>
-              <span [matBadge]="1" matBadgeOverlap="false" matBadgeColor="primary"></span>
+              <span [matBadge]="3" matBadgeOverlap="false" matBadgeColor="primary"></span>
             </div>
           </div>
           <div class="col-md-12 separator">
           </div>
           <div class="col-md-12 item-name">
-            TEST
+            {{site.name}}
           </div>
           <div class="col-md-12 item-details">
             <span>{{ 'Tipo: Oracle' }}</span>

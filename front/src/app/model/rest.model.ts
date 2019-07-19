@@ -3,6 +3,34 @@ export class Pagination {
   items: number;
 }
 
+export class AffectedClient {
+  client: string;
+  applications: AffectedApplication[];
+}
+
+export class AffectedClientType {
+  client: string;
+  applications: AffectedClientApplications;
+  affected: AffectedTypes;
+}
+
+export class AffectedClientApplications {
+  total: number;
+  affected: number;
+}
+
+export class AffectedTypes {
+  sites: number;
+  databases: number;
+  services: number;
+  servicebus: number;
+}
+
+export class AffectedApplication {
+  name: string;
+  events: AppEvent[];
+}
+
 export class Client {
   _id: any;
   applications: ClientApp[];
