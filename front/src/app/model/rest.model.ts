@@ -3,9 +3,11 @@ export class Pagination {
   items: number;
 }
 
-export class AffectedClient {
+export class AffectedClient {
   client: string;
   applications: AffectedApplication[];
+  total: number;
+  affected: number;
 }
 
 export class AffectedClientType {
@@ -14,7 +16,7 @@ export class AffectedClientType {
   affected: AffectedTypes;
 }
 
-export class AffectedClientApplications {
+export class AffectedClientApplications {
   total: number;
   affected: number;
 }
@@ -29,6 +31,19 @@ export class AffectedTypes {
 export class AffectedApplication {
   name: string;
   events: AppEvent[];
+}
+
+export class ClientStatus {
+  client: string;
+  applications: AffectedClientApplications;
+  events: ClientEvents;
+}
+
+export class ClientEvents {
+  sites: AppEvent[];
+  databases: AppEvent[];
+  services: AppEvent[];
+  servicebus: AppEvent[];
 }
 
 export class Client {
@@ -120,6 +135,7 @@ export class Datetime {
 export class AppEvent {
   _id: Id;
   application: Id;
+  client: string;
   datetime: Datetime;
   name: string;
   status: boolean;

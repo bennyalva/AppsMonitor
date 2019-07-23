@@ -76,6 +76,10 @@ export class ConsumeService {
     return this._http.get<Response>(`${this.baseUrl}/dashboard/stats/client-affected-types`);
   }
 
+  getAffectedAppsByClient(client: string): Observable<Response> {
+    return this._http.get<Response>(`${this.baseUrl}/dashboard/stats/affected-apps-client/${client}`);
+  }
+
   getLatestEvents(application: string, type: string): Observable<Response> {
     const params = new HttpParams()
       .set('application', application)

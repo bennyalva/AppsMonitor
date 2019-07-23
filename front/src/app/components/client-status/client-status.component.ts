@@ -2,6 +2,8 @@ import { Component, OnInit, Input } from '@angular/core';
 import { AffectedClientType } from 'src/app/model/rest.model';
 import { DialogDetailComponent } from '../dialog-detail/dialog-detail.component';
 import { MatDialog } from '@angular/material';
+import { DataService } from 'src/app/services/data.service';
+import { ConsumeService } from 'src/app/services/consume.service';
 
 @Component({
   selector: 'app-client-status',
@@ -14,7 +16,7 @@ export class ClientStatusComponent implements OnInit {
   affected = 0;
   total = 0;
 
-  constructor(private _dialog: MatDialog) { }
+  constructor(private _dialog: MatDialog, private _dataService: DataService, private _consumeService: ConsumeService) { }
 
   ngOnInit() {
     if (this.client) {
@@ -24,12 +26,16 @@ export class ClientStatusComponent implements OnInit {
   }
 
   detail() {
-    this._dialog.open(DialogDetailComponent, {
-      panelClass: ['card-dialog'],
-      width: '630px',
-      data: {
-        client: this.client
-      }
+    this._dataService.setIsLoadingEvent(true);
+    this._consumeService.getAffectedAppsByClient(this.client.client).subscribe(res => {
+      this._dataService.setIsLoadingEvent(false);
+      this._dialog.open(DialogDetailComponent, {
+        panelClass: ['card-dialog'],
+        width: '630px',
+        data: {
+          client: res.data
+        }
+      });
     });
   }
 

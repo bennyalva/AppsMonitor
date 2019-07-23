@@ -165,6 +165,13 @@ def get_client_affected_types():
     return create_response(res, 200)
 
 
+@app.route('/dashboard/stats/affected-apps-client/<client>', methods=['GET'])
+def get_affected_apps_by_client(client):
+    mgo = mongo.MongoManager()
+    res = mgo.get_affected_apps_by_client(client)
+    return create_response(res, 200)
+
+
 @app.errorhandler(404)
 def custom400(error):
     return create_response(None, 404)

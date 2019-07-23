@@ -1,6 +1,7 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
-import { ClientApp, Client, AffectedClient, AffectedClientType } from 'src/app/model/rest.model';
+import { ClientStatus } from 'src/app/model/rest.model';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-dialog-detail',
@@ -8,13 +9,10 @@ import { ClientApp, Client, AffectedClient, AffectedClientType } from 'src/app/m
   styleUrls: ['./dialog-detail.component.css']
 })
 export class DialogDetailComponent implements OnInit {
-  client: AffectedClientType;
-  application: ClientApp;
+  client: ClientStatus;
 
   constructor(public _dialogRef: MatDialogRef<DialogDetailComponent>, @Inject(MAT_DIALOG_DATA) private _data: any) {
     this.client = this._data.client;
-    // this.application = this._data.application;
-    // this.application = this.client.applications[0];
   }
 
   ngOnInit() {
@@ -24,11 +22,7 @@ export class DialogDetailComponent implements OnInit {
     this._dialogRef.close();
   }
 
-  getEvents(item, type) {
-    return [];
-  }
-
-  getSites() {
-    return [];
+  parseDate(date) {
+    return moment(date).utc().format('YYYY-MM-DD HH:mm');
   }
 }

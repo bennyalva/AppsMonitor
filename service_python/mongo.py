@@ -62,12 +62,13 @@ class MongoManager:
         return coll.find_one(query)
 
     def get_stats_by_type(self, type):
+        last_day = datetime.now() - timedelta(hours=24)
         all_points = self.db['points'].find()
         total = 0
         for r in all_points:
             total += len(r[type])
         affected = len(self.db['events'].find({'status': False, 'type': type, 'datetime': {
-                       '$gt': datetime.now() - timedelta(hours=24)}}).distinct('application'))
+                       '$gt': last_day}}).distinct('application'))
         res = {
             'total': total,
             'affected': affected
@@ -89,6 +90,29 @@ class MongoManager:
             'total': affected
         }
         return res
+
+    def get_affected_apps_by_client(self, client):
+        last_day = datetime.now() - timedelta(hours=24)
+        affected = {
+            'client': client,
+            'applications': {
+                'total': len(self.db['points'].find({'client': client}).distinct('application')),
+                'affected': len(self.db['events'].find({'status': False, 'client': client, 'datetime': {'$gt': last_day}}).distinct('application'))
+            },
+            'types': {
+                'sites': len(self.db['events'].find({'status': False, 'client': client, 'type': 'sites', 'datetime': {'$gt': last_day}}).distinct('name')),
+                'databases': len(self.db['events'].find({'status': False, 'client': client, 'type': 'databases', 'datetime': {'$gt': last_day}}).distinct('name')),
+                'services': len(self.db['events'].find({'status': False, 'client': client, 'type': 'services', 'datetime': {'$gt': last_day}}).distinct('name')),
+                'servicebus': len(self.db['events'].find({'status': False, 'client': client, 'type': 'servicebus', 'datetime': {'$gt': last_day}}).distinct('name'))
+            },
+            'events': {
+                'sites': self.db['events'].find({'status': False, 'client': client, 'type': 'sites', 'datetime': {'$gt': last_day}}),
+                'databases': self.db['events'].find({'status': False, 'client': client, 'type': 'databases', 'datetime': {'$gt': last_day}}),
+                'services': self.db['events'].find({'status': False, 'client': client, 'type': 'services', 'datetime': {'$gt': last_day}}),
+                'servicebus': self.db['events'].find({'status': False, 'client': client, 'type': 'servicebus', 'datetime': {'$gt': last_day}})
+            }
+        }
+        return affected
 
     def get_affected_clients(self):
         last_day = datetime.now() - timedelta(hours=24)

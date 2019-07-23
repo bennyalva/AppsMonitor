@@ -63,3 +63,15 @@ div.title {
 .snack-bar-custom button {
   color: #ef374c;
 }
+
+mat-progress-bar {
+  position: absolute !important;
+  top: 60;
+}
+
+@media screen and (max-width: 600px) {
+  mat-progress-bar {
+    position: absolute !important;
+    top: 52px;
+  }
+}

@@ -1,9 +1,7 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { Client, AffectedClient } from 'src/app/model/rest.model';
 import { NestedTreeControl } from '@angular/cdk/tree';
+import { Component, Input, OnInit } from '@angular/core';
 import { MatTreeNestedDataSource } from '@angular/material';
-import { Subject } from 'rxjs';
-import { ConsumeService } from 'src/app/services/consume.service';
+import { AffectedClient } from 'src/app/model/rest.model';
 
 interface Node {
   name: string;
@@ -19,40 +17,36 @@ interface Node {
   styleUrls: ['./tree.component.css'],
 })
 export class TreeComponent implements OnInit {
-  clients = new Subject<AffectedClient[]>();
+  @Input() clients: AffectedClient[];
 
   treeControl = new NestedTreeControl<Node>(node => node.children);
   dataSource = new MatTreeNestedDataSource<Node>();
 
   hasChild = (_: number, node: Node) => !!node.children && node.children.length > 0;
 
-  constructor(private _consumeService: ConsumeService) {
+  constructor() {
   }
 
   ngOnInit() {
-    this.clients.subscribe(cli => {
-      if (cli) {
-        this.dataSource.data = cli.map(x => {
+    this.dataSource.data = this.clients.map(x => {
+      return <Node>{
+        name: x.client,
+        level: 0,
+        children: x.applications.map(y => {
           return <Node>{
-            name: x.client,
-            level: 0,
-            children: x.applications.map(y => {
-              return <Node>{
-                name: y.name,
-                level: 1,
-                children: y.events.map(e => {
-                  return {
-                    name: e.name,
-                    tooltip: e.status_response,
-                    icon: this.getIconForType(e.type),
-                    level: 2
-                  };
-                })
+            name: y.name,
+            level: 1,
+            children: y.events.map(e => {
+              return {
+                name: e.name,
+                tooltip: e.status_response,
+                icon: this.getIconForType(e.type),
+                level: 2
               };
             })
           };
-        });
-      }
+        })
+      };
     });
   }
 

@@ -38,27 +38,6 @@ export class DashboardComponent implements OnInit {
 
   ngOnInit() {
     this.loadData();
-    // this._dataService.setIsLoadingEvent(true);
-    // this._consumeService.getClientsAppsEvents().subscribe(x => {
-    //   this._dataService.setIsLoadingEvent(false);
-    //   this.clients = x.data;
-    //   this.treeComponent.clients.next(x.data);
-    //   this.buildStats();
-    //   if (this.clients.length > 0) {
-    //     this.selectedClient = this.clients[0];
-    //   }
-    // }, err => {
-    //   this._dataService.setIsLoadingEvent(false);
-    //   this._dataService.setGeneralNotificationMessage(err);
-    // });
-
-    // this._consumeService.getApplications().subscribe(res => {
-    //   this.applications = res.data;
-    //   this._dataService.setIsLoadingEvent(false);
-    // }, err => {
-    //   this._dataService.setIsLoadingEvent(false);
-    //   this._dataService.setGeneralNotificationMessage(err);
-    // });
   }
 
   loadData() {
@@ -86,7 +65,6 @@ export class DashboardComponent implements OnInit {
     const loadClients = this._consumeService.getAffectedClients().pipe(
       tap(val => {
         this.affectedClients = val.data;
-        this.treeComponent.clients.next(val.data);
       })
     );
 
