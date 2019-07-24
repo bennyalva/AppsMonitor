@@ -36,6 +36,7 @@ export class AffectedApplication {
 export class ClientStatus {
   client: string;
   applications: AffectedClientApplications;
+  types: AffectedTypes;
   events: ClientEvents;
 }
 
