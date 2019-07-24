@@ -53,7 +53,7 @@ export class Client {
 }
 
 export class ClientApp {
-  application: Application;
+  application: string;
   databases: Database[];
   sites: Site[];
   services: Service[];

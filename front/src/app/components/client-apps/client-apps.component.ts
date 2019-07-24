@@ -42,7 +42,7 @@ export class ClientAppsComponent implements OnInit {
       .subscribe(confirm => {
         if (confirm) {
           this._dataService.setIsLoadingEvent(true);
-          this._consumeService.deleteApplication(this.client._id.client, app.application.application).subscribe(res => {
+          this._consumeService.deleteApplication(this.client._id.client, app.application).subscribe(res => {
             this.applications = this.applications.filter(x => x !== app);
             this._dataService.setIsLoadingEvent(false);
             this._dataService.setGeneralNotificationMessage(res.message);
