@@ -10,7 +10,7 @@
       <app-stats-circle [title]="'Apps afectadas'" [count]="statsApps"></app-stats-circle>
     </div>
   </div>
-  <ng-container *ngIf="statsAlerts > 0 && !isLoading">
+  <ng-container *ngIf="affectedClients.length > 0">
     <div class="row">
       <h1 class="main-title">Clientes</h1>
     </div>
