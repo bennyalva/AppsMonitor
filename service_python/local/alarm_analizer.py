@@ -1,0 +1,1 @@
+/home/benny/Documents/repositorios/codigo/angular/farmacias/AppsMonitor/service_python/alarm_analizer.py
