@@ -12,19 +12,20 @@ mat-sidenav {
   height: 40px;
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
+  justify-content: left;
+  padding-right: 24px;
 }
 
 .toolbar-container span {
   display: flex;
   flex-direction: column;
   justify-content: center;
+  margin-left: 12px;
 }
 
 .toolbar-logo {
   height: 50px;
   margin-top: -6px;
-  margin-left: 24px;
   /* position: absolute; */
 }
 
@@ -34,4 +35,8 @@ mat-sidenav {
 
 .hand-cursor {
   cursor: pointer;
+}
+
+.menu span {
+  color: #3b1053;
 }

@@ -1,0 +1,132 @@
+<mat-card>
+  <mat-card-title>
+    {{ client.client }}
+    <button mat-icon-button [disableRipple]="true" tabindex="-1" (click)="close()">
+      <mat-icon>close</mat-icon>
+    </button>
+  </mat-card-title>
+  <mat-dialog-content>
+    <mat-card-content>
+      <div class="container-fluid">
+        <div class="row" *ngIf="client.types.sites > 0">
+          <div class="col-md-12">
+            <div class="header">
+              <mat-icon svgIcon="site"></mat-icon>
+              <span class="section-title">Sitios</span>
+              <span [matBadge]="client.types.sites" matBadgeOverlap="false" matBadgeColor="primary"></span>
+            </div>
+          </div>
+          <div class="col-md-12 separator">
+          </div>
+          <ng-container *ngFor="let item of client.events.sites">
+            <div class="col-md-12 item-name">
+              {{item.application}}
+            </div>
+            <div class="col-md-12 item-details">
+              <span>{{ item.name }}</span>
+            </div>
+            <div class="col-md-12 item-error">
+              {{ item.status_response }}
+            </div>
+          </ng-container>
+        </div>
+        <div class="row" *ngIf="client.types.databases > 0">
+          <div class="col-md-12">
+            <div class="header">
+              <mat-icon svgIcon="database"></mat-icon>
+              <span class="section-title">Bases de datos</span>
+              <span [matBadge]="client.types.databases" matBadgeOverlap="false" matBadgeColor="primary"></span>
+            </div>
+          </div>
+          <div class="col-md-12 separator">
+          </div>
+          <ng-container *ngFor="let item of client.events.databases">
+            <div class="col-md-12 item-name">
+              {{item.application}}
+            </div>
+            <div class="col-md-12 item-details">
+              <span>{{ item.name }}</span>
+            </div>
+            <div class="col-md-12 item-error">
+              {{ item.status_response }}
+            </div>
+          </ng-container>
+        </div>
+        <div class="row" *ngIf="client.types.services > 0">
+          <div class="col-md-12">
+            <div class="header">
+              <mat-icon svgIcon="service"></mat-icon>
+              <span class="section-title">Servicios</span>
+              <span [matBadge]="client.types.services" matBadgeOverlap="false" matBadgeColor="primary"></span>
+            </div>
+          </div>
+          <div class="col-md-12 separator">
+          </div>
+          <ng-container *ngFor="let item of client.events.services">
+            <div class="col-md-12 item-name">
+              {{item.application}}
+            </div>
+            <div class="col-md-12 item-details">
+              <span>{{ item.name }}</span>
+              <span>{{ parseDate(item.datetime.$date) }}</span>
+            </div>
+            <div class="col-md-12 item-error">
+              {{ item.status_response }}
+            </div>
+          </ng-container>
+        </div>
+        <div class="row" *ngIf="client.types.servicebus > 0">
+          <div class="col-md-12">
+            <div class="header">
+              <mat-icon svgIcon="servicebus"></mat-icon>
+              <span class="section-title">Service bus</span>
+              <span [matBadge]="client.types.servicebus" matBadgeOverlap="false" matBadgeColor="primary"></span>
+            </div>
+          </div>
+          <div class="col-md-12 separator">
+          </div>
+          <ng-container *ngFor="let item of client.events.servicebus">
+            <div class="col-md-12 item-name">
+              {{item.application}}
+            </div>
+            <div class="col-md-12 item-details">
+              <span>{{ item.name }}</span>
+              <span>{{ parseDate(item.datetime.$date) }}</span>
+            </div>
+            <div class="col-md-12 item-error">
+              {{ item.status_response }}
+            </div>
+          </ng-container>
+        </div>
+        <!-- <div class="row">
+          <div class="col-md-12">
+            <div class="header">
+              <mat-icon>dns</mat-icon>
+              <span class="section-title">Bases de datos</span>
+              <span [matBadge]="2" matBadgeOverlap="false" matBadgeColor="primary"></span>
+            </div>
+          </div>
+          <div class="col-md-12 separator">
+          </div>
+          <div class="col-md-12 item-name">
+            TEST DB
+          </div>
+          <div class="col-md-12 item-details">
+            <span>{{ 'Tipo: Oracle' }}</span>
+            <span>{{ 'IP: 127.0.0.1' }}</span>
+            <span>{{ 'Base de datos: DBTest' }}</span>
+            <span>{{ 'Puerto: 1521' }}</span>
+          </div>
+          <div class="col-md-12 item-error">
+            Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet
+            dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper
+            suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in hendrerit in
+            vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et
+            accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait
+            nulla facilisi.
+          </div>
+        </div> -->
+      </div>
+    </mat-card-content>
+  </mat-dialog-content>
+</mat-card>

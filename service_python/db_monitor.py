@@ -31,8 +31,8 @@ def open_db_connection(type, ip_address, port, db_name, user, pwd):
             ip_address, port, db_name)
 
     print('verifying_connection_to_conn: ', connection_string)
-    driverPath = ['./drivers/sqljdbc42.jar', './drivers/ojdbc8.jar',
-                  './drivers/mysql-connector-java-8.0.16.jar']
+    driverPath = ['drivers/sqljdbc42.jar', 'drivers/ojdbc8.jar',
+                  'drivers/mysql-connector-java-8.0.16.jar']
     connection = jaydebeapi.connect(driverClassName,
                                     connection_string,
                                     [user, pwd],

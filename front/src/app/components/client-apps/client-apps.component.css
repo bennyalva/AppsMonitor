@@ -1,0 +1,49 @@
+table {
+  width: 100%;
+}
+
+.th-container {
+  color: #b19fba;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  height: 33px;
+}
+
+th:not(:nth-last-child(2)) .th-container {
+  border-right: 0.6px solid #b19fba;
+}
+
+.th-container>mat-icon {
+  margin-right: 4px;
+}
+
+.th-container>span {
+  font-size: 11px;
+  font-weight: 300;
+}
+
+td {
+  text-align: center;
+}
+
+td.app-name {
+  font-size: 11px;
+  text-align: left;
+  color: #3b1053;
+}
+
+td.app-number {
+  font-size: 11px;
+  text-align: center;
+  color: #b3b3b3;
+}
+
+td.app-actions {
+  text-align: right;
+}
+
+.mat-column-actions {
+  text-align: right;
+}

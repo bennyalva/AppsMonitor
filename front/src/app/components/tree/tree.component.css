@@ -1,0 +1,33 @@
+.tree-invisible {
+  display: none;
+}
+
+.mat-tree {
+  background: #f4eff0;
+}
+
+.tree ul, .tree li {
+  margin-top: 0;
+  margin-bottom: 0;
+  list-style-type: none;
+  color: #3b1053;
+}
+
+.mat-tree-node {
+  font-size: 20px;
+  font-weight: 300;
+  color: #3b1053;
+}
+
+.mat-tree-node mat-icon {
+  color: #b19fba;
+  transform: scale(0.7);
+}
+
+.node-app .mat-tree-node {
+  font-size: 14px !important;
+}
+
+.node-cat .mat-tree-node {
+  font-size: 14px !important;
+}

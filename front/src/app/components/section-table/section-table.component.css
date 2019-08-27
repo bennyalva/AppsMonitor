@@ -1,0 +1,16 @@
+table {
+  width: 100%;
+}
+
+td.app-name {
+  font-size: 11px;
+  color: #3b1053;
+}
+
+td.app-actions {
+  text-align: right;
+}
+
+.mat-column-actions {
+  text-align: right;
+}

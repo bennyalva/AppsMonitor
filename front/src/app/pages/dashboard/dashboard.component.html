@@ -1,12 +1,36 @@
-<div class="container-fluid" *ngIf="applications.length > 0">
-  <div class="row">
-    <div class="col-md-6" *ngFor="let app of applications">
-      <app-system-chart [application]="app"></app-system-chart>
+<div class="container-fluid">
+  <div class="row top-section">
+    <div class="col-md-2 col-sm-4 col-xs-6" *ngFor="let type of types">
+      <app-stats [type]="type"></app-stats>
+    </div>
+    <div class="col-md-2 col-sm-4 col-xs-6">
+      <app-stats-circle [title]="'Alertas'" [count]="statsAlerts"></app-stats-circle>
+    </div>
+    <div class="col-md-2 col-sm-4 col-xs-6">
+      <app-stats-circle [title]="'Apps afectadas'" [count]="statsApps"></app-stats-circle>
     </div>
   </div>
-</div>
-<div class="no-data" *ngIf="!isLoading && applications.length === 0">
-  <mat-icon>local_cafe</mat-icon>
-  <p>No existen datos disponibles</p>
-  <a [routerLink]="['/application']">Registrar una nueva aplicación</a>
+  <ng-container *ngIf="affectedClients.length > 0">
+    <div class="row">
+      <h1 class="main-title">Clientes</h1>
+    </div>
+    <div class="row">
+      <div class="col-lg-2 col-md-3 col-sm-12 tree-container">
+        <app-tree *ngIf="affectedClients" [clients]="affectedClients"></app-tree>
+      </div>
+      <div class="offset-lg-2 offset-md-3 col-md-9 col-lg-10 cards-container">
+        <div class="row">
+          <div class="col-md-4" *ngFor="let client of affectedClientTypes">
+            <app-client-status [client]="client"></app-client-status>
+          </div>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+  <div class="row" *ngIf="statsAlerts === 0 && !isLoading">
+    <div class="col-md-12 all-clear">
+      <mat-icon>local_cafe</mat-icon>
+      <p>Todas las aplicaciones se encuentran funcionando correctamente</p>
+    </div>
+  </div>
 </div>

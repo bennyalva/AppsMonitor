@@ -17,3 +17,54 @@ mat-list .item {
 .button-add {
   margin-bottom: 12px;
 }
+
+.app-name {
+  display: flex;
+  flex-direction: row;
+}
+
+.subtitle h1 {
+  font-size: 34px;
+  color: #3b1053;
+  font-weight: 300;
+  margin: 0 0 12px 0;
+}
+
+.app-header {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.app-header h1 {
+  font-size: 20px;
+  font-weight: 300;
+  color: #3b1053;
+  margin: 12px 0 24px 0;
+}
+
+.app-header .save-button {
+  height: 36px;
+  width: 144px;
+}
+
+mat-panel-title, mat-slide-toggle {
+  font-size: 20px;
+  font-weight: 300;
+  color: #3b1053;
+}
+
+.mat-badge-content {
+  top: 0px !important;
+  right: -28px !important;
+}
+
+.sections {
+  margin-top: 24px;
+  margin-bottom: 24px;
+}
+
+.back-container {
+  margin-top: -25px;
+}

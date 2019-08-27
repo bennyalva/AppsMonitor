@@ -1,5 +1,6 @@
 import { AfterViewChecked, ChangeDetectorRef, Component } from '@angular/core';
-import { MatSnackBar } from '@angular/material';
+import { MatIconRegistry, MatSnackBar } from '@angular/material';
+import { DomSanitizer } from '@angular/platform-browser';
 
 import { DataService } from './services/data.service';
 
@@ -11,15 +12,19 @@ import { DataService } from './services/data.service';
 export class AppComponent implements AfterViewChecked {
   isLoading = false;
 
-  constructor(private _dataService: DataService, private _snackBar: MatSnackBar, private _cdRef: ChangeDetectorRef) {
+  constructor(private _dataService: DataService, private _snackBar: MatSnackBar, private _domSanitizer: DomSanitizer,
+    private _cdRef: ChangeDetectorRef, private _matIconRegistry: MatIconRegistry) {
     this._dataService.getIsLoadingEvent().subscribe(load => {
       this.isLoading = load;
     });
+
+    this.registerCustomIcons();
 
     this._dataService
       .getGeneralNotificationMessage()
       .subscribe(msg => {
         this._snackBar.open(msg, 'OK', {
+          panelClass: ['snack-bar-custom'],
           duration: 3000
         });
       });
@@ -27,5 +32,24 @@ export class AppComponent implements AfterViewChecked {
 
   ngAfterViewChecked() {
     this._cdRef.detectChanges();
+  }
+
+  registerCustomIcons() {
+    this._matIconRegistry.addSvgIcon(
+      'site',
+      this._domSanitizer.bypassSecurityTrustResourceUrl('./assets/img/icons/site.svg')
+    );
+    this._matIconRegistry.addSvgIcon(
+      'database',
+      this._domSanitizer.bypassSecurityTrustResourceUrl('./assets/img/icons/database.svg')
+    );
+    this._matIconRegistry.addSvgIcon(
+      'service',
+      this._domSanitizer.bypassSecurityTrustResourceUrl('./assets/img/icons/service.svg')
+    );
+    this._matIconRegistry.addSvgIcon(
+      'servicebus',
+      this._domSanitizer.bypassSecurityTrustResourceUrl('./assets/img/icons/servicebus.svg')
+    );
   }
 }

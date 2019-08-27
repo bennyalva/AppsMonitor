@@ -43,3 +43,35 @@ html, body {
   margin: 0 -16px !important;
   padding: 0px 16px !important;
 }
+
+h1.main-title {
+  font-size: 40px;
+  font-weight: 300;
+  text-align: left;
+  color: #3b1053;
+}
+
+div.title {
+  padding: 0 30px 0 30px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 35px;
+  box-shadow: 0px 10.3px 0px -10px #3b1053;
+}
+
+.snack-bar-custom button {
+  color: #ef374c;
+}
+
+mat-progress-bar {
+  position: absolute !important;
+  top: 60;
+}
+
+@media screen and (max-width: 600px) {
+  mat-progress-bar {
+    position: absolute !important;
+    top: 52px;
+  }
+}

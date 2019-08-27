@@ -1,0 +1,28 @@
+div.stats-alerts {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+div.stats-alerts>div {
+  width: 90px;
+  height: 45px;
+  background: #ef374c;
+  border-top-left-radius: 90px;
+  border-top-right-radius: 90px;
+  font-size: 32px;
+  font-weight: 500;
+  line-height: 0.77;
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+div.stats-alerts>span {
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.76;
+  color: #3b1053;
+  text-align: center;
+}

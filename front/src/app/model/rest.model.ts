@@ -3,8 +3,68 @@ export class Pagination {
   items: number;
 }
 
+export class AffectedClient {
+  client: string;
+  applications: AffectedApplication[];
+  total: number;
+  affected: number;
+}
+
+export class AffectedClientType {
+  client: string;
+  applications: AffectedClientApplications;
+  affected: AffectedTypes;
+}
+
+export class AffectedClientApplications {
+  total: number;
+  affected: number;
+}
+
+export class AffectedTypes {
+  sites: number;
+  databases: number;
+  services: number;
+  servicebus: number;
+}
+
+export class AffectedApplication {
+  name: string;
+  events: AppEvent[];
+}
+
+export class ClientStatus {
+  client: string;
+  applications: AffectedClientApplications;
+  types: AffectedTypes;
+  events: ClientEvents;
+}
+
+export class ClientEvents {
+  sites: AppEvent[];
+  databases: AppEvent[];
+  services: AppEvent[];
+  servicebus: AppEvent[];
+}
+
+export class Client {
+  _id: any;
+  applications: ClientApp[];
+}
+
+export class ClientApp {
+  application: string;
+  databases: Database[];
+  sites: Site[];
+  services: Service[];
+  servicebus: ServiceBus[];
+  administrators: string[];
+  events: AppEvent[];
+}
+
 export class Application {
   _id: Id;
+  client: string;
   application: string;
   description: string;
   sites: Site[];
@@ -66,15 +126,35 @@ export class Site {
 
 export class Id {
   '$oid': string;
+  'name': string;
 }
 
 export class Datetime {
   '$date': number;
 }
 
+export class AppEvent {
+  _id: Id;
+  application: Id;
+  client: string;
+  datetime: Datetime;
+  name: string;
+  status: boolean;
+  status_response: string;
+  type: string;
+}
+
 export class Catalog {
   _id: Id;
   type: string;
   name: string;
-  value;
+  value: any;
+}
+
+export enum ElementType {
+  site = 1,
+  database = 2,
+  service = 3,
+  servicebus = 4,
+  owners = 5
 }

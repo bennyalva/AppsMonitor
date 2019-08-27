@@ -1,0 +1,26 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-12 title">
+      <h1 class="main-title">Configuración</h1>
+      <button mat-mini-fab color="primary" matTooltip="Agregar cliente" (click)="add()">
+        <mat-icon>add</mat-icon>
+      </button>
+    </div>
+  </div>
+</div>
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
+      <mat-accordion>
+        <mat-expansion-panel color="accent" *ngFor="let client of clients">
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              {{client._id.client}}
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+          <app-client-apps [client]="client" [applications]="client.applications"></app-client-apps>
+        </mat-expansion-panel>
+      </mat-accordion>
+    </div>
+  </div>
+</div>

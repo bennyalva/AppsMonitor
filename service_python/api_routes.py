@@ -41,8 +41,10 @@ def insert_point():
 @app.route('/points', methods=['GET'])
 def get_points():
     mgo = mongo.MongoManager()
-    res = mgo.get('points', {}, request.args.get('id'),
-                  request.args.get('page'), request.args.get('items'))
+    res = mgo.get_single('points', {
+        'client': request.args.get('client'),
+        'application': request.args.get('application')
+    })
     return create_response(res, 200)
 
 
@@ -53,10 +55,13 @@ def update_point(id):
     return create_response(res, 200)
 
 
-@app.route('/points/<id>', methods=['DELETE'])
-def delete_point(id):
+@app.route('/points', methods=['DELETE'])
+def delete_point():
     mgo = mongo.MongoManager()
-    res = mgo.delete('points', id)
+    res = mgo.delete('points', {
+        'client': request.args.get('client'),
+        'application': request.args.get('application')
+    })
     return create_response(res, 200)
 
 
@@ -72,6 +77,98 @@ def get_events():
 def get_catalogs():
     mgo = mongo.MongoManager()
     res = mgo.get_list('catalogs', {})
+    return create_response(res, 200)
+
+
+@app.route('/clients', methods=['POST'])
+def insert_client():
+    mgo = mongo.MongoManager()
+    res = mgo.insert('clients', request.get_json())
+    return create_response(res, 200)
+
+
+@app.route('/clients', methods=['GET'])
+def get_clients():
+    mgo = mongo.MongoManager()
+    res = mgo.get('clients', {}, request.args.get('id'),
+                  request.args.get('page'), request.args.get('items'))
+    return create_response(res, 200)
+
+
+@app.route('/clients/apps', methods=['GET'])
+def get_clients_apps():
+    mgo = mongo.MongoManager()
+    res = mgo.get_clients_with_points()
+    return create_response(res, 200)
+
+
+@app.route('/clients/events', methods=['GET'])
+def get_clients_apps_events():
+    mgo = mongo.MongoManager()
+    res = mgo.get_clients_with_points_and_events()
+    return create_response(res, 200)
+
+
+@app.route('/clients/raw', methods=['GET'])
+def get_clients_raw():
+    mgo = mongo.MongoManager()
+    res = mgo.get_clients()
+    return create_response(res, 200)
+
+
+@app.route('/clients/<id>', methods=['PUT'])
+def update_client(id):
+    mgo = mongo.MongoManager()
+    res = mgo.update('clients', request.get_json(), id)
+    return create_response(res, 200)
+
+
+@app.route('/clients/<id>', methods=['DELETE'])
+def delete_client(id):
+    mgo = mongo.MongoManager()
+    res = mgo.delete_by_id('clients', id)
+    return create_response(res, 200)
+
+
+@app.route('/dashboard/stats/<type>', methods=['GET'])
+def get_type_stats(type):
+    mgo = mongo.MongoManager()
+    res = mgo.get_stats_by_type(type)
+    return create_response(res, 200)
+
+
+@app.route('/dashboard/stats/alerts', methods=['GET'])
+def get_total_alerts():
+    mgo = mongo.MongoManager()
+    res = mgo.get_total_alerts()
+    return create_response(res, 200)
+
+
+@app.route('/dashboard/stats/affected-apps', methods=['GET'])
+def get_affected_apps():
+    mgo = mongo.MongoManager()
+    res = mgo.get_affected_apps()
+    return create_response(res, 200)
+
+
+@app.route('/dashboard/stats/affected-clients', methods=['GET'])
+def get_affected_clients():
+    mgo = mongo.MongoManager()
+    res = mgo.get_affected_clients()
+    return create_response(res, 200)
+
+
+@app.route('/dashboard/stats/client-affected-types', methods=['GET'])
+def get_client_affected_types():
+    mgo = mongo.MongoManager()
+    res = mgo.get_client_affected_types()
+    return create_response(res, 200)
+
+
+@app.route('/dashboard/stats/affected-apps-client/<client>', methods=['GET'])
+def get_affected_apps_by_client(client):
+    mgo = mongo.MongoManager()
+    res = mgo.get_affected_apps_by_client(client)
     return create_response(res, 200)
 
 
