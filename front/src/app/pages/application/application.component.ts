@@ -40,6 +40,7 @@ export class ApplicationComponent implements OnInit {
   constructor(private _dataService: DataService, private _consumeService: ConsumeService,
     private _route: ActivatedRoute, private _fb: FormBuilder, private _dialog: MatDialog, private _router: Router) {
     this._route.queryParams.subscribe(params => {
+      //console.log('params:: ', params);each that do click on app inside clients options
       this.client = params.cli;
       this.appName = params.app;
     });
@@ -56,6 +57,8 @@ export class ApplicationComponent implements OnInit {
 
   ngOnInit() {
     this.formApp.get('application').valueChanges.subscribe(val => {
+      //console.log('frm app get aplication:: ', val)
+      //se observa el elemento "aplication" de this.formAPP
       this.application.application = val;
     });
 
@@ -289,6 +292,12 @@ export class ApplicationComponent implements OnInit {
         type: FieldType.password,
         validators: [Validators.required]
       },
+      {
+        name: 'query',
+        placeholder: 'Query',
+        type: FieldType.input,
+        validators: [Validators.required]
+      },
     ];
 
     const dialogRef = this._dialog.open(DialogFormComponent, {
@@ -312,6 +321,7 @@ export class ApplicationComponent implements OnInit {
           db.port = value.port;
           db.usr = value.usr;
           db.pwd = value.pwd;
+          db.query = value.query;
           this.application.databases = this.application.databases.concat(db);
         } else {
           item.name = value.name;
@@ -321,6 +331,7 @@ export class ApplicationComponent implements OnInit {
           item.port = value.port;
           item.usr = value.usr;
           item.pwd = value.pwd;
+          item.query = value.query;
         }
       }
     });

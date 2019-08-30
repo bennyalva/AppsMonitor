@@ -31,7 +31,7 @@
       </div>
       <div class="app-input" *ngIf="!appName || editName">
         <mat-form-field>
-          <input matInput formControlName="application" placeholder="Nombre de la aplicación">
+          <input matInput formControlName="application" placeholder="Nombre de la farmacia">
         </mat-form-field>
       </div>
       <button mat-raised-button color="accent" [disabled]="formApp.invalid" (click)="saveApp()" class="save-button">

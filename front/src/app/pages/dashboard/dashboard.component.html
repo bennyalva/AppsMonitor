@@ -7,18 +7,18 @@
       <app-stats-circle [title]="'Alertas'" [count]="statsAlerts"></app-stats-circle>
     </div>
     <div class="col-md-2 col-sm-4 col-xs-6">
-      <app-stats-circle [title]="'Apps afectadas'" [count]="statsApps"></app-stats-circle>
+      <app-stats-circle [title]="'Secciones'" [count]="statsApps"></app-stats-circle>
     </div>
   </div>
   <ng-container *ngIf="affectedClients.length > 0">
+     <!--<div class="row">
+      <h1 class="main-title">Secciones</h1>
+    </div> -->
     <div class="row">
-      <h1 class="main-title">Clientes</h1>
-    </div>
-    <div class="row">
-      <div class="col-lg-2 col-md-3 col-sm-12 tree-container">
+      <div class="col-lg-2.5 col-md-3 col-sm-12 tree-container">
         <app-tree *ngIf="affectedClients" [clients]="affectedClients"></app-tree>
       </div>
-      <div class="offset-lg-2 offset-md-3 col-md-9 col-lg-10 cards-container">
+      <div class="offset-lg-2.5 offset-md-3 col-md-9 col-lg-10 cards-container">
         <div class="row">
           <div class="col-md-4" *ngFor="let client of affectedClientTypes">
             <app-client-status [client]="client"></app-client-status>

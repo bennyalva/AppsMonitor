@@ -35,6 +35,7 @@ export class DialogFormComponent implements OnInit {
 
   constructor(public _dialogRef: MatDialogRef<DialogFormComponent>, @Inject(MAT_DIALOG_DATA) private _data: any,
     private _fb: FormBuilder) {
+      console.log('data::: ',this._data)
     this.fields = this._data.fields;
     this.title = this._data.title;
 

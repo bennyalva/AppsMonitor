@@ -102,6 +102,7 @@ export class Database {
   pwd: string;
   status: number;
   datetime: Datetime;
+  query: string;
 }
 
 export class Service {

@@ -31,7 +31,7 @@ export class ClientListComponent implements OnInit {
   }
 
   add() {
-    const title = 'Agregar cliente';
+    const title = 'Agregar apartado';
     const fields: DialogField[] = [
       {
         name: 'name',

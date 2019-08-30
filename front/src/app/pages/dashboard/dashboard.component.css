@@ -22,7 +22,8 @@ h1.main-title {
 
 .tree-container {
   position: absolute;
-  top: 265px;
+  /* top: 265px; */
+  top: 190px;
   bottom: 0px;
   overflow-y: auto;
   background: #f4eff0;
@@ -31,7 +32,8 @@ h1.main-title {
 
 .cards-container {
   position: absolute;
-  top: 265px;
+  /* top: 265px; */
+  top: 190px;
   bottom: 0px;
   overflow-y: auto;
   padding-bottom: 15px;

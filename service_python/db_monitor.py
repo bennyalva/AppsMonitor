@@ -4,13 +4,16 @@ import json
 import sys
 
 
-def verify_connection(type, ip_address, port, db_name, user, pwd):
+#def verify_connection(type, ip_address, port, db_name, user, pwd):
+def verify_connection(type, ip_address, port, db_name, user, pwd, query):
     try:
         with open_db_connection(type, ip_address, port, db_name, user, pwd) as cursor:
-            query = 'SELECT 1 FROM DUAL' if type == 'oracle' else 'SELECT 1'
+            #query = 'SELECT 1 FROM DUAL' if type == 'oracle' else 'SELECT 1'
             cursor.execute(query)
             row = cursor.fetchone()
-            return {'status': True, 'msg': row[0]}
+            print('row:: ',row)
+            #return {'status': True, 'msg': row[0]}
+            return {'status': True, 'msg': row}
     except Exception as ex:
         return {'status': False, 'msg': str(ex)}
 
