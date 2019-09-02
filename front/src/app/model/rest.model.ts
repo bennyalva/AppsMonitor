@@ -4,18 +4,38 @@ export class Pagination {
 }
 
 export class AffectedClient {
-  client: string;
+  _id: string;
   applications: AffectedApplication[];
   total: number;
   affected: number;
 }
 
-export class AffectedClientType {
+export class AffectedClientType {//this
   client: string;
   applications: AffectedClientApplications;
   affected: AffectedTypes;
 }
 
+export class NewClientStatus{
+  client:Applications [];
+}
+export class Applications{
+  _id: ErrorAplication;
+  errors: ErrorByApp []
+}
+
+export class ErrorByApp{
+  status_response: string;
+  firstDate: Date;
+  lastDate: Date;
+  count: number;
+}
+export class ErrorAplication{
+  application: string;
+  client: string;
+  name: string;
+  type: string;
+}
 export class AffectedClientApplications {
   total: number;
   affected: number;
@@ -31,14 +51,15 @@ export class AffectedTypes {
 export class AffectedApplication {
   name: string;
   events: AppEvent[];
+  _id: any;
 }
 
 export class ClientStatus {
-  client: string;
+  _id: string;
   applications: AffectedClientApplications;
-  types: AffectedTypes;
-  events: ClientEvents;
 }
+
+
 
 export class ClientEvents {
   sites: AppEvent[];

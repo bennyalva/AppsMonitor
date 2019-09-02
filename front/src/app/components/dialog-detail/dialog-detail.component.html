@@ -1,6 +1,6 @@
 <mat-card>
   <mat-card-title>
-    {{ client.client }}
+    {{ client.client[0]._id.client }}
     <button mat-icon-button [disableRipple]="true" tabindex="-1" (click)="close()">
       <mat-icon>close</mat-icon>
     </button>
@@ -8,51 +8,59 @@
   <mat-dialog-content>
     <mat-card-content>
       <div class="container-fluid">
-        <div class="row" *ngIf="client.types.sites > 0">
+        <div class="row" *ngIf="type =='sites'">
           <div class="col-md-12">
             <div class="header">
               <mat-icon svgIcon="site"></mat-icon>
               <span class="section-title">Sitios</span>
-              <span [matBadge]="client.types.sites" matBadgeOverlap="false" matBadgeColor="primary"></span>
+              <span [matBadge]="sizeArray" matBadgeOverlap="false" matBadgeColor="primary"></span>
             </div>
           </div>
           <div class="col-md-12 separator">
           </div>
-          <ng-container *ngFor="let item of client.events.sites">
+          <ng-container *ngFor="let item of client.client">
             <div class="col-md-12 item-name">
-              {{item.application}}
+              {{item._id.application}}
             </div>
             <div class="col-md-12 item-details">
-              <span>{{ item.name }}</span>
-            </div>
-            <div class="col-md-12 item-error">
-              {{ item.status_response }}
+              <span>{{ item._id.name }}</span>
             </div>
           </ng-container>
         </div>
-        <div class="row" *ngIf="client.types.databases > 0">
+        <div class="row" *ngIf="type =='databases'">
           <div class="col-md-12">
             <div class="header">
               <mat-icon svgIcon="database"></mat-icon>
               <span class="section-title">Bases de datos</span>
-              <span [matBadge]="client.types.databases" matBadgeOverlap="false" matBadgeColor="primary"></span>
+              <span [matBadge]="sizeArray" matBadgeOverlap="false" matBadgeColor="primary"></span>
             </div>
           </div>
           <div class="col-md-12 separator">
           </div>
-          <ng-container *ngFor="let item of client.events.databases">
+          <ng-container *ngFor="let item of  client.client">
             <div class="col-md-12 item-name">
-              {{item.application}}
+              {{item._id.application}}
             </div>
             <div class="col-md-12 item-details">
-              <span>{{ item.name }}</span>
+              <span>{{ item._id.name }}</span>
             </div>
-            <div class="col-md-12 item-error">
-              {{ item.status_response }}
+            <div class="col-md-12 item-error" *ngFor="let error of item.errors">
+              {{ error.status_response }}
+              <div id="container-errors">
+                <div class="item-error-date">
+                   Primero: {{ parseDate(error.firstDate.$date)  }}
+                   >>>>  Ultimo: {{  parseDate(error.lastDate.$date)}}
+                </div>
+                <div id="count-errors">
+
+                Registros:{{error.count}}
+                <span [matBadge]="" matBadgeOverlap="false" matBadgeColor="primary"></span>
+                </div>
+              </div>
             </div>
           </ng-container>
         </div>
-        <div class="row" *ngIf="client.types.services > 0">
+        <!-- <div class="row" *ngIf="client.types.services > 0">
           <div class="col-md-12">
             <div class="header">
               <mat-icon svgIcon="service"></mat-icon>
@@ -97,7 +105,7 @@
               {{ item.status_response }}
             </div>
           </ng-container>
-        </div>
+        </div>-->
         <!-- <div class="row">
           <div class="col-md-12">
             <div class="header">

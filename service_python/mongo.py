@@ -92,53 +92,160 @@ class MongoManager:
         return res
 
     def get_affected_apps_by_client(self, client):
+        #other
         last_day = datetime.now() - timedelta(hours=24)
-        affected = {
-            'client': client,
-            'applications': {
-                'total': len(self.db['points'].find({'client': client}).distinct('application')),
-                'affected': len(self.db['events'].find({'status': False, 'client': client, 'datetime': {'$gt': last_day}}).distinct('application'))
-            },
-            'types': {
-                'sites': len(self.db['events'].find({'status': False, 'client': client, 'type': 'sites', 'datetime': {'$gt': last_day}}).distinct('name')),
-                'databases': len(self.db['events'].find({'status': False, 'client': client, 'type': 'databases', 'datetime': {'$gt': last_day}}).distinct('name')),
-                'services': len(self.db['events'].find({'status': False, 'client': client, 'type': 'services', 'datetime': {'$gt': last_day}}).distinct('name')),
-                'servicebus': len(self.db['events'].find({'status': False, 'client': client, 'type': 'servicebus', 'datetime': {'$gt': last_day}}).distinct('name'))
-            },
-            'events': {
-                'sites': self.db['events'].find({'status': False, 'client': client, 'type': 'sites', 'datetime': {'$gt': last_day}}),
-                'databases': self.db['events'].find({'status': False, 'client': client, 'type': 'databases', 'datetime': {'$gt': last_day}}),
-                'services': self.db['events'].find({'status': False, 'client': client, 'type': 'services', 'datetime': {'$gt': last_day}}),
-                'servicebus': self.db['events'].find({'status': False, 'client': client, 'type': 'servicebus', 'datetime': {'$gt': last_day}})
-            }
-        }
+        affected = self.db['events'].aggregate(
+            [
+                {
+                  '$match': {
+                  'status': False, 
+                  'datetime': {
+                               '$gt': last_day
+                              }, 
+                  'client': client
+                   }
+                }, {
+                     '$group': {
+                                 '_id': {
+                                         'client': '$client', 
+                                         'application': '$application', 
+                                         'type': '$type', 
+                                         'name': '$name', 
+                                         'status_response': '$status_response'
+                                         }, 
+                                 'status_response': {
+                                                     '$last': '$status_response'
+                                                    }, 
+                                 'firstDate': {
+                                               '$first': '$datetime'
+                                              }, 
+                                  'lastDate': {
+                                               '$last': '$datetime'
+                                              }, 
+                                  'count': {
+                                             '$sum': 1
+                                           }
+                                 }
+                     }, {
+                          '$group': {
+                                      '_id': '$_id.client', 
+                                      'applications': {
+                                                       '$push': '$$ROOT'
+                                                      }
+                                    }
+                     }, {
+                           '$unwind': {
+                                        'path': '$applications'
+                                      }
+                     }, {
+                           '$group': {
+                                       '_id': {
+                                                'client': '$applications._id.client', 
+                                                 'application': '$applications._id.application', 
+                                                 'type': '$applications._id.type', 
+                                                 'name': '$applications._id.name'
+                                              }, 
+                                       'errors': {
+                                                   '$addToSet': {
+                                                                  'status_response': '$applications.status_response', 
+                                                                   'firstDate': '$applications.firstDate', 
+                                                                    'lastDate': '$applications.lastDate', 
+                                                                    'count': '$applications.count'
+                                                                }
+                                                 }
+                                      }
+                     }, {
+                          '$group': {
+                                      '_id': '$_id.client', 
+                                       'applications': {
+                                                         '$addToSet': '$$ROOT'
+                                                        }
+                                     }
+                         }
+        ]
+        )
+        # affected = {
+        #     'client': client,
+        #     'applications': {
+        #         'total': len(self.db['points'].find({'client': client}).distinct('application')),
+        #         'affected': len(self.db['events'].find({'status': False, 'client': client, 'datetime': {'$gt': last_day}}).distinct('application'))
+        #     },
+        #     'types': {
+        #         'sites': len(self.db['events'].find({'status': False, 'client': client, 'type': 'sites', 'datetime': {'$gt': last_day}}).distinct('name')),
+        #         'databases': len(self.db['events'].find({'status': False, 'client': client, 'type': 'databases', 'datetime': {'$gt': last_day}}).distinct('name')),
+        #         'services': len(self.db['events'].find({'status': False, 'client': client, 'type': 'services', 'datetime': {'$gt': last_day}}).distinct('name')),
+        #         'servicebus': len(self.db['events'].find({'status': False, 'client': client, 'type': 'servicebus', 'datetime': {'$gt': last_day}}).distinct('name'))
+        #     },
+        #     'events': {
+        #         'sites': self.db['events'].find({'status': False, 'client': client, 'type': 'sites', 'datetime': {'$gt': last_day}}),
+        #         'databases': self.db['events'].find({'status': False, 'client': client, 'type': 'databases', 'datetime': {'$gt': last_day}}),
+        #         'services': self.db['events'].find({'status': False, 'client': client, 'type': 'services', 'datetime': {'$gt': last_day}}),
+        #         'servicebus': self.db['events'].find({'status': False, 'client': client, 'type': 'servicebus', 'datetime': {'$gt': last_day}})
+        #     }
+        # }
         return affected
 
     def get_affected_clients(self):
+        #tree
         last_day = datetime.now() - timedelta(hours=24)
-        clients = self.db['events'].find({'status': False, 'datetime': {
-            '$gt': last_day}}).distinct('client')
-        affected = []
-        for c in clients:
-            affected.append({
-                'client': c,
-                'applications': self.db['events'].find({'status': False, 'client': c, 'datetime': {
-                    '$gt': last_day}}).distinct('application')
-            })
-        res = []
-        for c in affected:
-            cli = {
-                'client': c['client']
-            }
-            apps = []
-            for a in c['applications']:
-                apps.append({
-                    'name': a,
-                    'events': self.db['events'].find({'status': False, 'client': c['client'], 'application': a, 'datetime': {
-                        '$gt': last_day}})
-                })
-            cli['applications'] = apps
-            res.append(cli)
+        print('lastDay:: ',last_day)
+        res = self.db['events'].aggregate(
+            [
+             {
+               '$match': {
+                          'status': False, 
+                           'datetime': {
+                                      '$gt': last_day
+                                       }
+                          }
+             }, {
+                   '$group': {
+                                '_id': {
+                                         'client': '$client', 
+                                         'application': '$application'
+                                       }, 
+                                'events': {
+                                            '$addToSet': {
+                                                           'type': '$type', 
+                                                           'name': '$name', 
+                                                           'status_response': '$status_response'
+                                                        }
+                                          }
+                            }
+                 },{
+                     '$group': {
+                                 '_id': '$_id.client', 
+                                  'applications': {
+                                                   '$addToSet': '$$ROOT'
+                                                  }
+                               }
+                   }
+            ])
+        #tree
+        # last_day = datetime.now() - timedelta(hours=24)
+        # clients = self.db['events'].find({'status': False, 'datetime': {
+        #     '$gt': last_day}}).distinct('client')
+        # affected = []
+        # for c in clients:
+        #     affected.append({
+        #         'client': c,
+        #         'applications': self.db['events'].find({'status': False, 'client': c, 'datetime': {
+        #             '$gt': last_day}}).distinct('application')
+        #     })
+        # res = []
+        # for c in affected:
+        #     cli = {
+        #         'client': c['client']
+        #     }
+        #     apps = []
+        #     for a in c['applications']:
+        #         apps.append({
+        #             'name': a,
+        #             'events': self.db['events'].find({'status': False, 'client': c['client'], 'application': a, 'datetime': {
+        #                 '$gt': last_day}})
+        #         })
+        #     cli['applications'] = apps
+        #     res.append(cli)
         return res
 
     def get_client_affected_types(self):

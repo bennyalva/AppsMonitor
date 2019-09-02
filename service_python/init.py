@@ -8,7 +8,7 @@ import json
 
 
 def main():
-    cron_task.schedule_job(100)
+    cron_task.schedule_job(1000)
 
 
 def init_catalogs():

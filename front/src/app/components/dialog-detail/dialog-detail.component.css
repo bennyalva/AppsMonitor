@@ -50,15 +50,32 @@ div.header span.section-title {
 }
 
 .item-details span {
-  font-size: 9px;
+  font-size: 12px;
   color: #666666;
 }
 
 .item-error {
-  font-size: 9px;
+  font-size: 10px;
   color: #666666;
 }
+#container-errors{
+  display: flex;
+  align-items: center;
 
+}
+#count-errors{
+  font-size: 10px;
+  color: #666666;
+  width: 15%;
+  margin-top: 2%;
+}
+.item-error-date{
+  font-size: 10px;
+  text-align: center;
+  color: #666666;
+  width: 85%;
+  margin-top: 2%;
+}
 div[class^="col"] {
   margin: 5px 0 5px 0;
 }

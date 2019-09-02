@@ -30,11 +30,11 @@ export class TreeComponent implements OnInit {
   ngOnInit() {
     this.dataSource.data = this.clients.map(x => {
       return <Node>{
-        name: x.client,
+        name: x._id,
         level: 0,
         children: x.applications.map(y => {
           return <Node>{
-            name: y.name,
+            name: y._id.application,
             level: 1,
             children: y.events.map(e => {
               return {

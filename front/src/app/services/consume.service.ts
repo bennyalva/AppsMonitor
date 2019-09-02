@@ -77,7 +77,7 @@ export class ConsumeService {
     return this._http.get<Response>(`${this.baseUrl}/dashboard/stats/client-affected-types`);
   }
 
-  getAffectedAppsByClient(client: string): Observable<Response> {
+  getAffectedAppsByClient(client: string): Observable<Response> {//this
     return this._http.get<Response>(`${this.baseUrl}/dashboard/stats/affected-apps-client/${client}`);
   }
 
