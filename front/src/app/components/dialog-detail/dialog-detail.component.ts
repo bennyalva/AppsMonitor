@@ -18,13 +18,12 @@ export class DialogDetailComponent implements OnInit {
     this.type = this.client.client[0]._id.type;
     this.sizeArray = this.client.client.length;
     //console.log('type:  ',this.type)
-    this.client.client.forEach(element => {
+    /*this.client.client.forEach(element => {
       //console.log('what:::,',element)
       element.errors.forEach(other => {
         console.log('other:. ',this.parseDate(other.firstDate))
       })
-    })
-    //console.log('que es:. ', )
+    })*/
    
   }
 
@@ -36,7 +35,7 @@ export class DialogDetailComponent implements OnInit {
   }
 
   parseDate(date) {
-    console.log('whtach loop:: ')
+    //console.log('whtach loop:: ')
     return moment(date).utc().format('YYYY-MM-DD HH:mm');
   }
 }

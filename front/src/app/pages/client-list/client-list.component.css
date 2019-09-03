@@ -6,7 +6,9 @@ table {
   width: 180px;
   text-align: right;
 }
-
+#color-add{
+  background-color: #001887;
+}
 @media screen and (max-width: 767px) {
   .mat-column-actions {
     display: flex;

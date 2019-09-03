@@ -5,19 +5,19 @@ import sys
 import alarm_analizer
 import mongo
 import json
-
-
+import pandas as pd
 def main():
     cron_task.schedule_job(1000)
 
 
 def init_catalogs():
     json_data = []
+    data = pd.read_excel ('hello.xlsx')
+    #print('descargar:: ', data)
     with open('catalogs.json') as json_file:
         data = json.load(json_file)
         mgo = mongo.MongoManager()
         mgo.init_coll('catalogs', data)
-
 
 def init_config():
     json_data = []

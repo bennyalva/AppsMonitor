@@ -30,6 +30,8 @@ mat-sidenav {
 }
 
 .toolbar-text {
+  background-color: #001887;
+  color: #EEF5FC;
   font-size: 1.2em;
 }
 

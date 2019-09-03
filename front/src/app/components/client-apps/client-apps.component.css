@@ -10,7 +10,9 @@ table {
   justify-content: center;
   height: 33px;
 }
-
+#color-add{
+  background-color: #001887;
+}
 th:not(:nth-last-child(2)) .th-container {
   border-right: 0.6px solid #b19fba;
 }
