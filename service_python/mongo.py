@@ -3,7 +3,7 @@ from bson.objectid import ObjectId
 from datetime import datetime, timedelta
 import dateutil.parser
 import config
-
+import json
 
 class MongoManager:
 
@@ -492,6 +492,14 @@ class MongoManager:
 
     def update(self, collection, data, id):
         coll = self.db[collection]
+        oldNameApplication = coll.find_one({'_id': ObjectId(id)});
+        result = self.db['events'].update_many(
+                                  {
+                                  'client': data['client'],
+                                  'application': oldNameApplication['application']
+                                  },
+                                   {'$set': {'application':data['application']}}
+                        )
         return coll.update_one({'_id': ObjectId(id)}, {'$set': data}).modified_count
 
     def upsert(self, collection, data):

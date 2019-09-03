@@ -50,11 +50,9 @@ def get_points():
 
 @app.route('/points/<id>', methods=['PUT'])
 def update_point(id):
+    #toChange
     mgo = mongo.MongoManager()
-    print('what id:: ', id)
     res = mgo.update('points', request.get_json(), id)
-    print('res:: ', res)
-    print('rquest:: ', request.get_json())
     return create_response(res, 200)
 
 @app.route('/points', methods=['DELETE'])

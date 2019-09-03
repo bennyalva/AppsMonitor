@@ -27,7 +27,6 @@ export class ApplicationComponent implements OnInit {
   appName: string;
   editName = false;
   application: Application = new Application();
-  oldNameAplication: string;
   catalogs: Catalog[] = [];
   formApp: FormGroup;
   elementType = ElementType;
@@ -61,7 +60,6 @@ export class ApplicationComponent implements OnInit {
      // console.log('frm app get aplication:: ', val)
       //se observa el elemento "aplication" de this.formAPP
       this.application.application = val;
-      this.oldNameAplication = val;
     });
     this.formApp.get('notifications').valueChanges.subscribe(val => {
       this.application.notifications = val;
@@ -113,8 +111,6 @@ export class ApplicationComponent implements OnInit {
   }
 
   saveApp() {
-    console.log('apliiOld::',this.oldNameAplication)
-    console.log('appl: ', this.application.application)
     this._dataService.setIsLoadingEvent(true);
     this._consumeService.saveApplication(this.application).subscribe(res => {
       this._dataService.setIsLoadingEvent(false);
