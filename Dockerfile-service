@@ -3,6 +3,7 @@ ENV PYTHONUNBUFFERED 1
 WORKDIR /usr/src/app
 COPY service_python ./
 RUN apt-get update 
+RUN apt-get install -y python3.7-dev
 RUN apt-get install -y openjdk-11-jre
 ENV JAVA_HOME /usr/lib/jvm/java-11-openjdk-amd64
 RUN export JAVA_HOME
