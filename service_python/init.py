@@ -7,7 +7,7 @@ import mongo
 import json
 import pandas as pd
 def main():
-    cron_task.schedule_job(5)
+    cron_task.schedule_job(1)
 
 
 def init_catalogs():
