@@ -10,4 +10,5 @@ RUN export JAVA_HOME
 RUN pip install -U pip
 RUN pip install --no-cache-dir -r requirements.txt
 RUN pip3 install --no-cache-dir JPype1==0.6.3 --force-reinstall
+RUN apt-get install -y libjaxb-api-java
 CMD ["python", "-u", "init.py", "prod"]
