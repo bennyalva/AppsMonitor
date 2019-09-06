@@ -9,6 +9,7 @@ RUN make altinstall
 WORKDIR /usr/src/app
 COPY service_python ./
 RUN apt-get install -y python3.7-dev
-RUN pip install --no-cache-dir -r requirements.txt
+RUN apt install python3-pip
+RUN pip3 install -y --no-cache-dir -r requirements.txt
 RUN pip3 install --no-cache-dir JPype1==0.6.3 --force-reinstall
 CMD ["python3.7", "-u", "init.py", "prod"]
