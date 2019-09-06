@@ -6,11 +6,9 @@ RUN tar -xf Python-3.7.3.tar.xz
 WORKDIR /Python-3.7.3
 RUN ./configure --enable-optimizations
 RUN make altinstall
+ENV PYTHONUNBUFFERED 1
 WORKDIR /usr/src/app
 COPY service_python ./
-RUN apt-get install -y python3-venv
-RUN python3.7 -m venv .
-RUN source bin/activate
 RUN apt-get install -y python3.7-dev
 RUN apt install -y python3-pip
 RUN pip3 install --no-cache-dir -r requirements.txt
