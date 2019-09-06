@@ -8,4 +8,7 @@ RUN tar -xf Python-3.7.3.tar.xz
 WORKDIR /Python-3.7.3
 RUN ./configure --enable-optimizations
 RUN make altinstall
+apt-get install -y python3.7-dev
+RUN pip install --no-cache-dir -r requirements.txt
+RUN pip3 install --no-cache-dir JPype1==0.6.3 --force-reinstall
 CMD ["python3.7", "-u", "init.py", "prod"]
