@@ -6,7 +6,7 @@ flask
 flask_cors
 schedule
 python-dateutil
-JPype1
+JPype1==0.6.3
 pandas
 numpy
 xlrd
