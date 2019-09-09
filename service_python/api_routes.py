@@ -10,7 +10,7 @@ CORS(app)
 
 def get_response_message(http_status):
     if http_status == 200:
-        return 'Operacion realizada con éxito'
+        return 'Operacion realizada con exito'
     elif http_status == 404:
         return 'No encontrado'
     else:
