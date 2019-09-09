@@ -18,7 +18,7 @@
       <div class="col-lg-2.5 col-md-3 col-sm-12 tree-container">
         <app-tree *ngIf="affectedClients" [clients]="affectedClients"></app-tree>
       </div>
-      <div class="offset-lg-2.5 offset-md-3 col-md-9 col-lg-10 cards-container">
+      <div class="offset-lg-2.5 offset-md-3 col-md-9 col-lg-9 cards-container">
         <div class="row">
           <div class="col-md-4" *ngFor="let client of affectedClientTypes">
             <app-client-status [client]="client"></app-client-status>

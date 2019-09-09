@@ -4,6 +4,7 @@ userName: deploy
 password: deploy100
 /////////
 user jenquins:::
+url : http://10.11.5.213:8080
 userNAme: admin-monitoring
 password: admin100
 ///////
