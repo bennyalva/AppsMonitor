@@ -1,0 +1,17 @@
+FROM python:3.6
+ENV PYTHONUNBUFFERED 1
+RUN apt-get update
+ADD jdk-8u221-linux-x64 /usr/lib/jvm
+RUN update-alternatives --install "/usr/bin/java" "java" "/usr/lib/jvm/jdk1.8.0_221/bin/java" 0
+RUN update-alternatives --set java /usr/lib/jvm/jdk1.8.0_221/bin/java
+ENV JAVA_HOME /usr/lib/jvm/jdk1.8.0_221
+RUN export JAVA_HOME
+ENV PATH $JAVA_HOME/bin:$PATH
+RUN export PATH
+WORKDIR /usr/src/app
+COPY service_python ./
+RUN apt-get install -y python3.7-dev
+RUN pip install -U pip
+RUN pip install --no-cache-dir -r requirements.txt
+RUN pip3 install --no-cache-dir JPype1==0.6.3 --force-reinstall
+CMD ["python3", "-u", "init.py", "prod"]

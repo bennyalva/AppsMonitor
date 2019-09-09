@@ -7,5 +7,4 @@ flask_cors
 schedule
 python-dateutil
 pandas
-numpy
 xlrd
