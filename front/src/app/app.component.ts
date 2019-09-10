@@ -1,7 +1,7 @@
 import { AfterViewChecked, ChangeDetectorRef, Component } from '@angular/core';
 import { MatIconRegistry, MatSnackBar } from '@angular/material';
 import { DomSanitizer } from '@angular/platform-browser';
-
+import { interval,Subscription } from 'rxjs';
 import { DataService } from './services/data.service';
 
 @Component({
@@ -11,13 +11,13 @@ import { DataService } from './services/data.service';
 })
 export class AppComponent implements AfterViewChecked {
   isLoading = false;
-
+  secondsCounter = interval(50000);
   constructor(private _dataService: DataService, private _snackBar: MatSnackBar, private _domSanitizer: DomSanitizer,
     private _cdRef: ChangeDetectorRef, private _matIconRegistry: MatIconRegistry) {
     this._dataService.getIsLoadingEvent().subscribe(load => {
       this.isLoading = load;
     });
-
+    
     this.registerCustomIcons();
 
     this._dataService
@@ -32,6 +32,9 @@ export class AppComponent implements AfterViewChecked {
 
   ngAfterViewChecked() {
     this._cdRef.detectChanges();
+    this.secondsCounter.subscribe(n =>{
+      console.log('qhat n ::', n)
+    })
   }
 
   registerCustomIcons() {
