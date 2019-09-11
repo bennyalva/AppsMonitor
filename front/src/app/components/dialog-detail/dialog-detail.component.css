@@ -64,13 +64,13 @@ div.header span.section-title {
 
 }
 #count-errors{
-  font-size: 10px;
+  font-size: 15px;
   color: #666666;
   width: 15%;
   margin-top: 2%;
 }
 .item-error-date{
-  font-size: 10px;
+  font-size: 15px;
   text-align: center;
   color: #666666;
   width: 85%;

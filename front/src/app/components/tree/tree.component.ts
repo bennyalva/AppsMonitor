@@ -39,7 +39,7 @@ export class TreeComponent implements OnInit {
             children: y.events.map(e => {
               return {
                 name: e.name,
-                tooltip: e.status_response,
+                tooltip: e.last_response,
                 icon: this.getIconForType(e.type),
                 level: 2
               };

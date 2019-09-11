@@ -11,7 +11,7 @@ def verify_connection(type, ip_address, port, db_name, user, pwd, query):
             #query = 'SELECT 1 FROM DUAL' if type == 'oracle' else 'SELECT 1'
             cursor.execute(query)
             row = cursor.fetchone()
-            print('row:: ',row)
+            #print('row:: ',row)
             #return {'status': True, 'msg': row[0]}
             return {'status': True, 'msg': row}
     except Exception as ex:
@@ -33,7 +33,7 @@ def open_db_connection(type, ip_address, port, db_name, user, pwd):
         connection_string = 'jdbc:mysql://{}:{}/{}?sslMode=DISABLED&useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC'.format(
             ip_address, port, db_name)
 
-    print('verifying_connection_to_conn: ', connection_string)
+    #print('verifying_connection_to_conn: ', connection_string)
     driverPath = ['drivers/sqljdbc42.jar', 'drivers/ojdbc8.jar',
                   'drivers/mysql-connector-java-8.0.16.jar']
     connection = jaydebeapi.connect(driverClassName,

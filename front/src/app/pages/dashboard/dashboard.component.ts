@@ -65,6 +65,12 @@ export class DashboardComponent implements OnInit {
     const loadClients = this._consumeService.getAffectedClients().pipe(
       tap(val => {
         this.affectedClients = val.data;
+        this.affectedClients.forEach(data =>{
+          console.log('dataaaaax:',data._id)
+          data.applications.forEach(app =>{
+            console.log('appp::', app._id)
+          })
+        })
         
       })
     );

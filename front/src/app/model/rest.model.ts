@@ -6,11 +6,9 @@ export class Pagination {
 export class AffectedClient {
   _id: string;
   applications: AffectedApplication[];
-  total: number;
-  affected: number;
 }
 
-export class AffectedClientType {//this
+export class AffectedClientType {
   client: string;
   applications: AffectedClientApplications;
   affected: AffectedTypes;
@@ -49,7 +47,6 @@ export class AffectedTypes {
 }
 
 export class AffectedApplication {
-  name: string;
   events: AppEvent[];
   _id: any;
 }
@@ -156,13 +153,8 @@ export class Datetime {
 }
 
 export class AppEvent {
-  _id: Id;
-  application: Id;
-  client: string;
-  datetime: Datetime;
   name: string;
-  status: boolean;
-  status_response: string;
+  last_response: string;
   type: string;
 }
 
