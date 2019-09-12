@@ -49,8 +49,8 @@ class Crawler:
     def database_status(self, point, databases):
         for database in databases:
             #print('databse:: ', database,'---------------')
-            #print('verifying_dbconnection_to: ', 'type:{} ip:{}, port:{} db:{}'.format(
-            #    database['type'], database['ip'], database['port'], database['database']))
+            print('verifying_dbconnection_to: ', 'type:{} ip:{}, port:{} db:{}'.format(
+                database['type'], database['ip'], database['port'], database['database']))
             result = db_monitor.verify_connection(
                 database['type'], database['ip'], database['port'], database['database'], database['usr'], database['pwd'], database['query'])
             # self.alm_analizer.analize(
@@ -63,7 +63,7 @@ class Crawler:
         now = datetime.now()
         if status :
             result = self.mgo.update_application_when_true(client, application, type, name)
-            print('Es true result:',result)
+        print(' result:',status)
         event = {
             'datetime': now,
             'client': client,

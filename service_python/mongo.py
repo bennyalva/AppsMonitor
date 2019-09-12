@@ -62,12 +62,16 @@ class MongoManager:
         return coll.find_one(query)
     
     def update_application_when_true(self,client, application, type, name):
+        last_day = datetime.now() - timedelta(hours=24)
         result = self.db['events'].update_many(
                                   {
                                   'client': client,
                                   'application': application,
                                   'type':type,
-                                  'name':name
+                                  'name':name,
+                                  'datetime':{
+                                                '$gt': last_day
+                                             }
                                   },
                                    {'$set': {'status':True}}
                         )
@@ -216,8 +220,6 @@ class MongoManager:
     def get_affected_clients(self):
         #treehere
         last_day = datetime.now() - timedelta(hours=24)
-        print('now::: ', datetime.now())
-        print('lastDayNNN:: ',last_day)
         res = self.db['events'].aggregate(
            [
               {
@@ -511,12 +513,16 @@ class MongoManager:
         return coll.aggregate(pipeline)
 
     def update(self, collection, data, id):
+        last_day = datetime.now() - timedelta(hours=24)
         coll = self.db[collection]
         oldNameApplication = coll.find_one({'_id': ObjectId(id)});
         result = self.db['events'].update_many(
                                   {
                                   'client': data['client'],
-                                  'application': oldNameApplication['application']
+                                  'application': oldNameApplication['application'],
+                                  'datetime':{
+                                                '$gt': last_day
+                                             }
                                   },
                                    {'$set': {'application':data['application']}}
                         )

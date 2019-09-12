@@ -30,7 +30,7 @@ export class DashboardComponent implements OnInit,OnDestroy {
   isLoading = false;
   statsAlerts = 0;
   statsApps = 0;
-  requestInterval = interval(10000);//10 se
+  requestInterval = interval(600000);//10 min
   subscriptionToRequest: Subscription;
   newAffectedClients = new Array<[]>(1);
   constructor(private _dataService: DataService, private _consumeService: ConsumeService) {
