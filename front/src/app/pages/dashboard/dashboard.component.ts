@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, OnDestroy } from '@angular/core';
 
 import { Application, Client, AffectedClient, AffectedClientType } from '../../model/rest.model';
 import { ConsumeService } from '../../services/consume.service';
@@ -7,14 +7,15 @@ import { StatType } from 'src/app/components/stats/stats.component';
 import { TreeComponent } from 'src/app/components/tree/tree.component';
 import { tap } from 'rxjs/operators';
 import { EMPTY, forkJoin } from 'rxjs';
-
+import { interval, Subscription } from 'rxjs';
+import { CdkObserveContent } from '@angular/cdk/observers';
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.css']
 })
-export class DashboardComponent implements OnInit {
-  @ViewChild(TreeComponent) treeComponent: TreeComponent;
+export class DashboardComponent implements OnInit,OnDestroy {
+  //@ViewChild(TreeComponent) treeComponent: TreeComponent;
 
   types: StatType[] = [
     { name: 'sites', title: 'Sitios', icon: 'site', affected: 0, total: 0 },
@@ -29,7 +30,9 @@ export class DashboardComponent implements OnInit {
   isLoading = false;
   statsAlerts = 0;
   statsApps = 0;
-
+  requestInterval = interval(10000);//10 se
+  subscriptionToRequest: Subscription;
+  newAffectedClients = new Array<[]>(1);
   constructor(private _dataService: DataService, private _consumeService: ConsumeService) {
     this._dataService.getIsLoadingEvent().subscribe(load => {
       this.isLoading = load;
@@ -38,9 +41,13 @@ export class DashboardComponent implements OnInit {
 
   ngOnInit() {
     this.loadData();
+    this.subscriptionToRequest = this.requestInterval.subscribe(val => this.loadData())
   }
-
+  ngOnDestroy(){
+    this.subscriptionToRequest.unsubscribe();
+  }
   loadData() {
+    console.log('se ejecuta load data')
     const loadStats = forkJoin(this.types.map(x => {
       return this._consumeService.getStatsByType(x.name).pipe(
         tap(val => {
@@ -65,13 +72,11 @@ export class DashboardComponent implements OnInit {
     const loadClients = this._consumeService.getAffectedClients().pipe(
       tap(val => {
         this.affectedClients = val.data;
-        this.affectedClients.forEach(data =>{
-          console.log('dataaaaax:',data._id)
-          data.applications.forEach(app =>{
-            console.log('appp::', app._id)
-          })
+        this.newAffectedClients[0]= val.data;
+        //console.log('new clientsAffected:: ',this.newAffectedClients)
+        this.newAffectedClients.forEach(data =>{
+          console.log('cuantas: ', data)
         })
-        
       })
     );
 

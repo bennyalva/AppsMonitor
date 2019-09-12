@@ -1,7 +1,7 @@
-import { AfterViewChecked, ChangeDetectorRef, Component } from '@angular/core';
+import { AfterViewChecked, ChangeDetectorRef, Component, OnDestroy, AfterContentInit } from '@angular/core';
 import { MatIconRegistry, MatSnackBar } from '@angular/material';
 import { DomSanitizer } from '@angular/platform-browser';
-
+import { interval, Subscription } from 'rxjs';
 import { DataService } from './services/data.service';
 
 @Component({
@@ -9,9 +9,9 @@ import { DataService } from './services/data.service';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent implements AfterViewChecked {
+export class AppComponent implements AfterViewChecked, OnDestroy {
   isLoading = false;
-
+  otherOption: any;
   constructor(private _dataService: DataService, private _snackBar: MatSnackBar, private _domSanitizer: DomSanitizer,
     private _cdRef: ChangeDetectorRef, private _matIconRegistry: MatIconRegistry) {
     this._dataService.getIsLoadingEvent().subscribe(load => {
@@ -33,7 +33,8 @@ export class AppComponent implements AfterViewChecked {
   ngAfterViewChecked() {
     this._cdRef.detectChanges();
   }
-
+  ngOnDestroy() {
+    }
   registerCustomIcons() {
     this._matIconRegistry.addSvgIcon(
       'site',

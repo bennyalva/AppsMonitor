@@ -15,8 +15,8 @@
       <h1 class="main-title">Secciones</h1>
     </div> -->
     <div class="row">
-      <div class="col-lg-2.5 col-md-3 col-sm-12 tree-container">
-        <app-tree *ngIf="affectedClients" [clients]="affectedClients"></app-tree>
+      <div class="col-lg-2.5 col-md-3 col-sm-12 tree-container" *ngFor=" let affectedClient of newAffectedClients">
+        <app-tree *ngIf="affectedClients" [clients]="affectedClient"></app-tree>
       </div>
       <div class="offset-lg-2.5 offset-md-3 col-md-9 col-lg-9 cards-container">
         <div class="row">

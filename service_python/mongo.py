@@ -1,6 +1,6 @@
 from pymongo import MongoClient
 from bson.objectid import ObjectId
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, date
 import dateutil.parser
 import config
 import json
@@ -216,7 +216,8 @@ class MongoManager:
     def get_affected_clients(self):
         #treehere
         last_day = datetime.now() - timedelta(hours=24)
-        print('lastDay:: ',last_day)
+        print('now::: ', datetime.now())
+        print('lastDayNNN:: ',last_day)
         res = self.db['events'].aggregate(
            [
               {

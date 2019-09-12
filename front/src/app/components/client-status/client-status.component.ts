@@ -29,15 +29,13 @@ export class ClientStatusComponent implements OnInit {
     this._dataService.setIsLoadingEvent(true);
     this._consumeService.getAffectedAppsByClient(this.client.client).subscribe(res => {
     let filterClientType = res.data[0].applications.filter(applications => applications._id.type == type);
-    
-     // console.log('appsByCLientType filterNNN:: ',filterClientType)
+
       this._dataService.setIsLoadingEvent(false);
      if(filterClientType.length > 0){
       this._dialog.open(DialogDetailComponent, {
         panelClass: ['card-dialog'],
         width: '630px',
         data: {
-          //client: res.data
           client: filterClientType
         }
       });

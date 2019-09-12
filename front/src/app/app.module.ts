@@ -27,7 +27,7 @@ import { StatsCircleComponent } from './components/stats-circle/stats-circle.com
 import { SectionTableComponent } from './components/section-table/section-table.component';
 import { ConfirmDialogComponent } from './components/confirm-dialog/confirm-dialog.component';
 import { DialogDetailComponent } from './components/dialog-detail/dialog-detail.component';
-
+import { from } from 'rxjs';
 @NgModule({
   declarations: [
     AppComponent,
@@ -53,7 +53,7 @@ import { DialogDetailComponent } from './components/dialog-detail/dialog-detail.
     AppMaterialModule,
     NgxChartsModule,
     HttpClientModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
   ],
   providers: [
     DataService,

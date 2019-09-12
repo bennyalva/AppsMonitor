@@ -3,10 +3,8 @@ from flask_cors import CORS
 from bson import Binary, Code
 from bson.json_util import dumps
 import mongo
-
 app = Flask(__name__)
 CORS(app)
-
 
 def get_response_message(http_status):
     if http_status == 200:
@@ -28,6 +26,7 @@ def create_response(data, http_status):
 
 @app.route('/ping', methods=['GET'])
 def ping():
+
     return create_response('pong', 200)
 
 
