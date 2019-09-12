@@ -47,7 +47,6 @@ export class DashboardComponent implements OnInit,OnDestroy {
     this.subscriptionToRequest.unsubscribe();
   }
   loadData() {
-    console.log('se ejecuta load data')
     const loadStats = forkJoin(this.types.map(x => {
       return this._consumeService.getStatsByType(x.name).pipe(
         tap(val => {
@@ -73,10 +72,6 @@ export class DashboardComponent implements OnInit,OnDestroy {
       tap(val => {
         this.affectedClients = val.data;
         this.newAffectedClients[0]= val.data;
-        //console.log('new clientsAffected:: ',this.newAffectedClients)
-        this.newAffectedClients.forEach(data =>{
-          console.log('cuantas: ', data)
-        })
       })
     );
 
