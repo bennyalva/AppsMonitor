@@ -1,0 +1,67 @@
+[
+  {
+    "type": "sites",
+    "name": "type",
+    "value": "Principal"
+  },
+  {
+    "type": "sites",
+    "name": "type",
+    "value": "Secundario"
+  },
+  {
+    "type": "sites",
+    "name": "environment",
+    "value": "Desarrollo"
+  },
+  {
+    "type": "sites",
+    "name": "environment",
+    "value": "QA"
+  },
+  {
+    "type": "sites",
+    "name": "environment",
+    "value": "Producción"
+  },
+  {
+    "type": "databases",
+    "name": "type",
+    "value": "sqlserver"
+  },
+  {
+    "type": "databases",
+    "name": "type",
+    "value": "oracle"
+  },
+  {
+    "type": "databases",
+    "name": "type",
+    "value": "mysql"
+  },
+  {
+    "type": "services",
+    "name": "type",
+    "value": "rest"
+  },
+  {
+    "type": "services",
+    "name": "type",
+    "value": "soap"
+  },
+  {
+    "type": "services",
+    "name": "method",
+    "value": "get"
+  },
+  {
+    "type": "services",
+    "name": "method",
+    "value": "post"
+  },
+  {
+    "type": "servicebus",
+    "name": "type",
+    "value": "osb"
+  }
+]
