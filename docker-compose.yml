@@ -5,7 +5,7 @@ services:
       context: .
       dockerfile: "Dockerfile-frontend"
     ports:
-      - "80:80"
+      - "8090:8090"
     environment:
       - TZ=America/Mexico_City
   service:
@@ -13,6 +13,6 @@ services:
       context: .
       dockerfile: "Dockerfile-service"
     ports:
-      - "3000:3000"
+      - "5000:5000"
     environment:
       - TZ=America/Mexico_City
