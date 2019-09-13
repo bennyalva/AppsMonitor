@@ -16,7 +16,7 @@ pipeline {
         stage('Docker up') {
             steps {
                 echo 'Running on Docker'
-                //sh 'docker network disconnect pharmacymonitoringdev_default mongodbdev'
+                sh 'docker network disconnect pharmacymonitoringdev_default mongodbdev'
                 sh 'docker-compose down --rmi all'
                 sh 'docker-compose up -d'
                 sh 'docker network connect pharmacymonitoringdev_default mongodbdev'
