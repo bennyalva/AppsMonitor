@@ -101,7 +101,10 @@ class MongoManager:
                 {
                   '$match': {
                               'status': False, 
-                              'type': type
+                              'type': type,
+                              'datetime': {
+                                         '$gt': last_day
+                                       }
                             }
                }, {
                    '$group': {
