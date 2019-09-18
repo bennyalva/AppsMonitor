@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  baseUrl: 'pharmacymonitoring_service_1'
+  baseUrl: 'http://10.27.24.38:3000'
 };
