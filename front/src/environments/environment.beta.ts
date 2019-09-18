@@ -1,4 +1,5 @@
 export const environment = {
   production: true,
-  baseUrl: 'http://10.27.24.38:5000'
+  //para scalar a modo de production no es recomendable usar dns para docker names
+  baseUrl: 'http://service-back:5000'
 };
