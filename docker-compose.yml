@@ -8,8 +8,6 @@ services:
       - "8090:80"
     environment:
       - TZ=America/Mexico_City
-    networks:
-      - netmonitoring
   service:
     build:
       context: .
@@ -18,9 +16,3 @@ services:
       - "5000:5000"
     environment:
       - TZ=America/Mexico_City
-    networks:
-      netmonitoring:
-          aliases:
-          - backservice
-networks:
-   netmonitoring:
