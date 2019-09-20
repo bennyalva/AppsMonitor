@@ -28,6 +28,7 @@ export class AppComponent implements AfterViewChecked, OnDestroy {
           duration: 3000
         });
       });
+
   }
 
   ngAfterViewChecked() {

@@ -11,9 +11,16 @@ class MongoManager:
         self.client = MongoClient('{}:27017'.format(
             config.env.MONGO_URL))  # pylint: disable=maybe-no-member
         self.db = self.client.monitor
-    def get_list(self, collection, query, startDate=None, endDate=None, sort=None, sortDir=None, limit=None):
-        coll = self.db[collection]
-
+    def get_list(self,monitoring):
+        coll = self.db['points'].aggregate(
+                [
+                    {
+                      '$match': {
+                                  'monitoring': monitoring
+                                }
+                    }
+                ])
+        return coll
         if startDate is not None or endDate is not None:
             dateFilter = {'datetime': {}}
             if self.isNotBlank(startDate):

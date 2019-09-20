@@ -2,10 +2,9 @@ from api_routes import app
 import cron_task
 import config
 import sys
-import json
-#import os as commanLine
 
-#commanLine.system('cd .. && ls')
+def main():
+    cron_task.schedule_job(30)
 
 if __name__ == '__main__':
     env = sys.argv[1] if len(sys.argv) == 2 else 'dev'
@@ -14,5 +13,5 @@ if __name__ == '__main__':
         config.env = config.DevelopmentConfig
     elif env == 'prod':
         config.env = config.ProductionConfig
-
+    main()
     app.run(host=config.env.LISTEN_ADDRESS, port=config.env.LISTEN_PORT)

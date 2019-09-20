@@ -15,5 +15,17 @@ Pwd: //Fap05
 ///////traefik
 https://www.digitalocean.com/community/tutorials/how-to-use-traefik-as-a-reverse-proxy-for-docker-containers-on-centos-7
 
-/////mageddo
+/////begin mageddo
 http://mageddo.github.io/dns-proxy-server/latest/en/2-features/installing-as-service/
+
+start docker service:::::::::::///////
+docker run --hostname dns.mageddo --name dns-proxy-server -p 5380:5380 \
+  --restart=unless-stopped -d \
+  -v /opt/dns-proxy-server/conf:/app/conf \
+  -v /var/run/docker.sock:/var/run/docker.sock \
+  -v /etc/resolv.conf:/etc/resolv.conf \
+  defreitas/dns-proxy-server
+
+/////end mageddo
+
+

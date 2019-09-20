@@ -8,23 +8,26 @@ import json
 from json.encoder import JSONEncoder
 
 class Crawler:
-
     def __init__(self):
         self.mgo = mongo.MongoManager()
         # self.alm_analizer = alarm_analizer.AlarmAnalizer()
-        points = self.get_points()
+        from api_routes import who
+        points = list(self.get_points(who))
+        #print('points:: ',points)
         for point in points:
-            print('points parsed: ', JSONEncoder().encode(point))
+            #print('point:: cakhsvc n',point)
             self.process(point)
 
-    def get_points(self):
-        return self.mgo.get_list('points', {})
+    def get_points(self,monitoring):
+        return self.mgo.get_list(monitoring)
 
     def process(self, point):
+        #print('databases:: ',point['databases'])
         #print('monitoring_application:', point['application'])
         self.webscrapping(point, point['sites'])
         self.port_open(point, point['services'])
         self.database_status(point, point['databases'])
+        
         #print('monitoring_application_finish:', point['application'])
 
     def webscrapping(self, point, sites):
@@ -46,11 +49,12 @@ class Crawler:
             #     point, 'services', service['name'], result, result)
             #print('connecting_to_port_response:', result)
             self.persist_event(point['client'], point['application'],
-                               'services', service['name'], result['msg'], result['status'])
+                               'services', service['name'], result['msg'], result['status'],
+                                point['monitoring'])
 
     def database_status(self, point, databases):
         for database in databases:
-            #print('databse:: ', database,'---------------')
+            print('client',point['client'], ' --- databsename:: ', database['name'],'------')
             #print('verifying_dbconnection_to: ', 'type:{} ip:{}, port:{} db:{}'.format(
             #    database['type'], database['ip'], database['port'], database['database']))
             result = db_monitor.verify_connection(
@@ -59,9 +63,9 @@ class Crawler:
             #     point, 'databases', database['name'], result['msg'], result['status'])
             #print('verifying_dbconnection_to_response: ', result)
             self.persist_event(point['client'], point['application'],
-                               'databases', database['name'], result['msg'], result['status'])
+                               'databases', database['name'], result['msg'], result['status'],point['monitoring'])
 
-    def persist_event(self, client, application, type, name, status_response, status):
+    def persist_event(self, client, application, type, name, status_response, status, monitoring):
         now = datetime.now()
         if status :
             result = self.mgo.update_application_when_true(client, application, type, name)
@@ -73,7 +77,8 @@ class Crawler:
             'type': type,
             'name': name,
             'status_response': status_response,
-            'status': status
+            'status': status,
+            'monitoring':monitoring
             
         }
         self.mgo.insert('events', event)

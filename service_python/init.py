@@ -6,9 +6,9 @@ import alarm_analizer
 import mongo
 import json
 import pandas as pd
-def main():
-    cron_task.schedule_job(30)
 
+def main():
+    cron_task.schedule_job(1)
 
 def init_catalogs():
     json_data = []

@@ -17,6 +17,6 @@ def run_schedule():
 
 
 def job():
-    print("checking...")
+    print("checking ")
     crawler.Crawler()
-    print("finish checking...")
+    print("finish checking ")

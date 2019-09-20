@@ -8,6 +8,7 @@ import crawler
 
 app = Flask(__name__)
 CORS(app)
+who = 0
 
 def get_response_message(http_status):
     if http_status == 200:
@@ -31,13 +32,18 @@ def create_response(data, http_status):
 def ping():
     return create_response('pong-n', 200)
 
-@app.route('/check-services', methods=['GET'])
-def checkservices():
-    #print('request:: ',request.get_json())
-    print("checking...")
-    crawler.Crawler()
-    print("finish checking...")
-    return create_response('ok', 200)
+@app.route('/newiam', methods=['POST'])
+def newiam():
+    newWho = request.get_json('name')
+    global who
+    who = newWho['name']
+    print('what have:: ', who)
+    return create_response(who, 200)
+
+@app.route('/whoiam', methods=['GET'])
+def whoiam():
+    return create_response(who, 200)
+
 
 @app.errorhandler(404)
 def custom400(error):
