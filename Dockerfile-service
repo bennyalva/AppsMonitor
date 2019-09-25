@@ -1,6 +1,6 @@
 FROM openjdk:8-jre-slim
-RUN apt update
-RUN apt install build-essential zlib1g-dev libncurses5-dev libgdbm-dev libnss3-dev libssl-dev libreadline-dev libffi-dev wget curl -y
+RUN apt-get update
+RUN apt-get install build-essential zlib1g-dev libncurses5-dev libgdbm-dev libnss3-dev libssl-dev libreadline-dev libffi-dev wget curl -y
 RUN curl -O https://www.python.org/ftp/python/3.7.3/Python-3.7.3.tar.xz
 RUN tar -xf Python-3.7.3.tar.xz
 WORKDIR /Python-3.7.3

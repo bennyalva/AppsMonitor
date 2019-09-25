@@ -23,7 +23,7 @@ export class DashboardComponent implements OnInit,OnDestroy {
     { name: 'services', title: 'Servicios', icon: 'service', affected: 0, total: 0 },
     { name: 'servicebus', title: 'Service bus', icon: 'servicebus', affected: 0, total: 0 },
   ];
-  applications: Application[] = [];
+  //applications: Application[] = [];
   affectedClients: AffectedClient[] = [];
   affectedClientTypes: AffectedClientType[] = [];
   selectedClient;
