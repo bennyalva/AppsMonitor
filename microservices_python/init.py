@@ -4,7 +4,7 @@ import config
 import sys
 
 def main():
-    cron_task.schedule_job(30)
+    cron_task.schedule_job(1)
 
 if __name__ == '__main__':
     env = sys.argv[1] if len(sys.argv) == 2 else 'dev'

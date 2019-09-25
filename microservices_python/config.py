@@ -14,9 +14,9 @@ class DevelopmentConfig(Config):
 
 class ProductionConfig(Config):
     DEBUG = False
-    LISTEN_PORT = 5000
+    LISTEN_PORT = 5050
     LISTEN_ADDRESS = '0.0.0.0'
-    MONGO_URL = 'mongodb'
+    MONGO_URL = 'mongodbdev'
     #MONGO_URL = '10.11.1.109'
     EMAIL_HOST = 'smtp.office365.com'
     EMAIL_PORT = 0
