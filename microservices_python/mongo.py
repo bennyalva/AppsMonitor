@@ -55,6 +55,7 @@ class MongoManager:
          last_day = datetime.now() - timedelta(hours=24)
          result = self.db['events'].update_many(
                                   {
+                                  'status': False,
                                   'client': client,
                                   'application': application,
                                   'type':type,
