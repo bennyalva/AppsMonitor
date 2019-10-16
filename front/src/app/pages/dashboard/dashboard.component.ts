@@ -75,7 +75,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
     const loadClients = this._consumeService.getAffectedClients().pipe(
       tap(val => {
         this.affectedClients = val.data;
-        this.newAffectedClients[0]= val.data;
+        this.newAffectedClients[0] = val.data;
       })
     );
 
