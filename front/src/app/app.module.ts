@@ -28,6 +28,10 @@ import { SectionTableComponent } from './components/section-table/section-table.
 import { ConfirmDialogComponent } from './components/confirm-dialog/confirm-dialog.component';
 import { DialogDetailComponent } from './components/dialog-detail/dialog-detail.component';
 import { from } from 'rxjs';
+import { SocketService } from './services/socket.service';
+import { environment } from 'src/environments/environment';
+import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
+const config: SocketIoConfig = { url: environment.baseUrl, options: {} };
 @NgModule({
   declarations: [
     AppComponent,
@@ -54,10 +58,12 @@ import { from } from 'rxjs';
     NgxChartsModule,
     HttpClientModule,
     ReactiveFormsModule,
+    SocketIoModule.forRoot(config)
   ],
   providers: [
     DataService,
     ConsumeService,
+    SocketService,
     {
       provide: MatPaginatorIntl,
       useClass: PaginatorService

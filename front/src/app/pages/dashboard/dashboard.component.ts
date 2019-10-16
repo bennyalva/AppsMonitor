@@ -7,15 +7,15 @@ import { StatType } from 'src/app/components/stats/stats.component';
 import { TreeComponent } from 'src/app/components/tree/tree.component';
 import { tap } from 'rxjs/operators';
 import { EMPTY, forkJoin } from 'rxjs';
-import { interval, Subscription } from 'rxjs';
+import { Subscription } from 'rxjs';
 import { CdkObserveContent } from '@angular/cdk/observers';
+import { SocketService } from 'src/app/services/socket.service';
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.css']
 })
-export class DashboardComponent implements OnInit,OnDestroy {
-  //@ViewChild(TreeComponent) treeComponent: TreeComponent;
+export class DashboardComponent implements OnInit, OnDestroy {
 
   types: StatType[] = [
     { name: 'sites', title: 'Sitios', icon: 'site', affected: 0, total: 0 },
@@ -30,21 +30,25 @@ export class DashboardComponent implements OnInit,OnDestroy {
   isLoading = false;
   statsAlerts = 0;
   statsApps = 0;
-  requestInterval = interval(600000);//10 min
-  subscriptionToRequest: Subscription;
+  subscriptions = new Subscription();
   newAffectedClients = new Array<[]>(1);
-  constructor(private _dataService: DataService, private _consumeService: ConsumeService) {
+  constructor(private _dataService: DataService, private _consumeService: ConsumeService,
+              private _socketService: SocketService) {
     this._dataService.getIsLoadingEvent().subscribe(load => {
       this.isLoading = load;
     });
+
+    this.subscriptions.add(this._socketService.listenFinishChecking().subscribe( dataFinish => {
+        console.log('data finish: ', dataFinish);
+        this.loadData();
+    }));
   }
 
   ngOnInit() {
     this.loadData();
-    this.subscriptionToRequest = this.requestInterval.subscribe(val => this.loadData())
   }
-  ngOnDestroy(){
-    this.subscriptionToRequest.unsubscribe();
+  ngOnDestroy() {
+    this.subscriptions.unsubscribe();
   }
   loadData() {
     const loadStats = forkJoin(this.types.map(x => {

@@ -1,4 +1,5 @@
 from threading import Thread
+from api_routes import socketio
 import schedule
 import time
 import crawler
@@ -18,5 +19,7 @@ def run_schedule():
 
 def job():
     print("checking...")
+    socketio.emit('startChecking', {'data':'event'}, broadcast=True)
     crawler.Crawler()
+    socketio.emit('finishChecking', { 'data':'event'}, broadcast=True)
     print("finish checking...")

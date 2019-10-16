@@ -1,4 +1,4 @@
-from api_routes import app
+from api_routes import app, socketio
 import cron_task
 import config
 import sys
@@ -7,7 +7,7 @@ import mongo
 import json
 import pandas as pd
 def main():
-    cron_task.schedule_job(30)
+    cron_task.schedule_job(1)
 
 
 def init_catalogs():
@@ -36,4 +36,5 @@ if __name__ == '__main__':
 
     main()
     init_catalogs()
-    app.run(host=config.env.LISTEN_ADDRESS, port=config.env.LISTEN_PORT)
+    #app.run(host=config.env.LISTEN_ADDRESS, port=config.env.LISTEN_PORT)
+    socketio.run(app,host=config.env.LISTEN_ADDRESS, port=config.env.LISTEN_PORT)

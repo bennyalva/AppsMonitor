@@ -3,8 +3,13 @@ from flask_cors import CORS
 from bson import Binary, Code
 from bson.json_util import dumps
 import mongo
+from flask_socketio import SocketIO, emit
+import eventlet
+eventlet.monkey_patch()
+
 app = Flask(__name__)
 CORS(app)
+socketio = SocketIO(app, cors_allowed_origins="*",async_mode="eventlet",use_reloader=False)
 
 def get_response_message(http_status):
     if http_status == 200:
@@ -26,7 +31,6 @@ def create_response(data, http_status):
 
 @app.route('/ping', methods=['GET'])
 def ping():
-
     return create_response('pong', 200)
 
 

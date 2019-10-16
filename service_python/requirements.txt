@@ -4,7 +4,10 @@ JayDeBeApi
 pymongo
 flask
 flask_cors
+flask-socketio
 schedule
 python-dateutil
+JPype1==0.6.3
+eventlet
 pandas
 xlrd
