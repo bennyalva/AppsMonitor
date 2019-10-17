@@ -18,6 +18,14 @@
           </span>
         </a>
       </mat-nav-list>
+      <mat-nav-list>
+        <a mat-list-item [routerLink]="['/reports']" (click)="sidenav.close()">
+          <mat-icon color="primary" matListIcon>assignment</mat-icon>
+          <span matLine>
+            Reportes
+          </span>
+        </a>
+      </mat-nav-list>
     </div>
   </mat-sidenav>
   <mat-progress-bar mode="indeterminate" color="accent" *ngIf="isLoading"></mat-progress-bar>

@@ -40,7 +40,7 @@ export class ConsumeService {
   }
 
   saveApplication(application: Application): Observable<Response> {
-    //console.log('aplication:: ', application)
+    // console.log('aplication:: ', application)
     if (application._id) {
       const id = application._id.$oid;
       delete application._id;
@@ -77,7 +77,7 @@ export class ConsumeService {
     return this._http.get<Response>(`${this.baseUrl}/dashboard/stats/client-affected-types`);
   }
 
-  getAffectedAppsByClient(client: string): Observable<Response> {//this
+  getAffectedAppsByClient(client: string): Observable<Response> {
     return this._http.get<Response>(`${this.baseUrl}/dashboard/stats/affected-apps-client/${client}`);
   }
 
@@ -136,5 +136,9 @@ export class ConsumeService {
 
   deleteClient(id: string): Observable<Response> {
     return this._http.delete<Response>(`${this.baseUrl}/clients/${id}`);
+  }
+
+  getReportByType(type: string): Observable<Response> {
+    return this._http.get<Response>(`${this.baseUrl}/reports/report/${type}`);
   }
 }

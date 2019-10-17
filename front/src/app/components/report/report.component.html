@@ -1,0 +1,11 @@
+<div class="stats-container">
+  <div class="percent">
+    <img class="img-responsive" src="../../../assets/img/icons/{{ type?.icon }}">
+  </div>
+  <div class="type">
+    <span>{{type?.title}}</span>
+  </div>
+  <div class="items">    <span [class]="type?.affected > 0 ? 'affected' : 'ok'">{{type?.affected}}
+</span>
+  </div>
+</div>

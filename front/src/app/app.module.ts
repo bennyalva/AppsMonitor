@@ -31,6 +31,8 @@ import { from } from 'rxjs';
 import { SocketService } from './services/socket.service';
 import { environment } from 'src/environments/environment';
 import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
+import { ReportsComponent } from './pages/reports/reports.component';
+import { ReportComponent } from './components/report/report.component';
 const config: SocketIoConfig = { url: environment.baseUrl, options: {} };
 @NgModule({
   declarations: [
@@ -48,7 +50,9 @@ const config: SocketIoConfig = { url: environment.baseUrl, options: {} };
     StatsCircleComponent,
     SectionTableComponent,
     ConfirmDialogComponent,
-    DialogDetailComponent
+    DialogDetailComponent,
+    ReportsComponent,
+    ReportComponent
   ],
   imports: [
     BrowserModule,

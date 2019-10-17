@@ -11,17 +11,29 @@
     </div>
   </div>
   <ng-container *ngIf="affectedClients.length > 0">
-     <!--<div class="row">
-      <h1 class="main-title">Secciones</h1>
-    </div> -->
     <div class="row">
       <div class="col-lg-2.5 col-md-3 col-sm-12 tree-container" *ngFor=" let affectedClient of newAffectedClients">
         <app-tree *ngIf="affectedClients" [clients]="affectedClient"></app-tree>
       </div>
       <div class="offset-lg-2.5 offset-md-3 col-md-9 col-lg-9 cards-container">
-        <div class="row">
-          <div class="col-md-4" *ngFor="let client of affectedClientTypes">
-            <app-client-status [client]="client"></app-client-status>
+        <div class="row" id="clients">
+          <div class="col-md-12 col-sm-12 " id="client-affected-cards">
+            <div class="row">
+              <div class="col-md-4" *ngFor="let client of affectedClientTypes">
+                <app-client-status [client]="client"></app-client-status>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-12 col-sm-12 col-xs-12" id="reports-container">
+            <div class="row">
+              <div id="title-reportes">
+                Reportes
+              </div>
+              <div class="col-md-2 col-sm-4 col-xs-6" *ngFor="let type of reportsType"
+                   id="report-icon">
+                <app-report [type]="type" (click)="detail(type.name)"></app-report>
+              </div>
+            </div>
           </div>
         </div>
       </div>

@@ -124,7 +124,23 @@ class MongoManager:
             'affected': resultTotalAffectedByService
         }
         return res
-
+    
+    def get_report_by_type(self, type):
+        #last day para que nos de los registros del ultimo dia
+        #last_day = datetime.now() - timedelta(hours=24)
+        report = self.db['reports'].aggregate([
+                {
+                    '$match': {
+                        'status': True, 
+                        'type': type
+                    }
+                }
+            ])
+        res = {
+            'affected': len(list(report))
+        }
+        return res
+        
     def get_total_alerts(self):
         all_alerts = self.db['events'].count_documents(
             {'status': False, 'datetime': {'$gt': datetime.now() - timedelta(hours=24)}})

@@ -4,12 +4,12 @@ from bson import Binary, Code
 from bson.json_util import dumps
 import mongo
 from flask_socketio import SocketIO, emit
-import eventlet
-eventlet.monkey_patch()
+#import eventlet
+#eventlet.monkey_patch()
 
 app = Flask(__name__)
 CORS(app)
-socketio = SocketIO(app, cors_allowed_origins="*",async_mode="eventlet",use_reloader=False)
+socketio = SocketIO(app, cors_allowed_origins="*",use_reloader=False)
 
 def get_response_message(http_status):
     if http_status == 200:
@@ -175,6 +175,11 @@ def get_affected_apps_by_client(client):
     res = mgo.get_affected_apps_by_client(client)
     return create_response(res, 200)
 
+@app.route('/reports/report/<type>', methods=['GET'])
+def get_type_report(type):
+    mgo = mongo.MongoManager()
+    res = mgo.get_report_by_type(type)
+    return create_response(res, 200)
 
 @app.errorhandler(404)
 def custom400(error):

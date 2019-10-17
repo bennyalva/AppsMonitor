@@ -58,7 +58,9 @@ h1.main-title {
 .all-clear p {
   color: rgba(0, 0, 0, 0.3);
 }
-
+#clients{
+  height: 100%;
+}
 @media screen and (max-width: 767px) {
   .tree-container {
     position: relative;
@@ -71,4 +73,27 @@ h1.main-title {
     top: unset;
     bottom: unset;
   }
+}
+ #client-affected-cards{
+  height: 50%;
+ }
+ #reports-container{
+  border-style: solid;
+  border-color: grey;
+  border-top-width: 1px;
+  border-right-width: 0;
+  border-left-width: 0;
+  border-bottom-width: 0;
+  height: 50%;
+ }
+#report-icon{
+  margin-top: 6%;
+  cursor: pointer;
+}
+#title-reportes{
+  width: 20%;
+  margin-left: 40%;
+  margin-right: 40%;
+  font-weight: bold;
+  margin-top: 6%;
 }

@@ -3,6 +3,7 @@ from api_routes import socketio
 import schedule
 import time
 import crawler
+from pymongo import errors as mongoerrors
 
 
 def schedule_job(every_minutes):
@@ -20,6 +21,9 @@ def run_schedule():
 def job():
     print("checking...")
     socketio.emit('startChecking', {'data':'event'}, broadcast=True)
-    crawler.Crawler()
+    try:
+        crawler.Crawler()
+    except mongoerrors.ServerSelectionTimeoutError as mongoError:
+        print('>>>! Error to connect to mongodb, please check if database is running before to continue !<<<<')
     socketio.emit('finishChecking', { 'data':'event'}, broadcast=True)
     print("finish checking...")
