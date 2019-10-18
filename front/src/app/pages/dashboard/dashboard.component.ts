@@ -47,26 +47,20 @@ export class DashboardComponent implements OnInit, OnDestroy {
     this._dataService.getIsLoadingEvent().subscribe(load => {
       this.isLoading = load;
     });
-    
     this.subscriptions.add(
           this._socketService.listenNewReport().subscribe( report => {
-            console.log('resport', report)
             this.loadReports();
           })
     );
     this.subscriptions.add(
-          this._socketService.listenAfterToConnect().subscribe( response => {
-            console.log('response ', response)
-          })
-    );
-    this.subscriptions.add(this._socketService.listenFinishChecking().subscribe( dataFinish => {
-        console.log('data finish: ', dataFinish);
-       this.loadData();
+         this._socketService.listenFinishChecking().subscribe( dataFinish => {
+            this.loadData();
     }));
   }
 
   ngOnInit() {
     this.loadData();
+    this.loadReports();
   }
   ngOnDestroy() {
     this.subscriptions.unsubscribe();

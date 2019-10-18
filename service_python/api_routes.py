@@ -9,7 +9,7 @@ from flask_socketio import SocketIO, emit
 
 app = Flask(__name__)
 CORS(app)
-socketio = SocketIO(app, cors_allowed_origins="*", async_mode="eventlet",use_reloader=False)
+socketio = SocketIO(app, cors_allowed_origins="*", use_reloader=False)
 
 @socketio.on('connect')
 def test_connect():

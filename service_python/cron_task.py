@@ -18,9 +18,7 @@ def run_schedule():
         time.sleep(1)
 
 def emit_do_work(evt, message):
-    print('what:.:::')
     socketio.emit(evt, message, broadcast=True)
-    print('what after:.:::')
     
 def job():
     print("checking...")
