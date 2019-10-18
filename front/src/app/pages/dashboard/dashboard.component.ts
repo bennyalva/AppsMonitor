@@ -26,11 +26,11 @@ export class DashboardComponent implements OnInit, OnDestroy {
     { name: 'servicebus', title: 'Service bus', icon: 'servicebus', affected: 0, total: 0 },
   ];
 
-  reportsType: ReportType [] = [
+  reportsType: ReportType[] = [
     { name: 'final_close', title: 'Cierre', icon: 'reporte.png', affected: 0 },
-    { name: 'errors', title: 'Bitacora', icon: 'bitacora.png', affected: 0},
-    { name: 'replications', title: 'Replicación', icon: 'database.png', affected: 0},
-    { name: 'queues', title: 'Queues', icon: 'queues.png', affected: 0},
+    { name: 'errors', title: 'Bitacora', icon: 'bitacora.png', affected: 0 },
+    { name: 'replications', title: 'Replicación', icon: 'database.svg', affected: 0 },
+    { name: 'queues', title: 'Queues', icon: 'queues.png', affected: 0 },
   ];
   applications: Application[] = [];
   affectedClients: AffectedClient[] = [];
@@ -38,24 +38,25 @@ export class DashboardComponent implements OnInit, OnDestroy {
   selectedClient;
   isLoading = false;
   statsAlerts = 0;
+  totalErrorReports = 0;
   statsApps = 0;
   subscriptions = new Subscription();
   newAffectedClients = new Array<[]>(1);
   constructor(private _dataService: DataService, private _consumeService: ConsumeService,
-               private _socketService: SocketService, private router: Router
-              ) {
+    private _socketService: SocketService, private router: Router
+  ) {
     this._dataService.getIsLoadingEvent().subscribe(load => {
       this.isLoading = load;
     });
     this.subscriptions.add(
-          this._socketService.listenNewReport().subscribe( report => {
-            this.loadReports();
-          })
+      this._socketService.listenNewReport().subscribe(() => {
+        this.loadReports();
+      })
     );
     this.subscriptions.add(
-         this._socketService.listenFinishChecking().subscribe( dataFinish => {
-            this.loadData();
-    }));
+      this._socketService.listenFinishChecking().subscribe(() => {
+        this.loadData();
+      }));
   }
 
   ngOnInit() {
@@ -103,7 +104,6 @@ export class DashboardComponent implements OnInit, OnDestroy {
     this._dataService.setIsLoadingEvent(true);
     forkJoin(loadStats, loadAffected, loadAlerts, loadClients, loadClientTypes).subscribe(() => {
       this._dataService.setIsLoadingEvent(false);
-      this.loadReports();
     });
   }
 
@@ -117,12 +117,12 @@ export class DashboardComponent implements OnInit, OnDestroy {
     }));
 
     this._dataService.setIsLoadingEvent(true);
-      this.subscriptions.add(loadReports.subscribe(() => {
-          this._dataService.setIsLoadingEvent(false);
-      }));
+    this.subscriptions.add(loadReports.subscribe(() => {
+      this._dataService.setIsLoadingEvent(false);
+    }));
   }
-
   detail(name: string) {
-     this.router.navigate(['/reports', { report: name}]);
+    this.reportsType.filter(report => report.name === name && report.affected > 0)
+                     .forEach(() =>  this.router.navigate(['/reports', { report: name }]));
   }
 }

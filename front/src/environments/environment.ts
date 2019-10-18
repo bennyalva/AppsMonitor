@@ -4,7 +4,13 @@
 
 export const environment = {
   production: false,
-  baseUrl: 'http://localhost:3000'
+  baseUrl: 'http://localhost:3000',
+  nameToTitle: new Map<string, string>([
+    ['queues', 'Reporte de monitoreo de Queues'],
+    ['errors', 'Reporte de Bitacora de errores'],
+    ['replications', 'Monitoreo de Replicación'],
+    ['final_close', 'Reporte de cierre con diferencias en sábana final']
+  ] )
 };
 
 /*

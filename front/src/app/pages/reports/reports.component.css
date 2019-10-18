@@ -7,3 +7,19 @@ table {
 .orange{
   background-color: orange;
 }
+#table-container{
+  margin-top: 3%;
+}
+.mat-elevation-z8{
+  padding: 1%;
+}
+#report-title{
+  width: 20%;
+  margin-right: 40%;
+  margin-left: 40%;
+  text-align: center;
+  font-weight: bold;
+  margin-top: 1%;
+  font-family: Arial;
+
+}

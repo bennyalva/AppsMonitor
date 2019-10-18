@@ -29,8 +29,7 @@
               <div id="title-reportes">
                 Reportes
               </div>
-              <div class="col-md-2 col-sm-4 col-xs-6" *ngFor="let type of reportsType"
-                   id="report-icon">
+              <div class="col-md-2 col-sm-4 col-xs-6" *ngFor="let type of reportsType" id="report-icon">
                 <app-report [type]="type" (click)="detail(type.name)"></app-report>
               </div>
             </div>
@@ -39,10 +38,28 @@
       </div>
     </div>
   </ng-container>
-  <div class="row" *ngIf="statsAlerts === 0 && !isLoading">
-    <div class="col-md-12 all-clear">
-      <mat-icon>local_cafe</mat-icon>
-      <p>Todas las aplicaciones se encuentran funcionando correctamente</p>
+
+<div *ngIf="affectedClients.length === 0">
+    <div class="col-md-12 col-sm-12 col-xs-12" id="reports-container">
+        <div class="row">
+          <div id="title-reportes">
+            Reportes
+          </div>
+          <div class="col-md-2 col-sm-4 col-xs-6" *ngFor="let type of reportsType" id="report-icon">
+            <app-report [type]="type" (click)="detail(type.name)"></app-report>
+          </div>
+        </div>
+      </div>
+</div>
+  <!-- ver la mejor forma para validar si es que no hay errores en base de datos
+       y en reportes para poder mostra la imagen de cafe de que todo esta bien 
+       por el momento solo van aparecer vacia la información
+    <div class="row" *ngIf="statsAlerts === 0 && !isLoading">
+    <div *ngIf="totalErrorReports === 0">
+        <div class="col-md-12 all-clear">
+            <mat-icon>local_cafe</mat-icon>
+            <p>Todas las aplicaciones se encuentran funcionando correctamente {{totalErrorReports}}</p>
+          </div>
     </div>
-  </div>
+  </div> -->
 </div>

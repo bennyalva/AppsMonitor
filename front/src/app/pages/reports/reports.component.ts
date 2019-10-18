@@ -5,6 +5,7 @@ import { ConsumeService } from 'src/app/services/consume.service';
 import { forkJoin, Subscription } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { ActivatedRoute } from '@angular/router';
+import { environment } from 'src/environments/environment';
 @Component({
   selector: 'app-reports',
   templateUrl: './reports.component.html',
@@ -17,6 +18,7 @@ export class ReportsComponent implements OnInit, OnDestroy {
   reportName: string;
   displayedColumns: string[];
   dataSource = [];
+  reportTitle = '';
   constructor(private _dataService: DataService,
     private _consumeService: ConsumeService, private _route: ActivatedRoute) {
     this._dataService.getIsLoadingEvent().subscribe(load => {
@@ -27,6 +29,7 @@ export class ReportsComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.reportName = this._route.snapshot.paramMap.get('report');
     this.loadData(this.reportName);
+    this.reportTitle = environment.nameToTitle.get(this.reportName);
   }
 
   ngOnDestroy() {
