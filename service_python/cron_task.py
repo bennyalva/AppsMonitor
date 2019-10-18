@@ -21,6 +21,7 @@ def run_schedule():
 def job():
     print("checking...")
     socketio.emit('startChecking', {'data':'event'}, broadcast=True)
+    socketio.emit('newReport',{'data': 'event'}, broadcast=True)
     try:
         crawler.Crawler()
     except mongoerrors.ServerSelectionTimeoutError as mongoError:

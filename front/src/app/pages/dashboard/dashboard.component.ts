@@ -47,9 +47,20 @@ export class DashboardComponent implements OnInit, OnDestroy {
     this._dataService.getIsLoadingEvent().subscribe(load => {
       this.isLoading = load;
     });
-
+    
+    this.subscriptions.add(
+          this._socketService.listenNewReport().subscribe( report => {
+            console.log('resport', report)
+            this.loadReports();
+          })
+    );
+    this.subscriptions.add(
+          this._socketService.listenAfterToConnect().subscribe( response => {
+            console.log('response ', response)
+          })
+    );
     this.subscriptions.add(this._socketService.listenFinishChecking().subscribe( dataFinish => {
-       // console.log('data finish: ', dataFinish);
+        console.log('data finish: ', dataFinish);
        this.loadData();
     }));
   }
@@ -69,14 +80,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
         })
       );
     }));
-    const loadReports = forkJoin(this.reportsType.map(x => {
-      return this._consumeService.getReportByType(x.name).pipe(
-        tap(val => {
-          x.affected = val.data.affected;
-          // console.log('val:: ', val.data.affected);
-        })
-      );
-    }));
+
     const loadAffected = this._consumeService.getAffectedApps().pipe(
       tap(val => {
         this.statsApps = val.data.total;
@@ -103,9 +107,25 @@ export class DashboardComponent implements OnInit, OnDestroy {
     );
 
     this._dataService.setIsLoadingEvent(true);
-    forkJoin(loadStats, loadAffected, loadAlerts, loadClients, loadClientTypes , loadReports).subscribe(() => {
+    forkJoin(loadStats, loadAffected, loadAlerts, loadClients, loadClientTypes).subscribe(() => {
       this._dataService.setIsLoadingEvent(false);
+      this.loadReports();
     });
+  }
+
+  loadReports() {
+    const loadReports = forkJoin(this.reportsType.map(x => {
+      return this._consumeService.getReportByType(x.name).pipe(
+        tap(val => {
+          x.affected = val.data.affected;
+        })
+      );
+    }));
+
+    this._dataService.setIsLoadingEvent(true);
+      this.subscriptions.add(loadReports.subscribe(() => {
+          this._dataService.setIsLoadingEvent(false);
+      }));
   }
 
   detail(name: string) {

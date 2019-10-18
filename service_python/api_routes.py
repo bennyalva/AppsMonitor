@@ -9,8 +9,13 @@ from flask_socketio import SocketIO, emit
 
 app = Flask(__name__)
 CORS(app)
-socketio = SocketIO(app, cors_allowed_origins="*",use_reloader=False)
+socketio = SocketIO(app, cors_allowed_origins="*", async_mode="eventlet",use_reloader=False)
 
+@socketio.on('connect')
+def test_connect():
+    print('someone connected')
+    socketio.emit('after connect',  {'welcome':'pharmacyMonitoring'})
+    
 def get_response_message(http_status):
     if http_status == 200:
         return 'Operacion realizada con exito'
@@ -53,7 +58,6 @@ def get_points():
 
 @app.route('/points/<id>', methods=['PUT'])
 def update_point(id):
-    #toChange
     mgo = mongo.MongoManager()
     res = mgo.update('points', request.get_json(), id)
     return create_response(res, 200)
@@ -191,6 +195,14 @@ def delete_report(report):
     mgo = mongo.MongoManager()
     mgo.update_by_id('reports',report)
     return create_response("ok", 200)
+
+@app.route('/api/reports', methods=['POST'])
+def api_reports():
+    mgo = mongo.MongoManager()
+    #res = mgo.insert('clients', request.get_json())
+    mgo.insert_many_to_collection('reports', request.get_json())
+    socketio.emit('newReport',{'data': 'event'}, broadcast=True)
+    return create_response(True, 200)
 
 @app.errorhandler(404)
 def custom400(error):

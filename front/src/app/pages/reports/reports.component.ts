@@ -63,15 +63,16 @@ export class ReportsComponent implements OnInit, OnDestroy {
   }
 
   delete(element: any) {
-    console.log('elemnt', element.color)
     this.subscriptions.add(this._dataService.confirm('¿Estás seguro?', 'Se eliminará el reporte!!!!')
       .subscribe(confirm => {
-        this._dataService.setIsLoadingEvent(true);
-        this._consumeService.deleteReport(element._id.$oid, element).subscribe(res => {
-          this.dataSource = this.dataSource.filter(x => x !== element);
-          this._dataService.setIsLoadingEvent(false);
-          this._dataService.setGeneralNotificationMessage(res.message);
-        });
+         if (confirm) {
+          this._dataService.setIsLoadingEvent(true);
+          this._consumeService.deleteReport(element._id.$oid, element).subscribe(res => {
+                this.dataSource = this.dataSource.filter(x => x !== element);
+                this._dataService.setIsLoadingEvent(false);
+                this._dataService.setGeneralNotificationMessage(res.message);
+          });
+         }
       }));
   }
 }

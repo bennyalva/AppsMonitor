@@ -16,4 +16,15 @@ export class SocketService {
     return this.socket
       .fromEvent('finishChecking');
   }
+
+  listenNewReport() {
+    return this.socket
+      .fromEvent('newReport');
+  }
+
+  listenAfterToConnect() {
+    return this.socket
+    .fromEvent('after connect');
+
+  }
 }
