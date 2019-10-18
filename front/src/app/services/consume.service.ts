@@ -141,4 +141,12 @@ export class ConsumeService {
   getReportByType(type: string): Observable<Response> {
     return this._http.get<Response>(`${this.baseUrl}/reports/report/${type}`);
   }
+
+  getReportDetailByType(type: string): Observable<Response> {
+    return this._http.get<Response>(`${this.baseUrl}/reports/report/detail/${type}`);
+  }
+
+  deleteReport(report: string, element: any): Observable<Response> {
+    return this._http.put<Response>(`${this.baseUrl}/reports/report/${report}`, element);
+  }
 }

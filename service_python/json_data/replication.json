@@ -1,0 +1,35 @@
+[
+    {
+      "type":"replications",
+      "publisher": "FAHORROMEX126",
+      "publisherDb": "POSDB_R001",
+      "publication": "POSDB_R001_Republication_RS_Doc",
+      "suscriberName": "FA1718STORE",
+      "statusReport": "EN ESPERA",
+      "lastDistSync": "03/10/2019 11:05:04 p. m.",
+      "sincronizationSeconds": 12,
+      "status":true
+    },
+    {
+        "type":"replications",
+        "publisher": "FAHORROMEX120",
+        "publisherDb": "POSDB_R001",
+        "publication": "POSDB_R001_Republication_RS_Tran",
+        "suscriberName": "FA1718STORE",
+        "statusReport": "EN ESPERA",
+        "lastDistSync": "03/10/2019 11:04:56 p. m.",
+        "sincronizationSeconds":7,
+        "status":true
+      },
+      {
+        "type":"replications",
+        "publisher": "FAHORROMEX122",
+        "publisherDb": "POSDB_R001",
+        "publication": "POSDB_R001_Republication_RS_Cat",
+        "suscriberName": "FA1718STORE",
+        "statusReport": "EN ESPERA",
+        "lastDistSync": "03/10/2019 10:59:56 p. m.",
+        "sincronizationSeconds":10,
+        "status":true
+      }
+]

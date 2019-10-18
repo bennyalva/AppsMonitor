@@ -109,8 +109,6 @@ export class DashboardComponent implements OnInit, OnDestroy {
   }
 
   detail(name: string) {
-     console.log('name.. ', name)
-     // tslint:disable-next-line: no-unused-expression
-     this.router.navigate['/reports'];
+     this.router.navigate(['/reports', { report: name}]);
   }
 }

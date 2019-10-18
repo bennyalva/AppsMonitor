@@ -1,3 +1,205 @@
-<div>
-  hola XDXD
-</div>
+<table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+  <div *ngIf="reportName == 'final_close'">
+    <ng-container matColumnDef="sucursal">
+      <th mat-header-cell *matHeaderCellDef > Sucursal</th>
+      <td mat-cell *matCellDef="let element" > {{element.sucursalId}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="name">
+      <th mat-header-cell *matHeaderCellDef> Name </th>
+      <td mat-cell *matCellDef="let element"> {{element.sucursalName}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="till">
+      <th mat-header-cell *matHeaderCellDef> TillNumber </th>
+      <td mat-cell *matCellDef="let element"> {{element.tillNumber}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="date">
+      <th mat-header-cell *matHeaderCellDef> Date </th>
+      <td mat-cell *matCellDef="let element"> {{element.operationDate}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="opening">
+      <th mat-header-cell *matHeaderCellDef> OpeningId </th>
+      <td mat-cell *matCellDef="let element"> {{element.operatioId}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="closed">
+      <th mat-header-cell *matHeaderCellDef> IdClosed </th>
+      <td mat-cell *matCellDef="let element"> {{element.closeId}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="initial">
+      <th mat-header-cell *matHeaderCellDef>Initial</th>
+      <td mat-cell *matCellDef="let element"> {{element.init}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="final">
+      <th mat-header-cell *matHeaderCellDef> Finish </th>
+      <td mat-cell *matCellDef="let element"> {{element.finish}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="transations">
+      <th mat-header-cell *matHeaderCellDef>Transactions</th>
+      <td mat-cell *matCellDef="let element"> {{element.transactions}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="pendings">
+      <th mat-header-cell *matHeaderCellDef>Pendings</th>
+      <td mat-cell *matCellDef="let element"> {{element.pendings}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="consumed">
+      <th mat-header-cell *matHeaderCellDef> Consumed </th>
+      <td mat-cell *matCellDef="let element"> {{element.consumed}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="errors">
+      <th mat-header-cell *matHeaderCellDef>WithError</th>
+      <td mat-cell *matCellDef="let element"> {{element.errors}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="missing">
+      <th mat-header-cell *matHeaderCellDef> Missing </th>
+      <td mat-cell *matCellDef="let element"> {{element.missing}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="delete">
+      <th mat-header-cell *matHeaderCellDef> Action</th>
+      <td mat-cell *matCellDef="let element"> <button mat-icon-button color="primary" matTooltip="Eliminar"
+          (click)="delete(element)">
+          <mat-icon>delete</mat-icon>
+        </button> </td>
+    </ng-container>
+  </div>
+  <div *ngIf="reportName == 'errors'">
+    <ng-container matColumnDef="sale">
+      <th mat-header-cell *matHeaderCellDef> saleId </th>
+      <td mat-cell *matCellDef="let element"> {{element.saleId}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="error">
+      <th mat-header-cell *matHeaderCellDef> Description </th>
+      <td mat-cell *matCellDef="let element"> {{element.errorDescrption}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="process">
+      <th mat-header-cell *matHeaderCellDef> Process </th>
+      <td mat-cell *matCellDef="let element"> {{element.process}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="init">
+      <th mat-header-cell *matHeaderCellDef> InitialDate</th>
+      <td mat-cell *matCellDef="let element"> {{element.initDate}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="finish">
+      <th mat-header-cell *matHeaderCellDef> lastDate </th>
+      <td mat-cell *matCellDef="let element"> {{element.finishDate}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="times">
+      <th mat-header-cell *matHeaderCellDef> Times </th>
+      <td mat-cell *matCellDef="let element"> {{element.times}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="delete">
+      <th mat-header-cell *matHeaderCellDef> Action</th>
+      <td mat-cell *matCellDef="let element"> <button mat-icon-button color="primary" matTooltip="Eliminar"
+          (click)="delete(element)">
+          <mat-icon>delete</mat-icon>
+        </button> </td>
+    </ng-container>
+  </div>
+  <div *ngIf="reportName == 'replications'">
+    <ng-container matColumnDef="publiser">
+      <th mat-header-cell *matHeaderCellDef> Publiser</th>
+      <td mat-cell *matCellDef="let element"> {{element.publisher}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="publiser-db">
+      <th mat-header-cell *matHeaderCellDef> PubliserDB</th>
+      <td mat-cell *matCellDef="let element"> {{element.publisherDb}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="publication">
+      <th mat-header-cell *matHeaderCellDef> Publication </th>
+      <td mat-cell *matCellDef="let element"> {{element.publication}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="suscriber-name">
+      <th mat-header-cell *matHeaderCellDef> SuscriberName</th>
+      <td mat-cell *matCellDef="let element"> {{element.suscriberName}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="status">
+      <th mat-header-cell *matHeaderCellDef> StatusReport</th>
+      <td mat-cell *matCellDef="let element"> {{element.statusReport}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="last">
+      <th mat-header-cell *matHeaderCellDef> LastDistSync </th>
+      <td mat-cell *matCellDef="let element"> {{element.lastDistSync}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="sincronization">
+      <th mat-header-cell *matHeaderCellDef> SincronizationSeconds</th>
+      <td mat-cell *matCellDef="let element"> {{element.sincronizationSeconds}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="delete">
+      <th mat-header-cell *matHeaderCellDef> Action</th>
+      <td mat-cell *matCellDef="let element"> <button mat-icon-button color="primary" matTooltip="Eliminar"
+          (click)="delete(element)">
+          <mat-icon>delete</mat-icon>
+        </button> </td>
+    </ng-container>
+  </div>
+  <div *ngIf="reportName == 'queues'">
+    <ng-container matColumnDef="sucursal">
+      <th mat-header-cell *matHeaderCellDef> Sucursal</th>
+      <td mat-cell *matCellDef="let element" > {{element.sucursalId}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="name">
+      <th mat-header-cell *matHeaderCellDef> Name </th>
+      <td mat-cell *matCellDef="let element"> {{element.sucursalName}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="till">
+      <th mat-header-cell *matHeaderCellDef> Till </th>
+      <td mat-cell *matCellDef="let element"> {{element.till}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="ip">
+      <th mat-header-cell *matHeaderCellDef> Ip</th>
+      <td mat-cell *matCellDef="let element"> {{element.ip}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="version">
+      <th mat-header-cell *matHeaderCellDef> CurrentVersion </th>
+      <td mat-cell *matCellDef="let element" > {{element.currentVersion}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="queue">
+      <th mat-header-cell *matHeaderCellDef> QueueName </th>
+      <td mat-cell *matCellDef="let element" class="{{element.color}}"> {{element.queueName}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="message">
+      <th mat-header-cell *matHeaderCellDef> Messages</th>
+      <td mat-cell *matCellDef="let element"class="{{element.color}}"> {{element.messagesTotal}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="delete">
+      <th mat-header-cell *matHeaderCellDef> Action</th>
+      <td mat-cell *matCellDef="let element"> <button mat-icon-button color="primary" matTooltip="Eliminar"
+          (click)="delete(element)">
+          <mat-icon>delete</mat-icon>
+        </button> </td>
+    </ng-container>
+  </div>
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+</table>

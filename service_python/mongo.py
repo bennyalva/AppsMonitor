@@ -125,8 +125,8 @@ class MongoManager:
         }
         return res
     
-    def get_report_by_type(self, type):
-        #last day para que nos de los registros del ultimo dia
+    def get_report_by_type(self, type, flag):
+        #last day para que nos de los registros del ultimo dia se agrega en la consulta
         #last_day = datetime.now() - timedelta(hours=24)
         report = self.db['reports'].aggregate([
                 {
@@ -139,7 +139,17 @@ class MongoManager:
         res = {
             'affected': len(list(report))
         }
+        if flag:
+            return list(self.db['reports'].aggregate([
+                {
+                    '$match': {
+                        'status': True, 
+                        'type': type
+                    }
+                }
+            ]))
         return res
+      
         
     def get_total_alerts(self):
         all_alerts = self.db['events'].count_documents(
@@ -546,7 +556,11 @@ class MongoManager:
                                    {'$set': {'application':data['application']}}
                         )
         return coll.update_one({'_id': ObjectId(id)}, {'$set': data}).modified_count
-
+    
+    def update_by_id(self, collection, id):
+         coll = self.db[collection]
+         coll.update_one({'_id': ObjectId(id)}, {'$set': {'status':False}}).modified_count
+    
     def upsert(self, collection, data):
         coll = self.db[collection]
         return coll.update_one(data, upsert=True).modified_count
@@ -556,7 +570,11 @@ class MongoManager:
         # TODO: implementar update o insert
         coll.drop()
         return coll.insert_many(data)
-
+    
+    def insert_many_to_collection(self, collection, data):
+        coll = self.db[collection]
+        coll.insert_many(data)
+        
     def delete_by_id(self, collection, id):
         coll = self.db[collection]
         return coll.delete_one({'_id': ObjectId(id)}).deleted_count

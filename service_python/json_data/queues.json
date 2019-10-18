@@ -1,0 +1,62 @@
+[
+    {
+     "type":"queues",
+     "sucursalId": 508,
+     "sucursalName": "F A MONTERREY PTE, TAURO",
+     "till": 11,
+     "ip": "10.88.0.66",
+     "currentVersion": "1.9.19263.1",
+     "queueName": "fa0508c11-private$-os.inventoryqueue",
+     "messagesTotal": 1,
+     "status":true,
+     "color":""
+    },
+    {
+        "type":"queues",
+        "sucursalId": 636,
+        "sucursalName": "F A MONTERREY PTE, PLAZA LOS LEONES",
+        "till": 10,
+        "ip": "10.88.6.197",
+        "currentVersion": "1.9.19263.1",
+        "queueName": "fa0636c10-private$-pos.ewalletqueue",
+        "messagesTotal": 1,
+        "status":true,
+        "color":""
+       },
+       {
+        "type":"queues",
+        "sucursalId": 643,
+        "sucursalName": "F A MONTERREY PTE, SAN JOSE",
+        "till": 11,
+        "ip": "10.88.7.6",
+        "currentVersion": "1.9.19263.1",
+        "queueName": "fa0643c11-private$-pos.inventoryqueue",
+        "messagesTotal": 1,
+        "status":true,
+        "color":""
+       },
+       {
+        "type":"queues",
+        "sucursalId": 789,
+        "sucursalName": "F A MONTERREY PTE, AZTLAN",
+        "till": 11,
+        "ip": "10.88.3.133",
+        "currentVersion": "1.9.19263.1",
+        "queueName": "No disponible, no se pudo obtener información de la caja",
+        "messagesTotal": 0,
+        "status":true,
+        "color":"orange"
+       },
+       {
+        "type":"queues",
+        "sucursalId": 1340,
+        "sucursalName": "F A MONTERREY PTE, CUMBRES DE LOS ALPES",
+        "till": 10,
+        "ip": "10.88.9.193",
+        "currentVersion": "1.7.19192.2",
+        "queueName": "fa1340c10-private$-pos.updateclientstatusreportqueue",
+        "messagesTotal": 8,
+        "status":true,
+        "color":"red"
+       }
+]

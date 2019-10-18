@@ -60,7 +60,6 @@ def update_point(id):
 
 @app.route('/points', methods=['DELETE'])
 def delete_point():
-
     mgo = mongo.MongoManager()
     res = mgo.delete('points', {
         'client': request.args.get('client'),
@@ -178,8 +177,20 @@ def get_affected_apps_by_client(client):
 @app.route('/reports/report/<type>', methods=['GET'])
 def get_type_report(type):
     mgo = mongo.MongoManager()
-    res = mgo.get_report_by_type(type)
+    res = mgo.get_report_by_type(type,False)
     return create_response(res, 200)
+
+@app.route('/reports/report/detail/<type>', methods=['GET'])
+def get_type_report_detail(type):
+    mgo = mongo.MongoManager()
+    res = mgo.get_report_by_type(type,True)
+    return create_response(res, 200)
+
+@app.route('/reports/report/<report>', methods=['PUT'])
+def delete_report(report):
+    mgo = mongo.MongoManager()
+    mgo.update_by_id('reports',report)
+    return create_response("ok", 200)
 
 @app.errorhandler(404)
 def custom400(error):

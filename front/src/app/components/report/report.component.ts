@@ -1,4 +1,6 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, OnDestroy } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { Subscription } from 'rxjs';
 export interface ReportType {
   name: string;
   title: string;
@@ -11,6 +13,7 @@ export interface ReportType {
   styleUrls: ['./report.component.css']
 })
 export class ReportComponent implements OnInit {
+
   @Input() type: ReportType;
   constructor() {
   }

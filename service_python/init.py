@@ -26,12 +26,21 @@ def init_config():
         mgo = mongo.MongoManager()
         mgo.init_coll('configuration', data)
 
-#método para cargar el mock data a mongo
+#método para cargar el mock data a mongo borrarlo antes de desplegar
 def initMock():
     with open('./json_data/closing_report.json') as closing:
         data = json.load(closing)
         mgo = mongo.MongoManager()
         mgo.init_coll('reports',data)
+    with open('./json_data/bitacora_errors.json') as errors:
+        data = json.load(errors)
+        mgo.insert_many_to_collection('reports',data)
+    with open('./json_data/replication.json') as replication:
+        data = json.load(replication)
+        mgo.insert_many_to_collection('reports',data)
+    with open('./json_data/queues.json') as queues:
+        data = json.load(queues)
+        mgo.insert_many_to_collection('reports',data)
     
 if __name__ == '__main__':
     env = sys.argv[1] if len(sys.argv) == 2 else 'dev'

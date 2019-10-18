@@ -1,0 +1,32 @@
+[
+    {
+      "type":"errors",
+      "saleId": 1741,
+      "errorDescrption": "Transaccion sin pago",
+      "process": "Validacion de Trans sin pago",
+      "initDate": "15/10/2019 02:42:04 p. m.",
+      "finishDate": "15/10/2019 02:42:04 p. m.",
+      "times":1,
+      "status":true
+    },
+    {
+        "type":"errors",
+        "saleId": 1841,
+        "errorDescrption": "Transaccion sin pago",
+        "process": "Validacion de Trans sin pago",
+        "initDate": "15/10/2019 03:42:04 p. m.",
+        "finishDate": "15/10/2019 03:42:04 p. m.",
+        "times":2,
+        "status":true
+      },
+      {
+        "type":"errors",
+        "saleId": 1941,
+        "errorDescrption": "Transaccion sin pago",
+        "process": "Validacion de Trans sin pago",
+        "initDate": "15/10/2019 04:42:04 p. m.",
+        "finishDate": "15/10/2019 04:42:04 p. m.",
+        "times":3,
+        "status":true
+      }
+]

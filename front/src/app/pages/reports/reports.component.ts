@@ -1,47 +1,77 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { DataService } from 'src/app/services/data.service';
 import { ReportType } from 'src/app/components/report/report.component';
 import { ConsumeService } from 'src/app/services/consume.service';
-import { forkJoin } from 'rxjs';
+import { forkJoin, Subscription } from 'rxjs';
 import { tap } from 'rxjs/operators';
-
+import { ActivatedRoute } from '@angular/router';
 @Component({
   selector: 'app-reports',
   templateUrl: './reports.component.html',
   styleUrls: ['./reports.component.css']
 })
-export class ReportsComponent implements OnInit {
-  reportsType: ReportType [] = [
-    { name: 'final_close', title: 'Cierre', icon: 'reporte.png', affected: 0 },
-    { name: 'errors', title: 'Bitacora', icon: 'bitacora.png', affected: 0},
-    { name: 'replications', title: 'Replicación', icon: 'database.png', affected: 0},
-    { name: 'queues', title: 'Queues', icon: 'queues.png', affected: 0},
-  ];
+
+export class ReportsComponent implements OnInit, OnDestroy {
   isLoading = false;
-  constructor(private _dataService: DataService, private _consumeService: ConsumeService) {
+  subscriptions = new Subscription();
+  reportName: string;
+  displayedColumns: string[];
+  dataSource = [];
+  constructor(private _dataService: DataService,
+    private _consumeService: ConsumeService, private _route: ActivatedRoute) {
     this._dataService.getIsLoadingEvent().subscribe(load => {
       this.isLoading = load;
     });
   }
 
   ngOnInit() {
-    this.loadData();
-    console.log('reports:: ', this.reportsType);
+    this.reportName = this._route.snapshot.paramMap.get('report');
+    this.loadData(this.reportName);
   }
 
-  loadData() {
-    const loadRports = forkJoin(this.reportsType.map(x => {
-      return this._consumeService.getReportByType(x.name).pipe(
-        tap(val => {
-          x.affected = val.data.affected;
-          // console.log('val:: ', val.data.affected);
-        })
-      );
+  ngOnDestroy() {
+    this.subscriptions.unsubscribe();
+  }
+  loadData(reportName: string) {
+    this.subscriptions.add(this._consumeService.getReportDetailByType(reportName).subscribe(data => {
+      this.dataSource = data.data;
     }));
+    switch (reportName) {
+      case 'final_close':
+        this.displayedColumns = ['sucursal', 'name', 'till', 'date', 'opening',
+          'closed', 'initial', 'final', 'transations', 'pendings',
+          'consumed', 'errors', 'missing', 'delete'];
+        break;
+      case 'errors':
+      case 'final_close':
+        this.displayedColumns = ['sale', 'error', 'process', 'init', 'finish', 'times', 'delete'];
+        break;
+        break;
+      case 'replications':
+        this.displayedColumns = ['publiser', 'publiser-db', 'publication',
+          'suscriber-name', 'status', 'last', 'sincronization','delete'];
+        break;
+      case 'queues':
+        this.displayedColumns = ['sucursal', 'name', 'till', 'ip', 'version',
+          'queue', 'message', 'delete'];
+        break;
+      default:
+        console.log('No such name report exists!');
+        break;
+    }
 
-    this._dataService.setIsLoadingEvent(true);
-    forkJoin(loadRports).subscribe(() => {
-      this._dataService.setIsLoadingEvent(false);
-    });
+  }
+
+  delete(element: any) {
+    console.log('elemnt', element.color)
+    this.subscriptions.add(this._dataService.confirm('¿Estás seguro?', 'Se eliminará el reporte!!!!')
+      .subscribe(confirm => {
+        this._dataService.setIsLoadingEvent(true);
+        this._consumeService.deleteReport(element._id.$oid, element).subscribe(res => {
+          this.dataSource = this.dataSource.filter(x => x !== element);
+          this._dataService.setIsLoadingEvent(false);
+          this._dataService.setGeneralNotificationMessage(res.message);
+        });
+      }));
   }
 }
