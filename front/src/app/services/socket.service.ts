@@ -10,11 +10,11 @@ export class SocketService {
 
   listenStartChecking() {
     return this.socket
-      .fromEvent('startChecking');
+      .fromEvent('start checking');
   }
   listenFinishChecking() {
     return this.socket
-      .fromEvent('finishChecking');
+      .fromEvent('finish checking');
   }
 
   listenNewReport() {

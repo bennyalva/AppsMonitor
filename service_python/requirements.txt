@@ -8,6 +8,6 @@ flask-socketio
 schedule
 python-dateutil
 JPype1==0.6.3
-eventlet
+#eventlet
 pandas
 xlrd
